@@ -1,0 +1,21 @@
+build/
+*.pbxuser
+*.mode1v3
+*.perspectivev3
+.DS_Store
+.LSOverride
+.idea/
+XNGAPIClientExample/.DS_Store
+
+# Doxygen Documentation
+Output/
+temp/
+
+# Xcode4
+XNGAPIClientExample/xcuserdata/
+
+# Xcode5
+XNGAPIClientExample/XNGAPIClientExample.xcworkspace/xcshareddata/XING.xccheckout
+XNGAPIClientExample/XNGAPIClientExample.xcodeproj/project.xcworkspace/xcshareddata/XNGAPIClientExample.xccheckout
+XNGAPIClientExample/XNGAPIClientExample.xcodeproj/project.xcworkspace/xcuserdata/
+XNGAPIClientExample/XNGAPIClientExample.xcodeproj/xcuserdata/
