@@ -10,7 +10,7 @@ XNGAPIClient is built on top of AFNetworking, so it takes full advantage of bloc
 If you use [CocoaPods](http://cocoapods.org), you can add the ```XINGAPIClient``` pod to your Podfile. Then run ```pod install```, and the XING API Client will be available in your project.
 
 ### Option 2
-Clone & Watch our repository by visiting https://github.com/xing/XINGAPIClient
+Clone & Watch our repository by visiting https://github.com/xing/XNGAPIClient
 
 ## Optain a consumer key
 You can optain a consumer key and consumer secret by visiting https://dev.xing.com/applications and pressing the create app button.
