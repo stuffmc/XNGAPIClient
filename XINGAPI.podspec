@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = 'XINGAPI'
-  s.version = '0.0.1'
+  s.version = '0.0.2'
   s.platform = :ios, '5.0'
   s.license = 'MIT'
   s.summary = 'The official Objective-C client for the XING API'
@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
   }
   s.source = {
     :git => 'https://github.com/xing/XNGAPIClient.git',
-    :tag => '0.0.1'
+    :tag => '0.0.2'
   }
   s.source_files = 'XNGAPIClient/*.{h,m}'
   s.requires_arc = true
