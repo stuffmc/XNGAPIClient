@@ -190,7 +190,7 @@
         parameters[@"offset"] = @( offset );
     }
     if ( limit > 0 ) {
-        parameters[@"limit"] = @( offset );
+        parameters[@"limit"] = @( limit );
     }
 
     NSString *path = [NSString stringWithFormat:@"v1/activities/%@/likes", activityID];
