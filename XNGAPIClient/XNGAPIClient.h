@@ -85,6 +85,7 @@ extern NSString * const XNGAPIClientDeprecationWarningNotification;
 
 - (void)setConsumerKey:(NSString *)consumerKey;
 - (void)setConsumerSecret:(NSString *)consumerSecret;
+- (void)setCallbackScheme:(NSString*)callbackScheme;
 - (void)setSignatureMethod:(NSString *)signatureMethod;
 - (void)setServiceProvider:(NSString *)serviceProvider;
 - (void)setUserAgent:(NSString *)userAgent;

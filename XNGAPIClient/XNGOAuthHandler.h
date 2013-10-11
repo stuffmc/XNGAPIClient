@@ -31,7 +31,7 @@
 @property (nonatomic, strong, readonly) NSString *accessToken;
 @property (nonatomic, strong, readonly) NSString *tokenSecret;
 @property (nonatomic, strong, readonly) NSString *userID;
-@property (nonatomic, strong, readonly) GTMOAuthAuthentication *GTMOAuthAuthentication;
+
 
 - (void)saveUserID:(NSString *)userID
        accessToken:(NSString *)accessToken
@@ -46,5 +46,8 @@
 - (void)deleteKeychainEntriesAndGTMOAuthAuthentication;
 
 - (BOOL)hasAccessToken;
+
+- (void)authorizeRequest:(NSMutableURLRequest *)request;
+
 
 @end

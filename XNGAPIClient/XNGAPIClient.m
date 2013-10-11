@@ -87,7 +87,7 @@ static XNGAPIClient *_sharedClient = nil;
                                       path:(NSString *)path
                                 parameters:(NSDictionary *)parameters {
     NSMutableURLRequest *request = [super requestWithMethod:method path:path parameters:parameters];
-    [self.oAuthHandler.GTMOAuthAuthentication authorizeRequest:request];
+    [self.oAuthHandler authorizeRequest:request];
     return request;
 }
 

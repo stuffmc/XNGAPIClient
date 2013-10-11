@@ -185,6 +185,10 @@ static NSString *kAccessTokenName = @"AccessToken";//Keychain username
 	self.GTMOAuthAuthentication = nil;
 }
 
+- (void) authorizeRequest:(NSMutableURLRequest *)request {
+    [self.GTMOAuthAuthentication authorizeRequest:request];
+}
+
 - (NSString *)serviceProvider {
     if ([_serviceProvider length]) {
         return _serviceProvider;
