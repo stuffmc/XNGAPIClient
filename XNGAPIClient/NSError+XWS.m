@@ -42,27 +42,6 @@
     return [self.userInfo xng_stringForKey:kErrorDomainXWSErrorName];
 }
 
-- (NSString *)xwsLocalizedErrorWithPrefix:(NSString *)prefix {
-    if (!self.isXWSError) {
-        return nil;
-    }
-
-    NSString *resourceKey = [NSString stringWithFormat:@"%@_%@", prefix, self.xwsErrorName];
-#warning Need seperate Loclizable.strings
-    NSString *errorMessage = NSLocalizedString(resourceKey,@"");
-
-    // LocalizedString just returns the resourceKey, if there's no translation.
-    if ([errorMessage isEqualToString:resourceKey] == NO) {
-        return errorMessage;
-    }
-
-    // No proper translation? Get a generic one.
-    resourceKey = [NSString stringWithFormat:@"%@_GENERIC", prefix];
-    errorMessage = NSLocalizedString(resourceKey,@"");
-
-    return errorMessage;
-}
-
 - (BOOL)xws_accessDenied {
     if (self.isXWSError &&
         [self.xwsErrorName isEqualToString:@"ACCESS_DENIED"]) {

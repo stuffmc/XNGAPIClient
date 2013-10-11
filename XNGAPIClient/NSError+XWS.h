@@ -36,6 +36,4 @@
 + (NSError *)httpErrorWithStatusCode:(NSInteger)statusCode
                             userInfo:(NSDictionary *)userInfo;
 
-- (NSString *)xwsLocalizedErrorWithPrefix:(NSString *)prefix;
-
 @end
