@@ -22,7 +22,7 @@
 #import "XNGAPIClient.h"
 #import "NSString+URLEncoding.h"
 #import "NSDictionary+Typecheck.h"
-#import "XNGOAuth1Client.h"
+#import "AFOAuth1Client.h"
 
 @interface XNGAPIClient()
 @property(nonatomic, strong, readwrite) XNGOAuthHandler *oAuthHandler;
@@ -122,7 +122,7 @@ static XNGAPIClient *_sharedClient = nil;
     NSURL *callbackURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@://success",self.callbackScheme]];
 
     __weak __typeof(&*self)weakSelf = self;
-    XNGOAuth1Client *oauthClient = [[XNGOAuth1Client alloc] initWithBaseURL:self.baseURL
+    AFOAuth1Client *oauthClient = [[AFOAuth1Client alloc] initWithBaseURL:self.baseURL
                                                                       key:self.consumerKey
                                                                    secret:self.consumerSecret];
     [oauthClient registerHTTPOperationClass:[AFJSONRequestOperation class]];
@@ -134,7 +134,7 @@ static XNGAPIClient *_sharedClient = nil;
                                                    scope:nil
                                                  success:
      ^(AFOAuth1Token *accessToken, id responseObject) {
-         NSString *userID = [accessToken.additionalParameters xng_stringForKey:@"user_id"];
+         NSString *userID = [accessToken.userInfo xng_stringForKey:@"user_id"];
          [weakSelf.oAuthHandler saveUserID:userID
                                accessToken:accessToken.key
                                     secret:accessToken.secret

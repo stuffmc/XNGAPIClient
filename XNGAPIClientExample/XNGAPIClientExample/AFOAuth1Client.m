@@ -20,7 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "XNGOAuth1Client.h"
+#import "AFOAuth1Client.h"
 #import "AFHTTPRequestOperation.h"
 
 #import <CommonCrypto/CommonHMAC.h>
@@ -62,13 +62,13 @@ static NSString * AFEncodeBase64WithData(NSData *data) {
 }
 
 static NSString * AFPercentEscapedQueryStringPairMemberFromStringWithEncoding(NSString *string, NSStringEncoding encoding) {
-    static NSString * const kAFCharactersToBeEscaped = @":/?&=;+!@#$()',";
+    static NSString * const kAFCharactersToBeEscaped = @":/?&=;+!@#$()',*";
     static NSString * const kAFCharactersToLeaveUnescaped = @"[].";
 
-	return (__bridge_transfer  NSString *)CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault, (__bridge CFStringRef)string, (__bridge CFStringRef)kAFCharactersToLeaveUnescaped, (__bridge CFStringRef)kAFCharactersToBeEscaped, CFStringConvertNSStringEncodingToEncoding(encoding));
+	return (__bridge_transfer NSString *)CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault, (__bridge CFStringRef)string, (__bridge CFStringRef)kAFCharactersToLeaveUnescaped, (__bridge CFStringRef)kAFCharactersToBeEscaped, CFStringConvertNSStringEncodingToEncoding(encoding));
 }
 
-static NSMutableDictionary * AFParametersFromQueryString(NSString *queryString) {
+static NSDictionary * AFParametersFromQueryString(NSString *queryString) {
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     if (queryString) {
         NSScanner *parameterScanner = [[NSScanner alloc] initWithString:queryString];
@@ -85,7 +85,7 @@ static NSMutableDictionary * AFParametersFromQueryString(NSString *queryString) 
             [parameterScanner scanString:@"&" intoString:NULL];
 
             if (name && value) {
-                [parameters setValue:[value stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding] forKey:[name stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+                parameters[[name stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]] = [value stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
             }
         }
     }
@@ -116,7 +116,7 @@ static inline NSString * NSStringFromAFOAuthSignatureMethod(AFOAuthSignatureMeth
 
 static inline NSString * AFHMACSHA1Signature(NSURLRequest *request, NSString *consumerSecret, NSString *tokenSecret, NSStringEncoding stringEncoding) {
     NSString *secret = tokenSecret ? tokenSecret : @"";
-    NSString *secretString = [NSString stringWithFormat:@"%@&%@", consumerSecret, secret];
+    NSString *secretString = [NSString stringWithFormat:@"%@&%@", AFPercentEscapedQueryStringPairMemberFromStringWithEncoding(consumerSecret, stringEncoding), AFPercentEscapedQueryStringPairMemberFromStringWithEncoding(secret, stringEncoding)];
     NSData *secretStringData = [secretString dataUsingEncoding:stringEncoding];
 
     NSString *queryString = AFPercentEscapedQueryStringPairMemberFromStringWithEncoding([[[[[request URL] query] componentsSeparatedByString:@"&"] sortedArrayUsingSelector:@selector(compare:)] componentsJoinedByString:@"&"], stringEncoding);
@@ -132,9 +132,18 @@ static inline NSString * AFHMACSHA1Signature(NSURLRequest *request, NSString *co
     return AFEncodeBase64WithData([NSData dataWithBytes:digest length:CC_SHA1_DIGEST_LENGTH]);
 }
 
+NSString * const kAFOAuth1CredentialServiceName = @"AFOAuthCredentialService";
+
+static NSDictionary * AFKeychainQueryDictionaryWithIdentifier(NSString *identifier) {
+    return @{(__bridge id)kSecClass: (__bridge id)kSecClassGenericPassword,
+             (__bridge id)kSecAttrAccount: identifier,
+             (__bridge id)kSecAttrService: kAFOAuth1CredentialServiceName
+             };
+}
+
 #pragma mark -
 
-@interface XNGOAuth1Client ()
+@interface AFOAuth1Client ()
 @property (readwrite, nonatomic, copy) NSString *key;
 @property (readwrite, nonatomic, copy) NSString *secret;
 @property (readwrite, nonatomic, strong) id applicationLaunchNotificationObserver;
@@ -149,14 +158,7 @@ static inline NSString * AFHMACSHA1Signature(NSURLRequest *request, NSString *co
                                 parameters:(NSDictionary *)parameters;
 @end
 
-@implementation XNGOAuth1Client
-@synthesize key = _key;
-@synthesize secret = _secret;
-@synthesize signatureMethod = _signatureMethod;
-@synthesize realm = _realm;
-@synthesize accessToken = _accessToken;
-@synthesize oauthAccessMethod = _oauthAccessMethod;
-@synthesize applicationLaunchNotificationObserver = _applicationLaunchNotificationObserver;
+@implementation AFOAuth1Client
 
 - (id)initWithBaseURL:(NSURL *)url
                   key:(NSString *)clientID
@@ -196,14 +198,14 @@ static inline NSString * AFHMACSHA1Signature(NSURLRequest *request, NSString *co
 
 - (NSDictionary *)OAuthParameters {
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    [parameters setValue:kAFOAuth1Version forKey:@"oauth_version"];
-    [parameters setValue:NSStringFromAFOAuthSignatureMethod(self.signatureMethod) forKey:@"oauth_signature_method"];
-    [parameters setValue:self.key forKey:@"oauth_consumer_key"];
-    [parameters setValue:[[NSNumber numberWithInteger:floor([[NSDate date] timeIntervalSince1970])] stringValue] forKey:@"oauth_timestamp"];
-    [parameters setValue:AFNounce() forKey:@"oauth_nonce"];
+    parameters[@"oauth_version"] = kAFOAuth1Version;
+    parameters[@"oauth_signature_method"] = NSStringFromAFOAuthSignatureMethod(self.signatureMethod);
+    parameters[@"oauth_consumer_key"] = self.key;
+    parameters[@"oauth_timestamp"] = [@(floor([[NSDate date] timeIntervalSince1970])) stringValue];
+    parameters[@"oauth_nonce"] = AFNounce();
 
     if (self.realm) {
-        [parameters setValue:self.realm forKey:@"realm"];
+        parameters[@"realm"] = self.realm;
     }
 
     return parameters;
@@ -227,8 +229,8 @@ static inline NSString * AFHMACSHA1Signature(NSURLRequest *request, NSString *co
     }
 }
 
-- (NSString *)authorizationHeaderForMethod:(NSString*)method
-                                      path:(NSString*)path
+- (NSString *)authorizationHeaderForMethod:(NSString *)method
+                                      path:(NSString *)path
                                 parameters:(NSDictionary *)parameters
 {
     static NSString * const kAFOAuth1AuthorizationFormatString = @"OAuth %@";
@@ -239,24 +241,26 @@ static inline NSString * AFHMACSHA1Signature(NSURLRequest *request, NSString *co
     if (self.key && self.secret) {
         [mutableAuthorizationParameters addEntriesFromDictionary:[self OAuthParameters]];
         if (self.accessToken) {
-            [mutableAuthorizationParameters setValue:self.accessToken.key forKey:@"oauth_token"];
+            mutableAuthorizationParameters[@"oauth_token"] = self.accessToken.key;
         }
     }
 
     [mutableParameters enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
         if ([key isKindOfClass:[NSString class]] && [key hasPrefix:@"oauth_"]) {
-            [mutableAuthorizationParameters setValue:obj forKey:key];
+            mutableAuthorizationParameters[key] = obj;
         }
     }];
 
     [mutableParameters addEntriesFromDictionary:mutableAuthorizationParameters];
-    [mutableAuthorizationParameters setValue:[self OAuthSignatureForMethod:method path:path parameters:mutableParameters token:self.accessToken] forKey:@"oauth_signature"];
-
+    mutableAuthorizationParameters[@"oauth_signature"] = [self OAuthSignatureForMethod:method path:path parameters:mutableParameters token:self.accessToken];
+    
     NSArray *sortedComponents = [[AFQueryStringFromParametersWithEncoding(mutableAuthorizationParameters, self.stringEncoding) componentsSeparatedByString:@"&"] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
     NSMutableArray *mutableComponents = [NSMutableArray array];
     for (NSString *component in sortedComponents) {
         NSArray *subcomponents = [component componentsSeparatedByString:@"="];
-        [mutableComponents addObject:[NSString stringWithFormat:@"%@=\"%@\"", [subcomponents objectAtIndex:0], [subcomponents objectAtIndex:1]]];
+        if ([subcomponents count] == 2) {
+            [mutableComponents addObject:[NSString stringWithFormat:@"%@=\"%@\"", subcomponents[0], subcomponents[1]]];
+        }
     }
 
     return [NSString stringWithFormat:kAFOAuth1AuthorizationFormatString, [mutableComponents componentsJoinedByString:@", "]];
@@ -285,7 +289,7 @@ static inline NSString * AFHMACSHA1Signature(NSURLRequest *request, NSString *co
                 self.applicationLaunchNotificationObserver = nil;
                 if (accessToken) {
                     self.accessToken = accessToken;
-
+                    
                     if (success) {
                         success(accessToken, responseObject);
                     }
@@ -303,7 +307,7 @@ static inline NSString * AFHMACSHA1Signature(NSURLRequest *request, NSString *co
         }];
 
         NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-        [parameters setValue:requestToken.key forKey:@"oauth_token"];
+        parameters[@"oauth_token"] = requestToken.key;
         NSMutableURLRequest *request = [super requestWithMethod:@"GET" path:userAuthorizationPath parameters:parameters];
         [request setHTTPShouldHandleCookies:NO];
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
@@ -326,9 +330,9 @@ static inline NSString * AFHMACSHA1Signature(NSURLRequest *request, NSString *co
                                  failure:(void (^)(NSError *error))failure
 {
     NSMutableDictionary *parameters = [[self OAuthParameters] mutableCopy];
-    [parameters setValue:[callbackURL absoluteString] forKey:@"oauth_callback"];
+    parameters[@"oauth_callback"] = [callbackURL absoluteString];
     if (scope && !self.accessToken) {
-        [parameters setValue:scope forKey:@"scope"];
+        parameters[@"scope"] = scope;
     }
 
     NSMutableURLRequest *request = [self requestWithMethod:accessMethod path:path parameters:parameters];
@@ -357,8 +361,8 @@ static inline NSString * AFHMACSHA1Signature(NSURLRequest *request, NSString *co
     self.accessToken = requestToken;
 
     NSMutableDictionary *parameters = [[self OAuthParameters] mutableCopy];
-    [parameters setValue:requestToken.key forKey:@"oauth_token"];
-    [parameters setValue:requestToken.verifier forKey:@"oauth_verifier"];
+    parameters[@"oauth_token"] = requestToken.key;
+    parameters[@"oauth_verifier"] = requestToken.verifier;
 
     NSMutableURLRequest *request = [self requestWithMethod:accessMethod path:path parameters:parameters];
 
@@ -391,9 +395,17 @@ static inline NSString * AFHMACSHA1Signature(NSURLRequest *request, NSString *co
 
     NSMutableURLRequest *request = [super requestWithMethod:method path:path parameters:mutableParameters];
 
-    [request setValue:[self authorizationHeaderForMethod:method path:path parameters:parameters] forHTTPHeaderField:@"Authorization"];
-    [request setHTTPShouldHandleCookies:NO];
 
+    // Only use parameters in the HTTP POST request body (with a content-type of `application/x-www-form-urlencoded`).
+    // See RFC 5849, Section 3.4.1.3.1 http://tools.ietf.org/html/rfc5849#section-3.4
+    NSDictionary *authorizationParameters = parameters;
+    if ([method isEqualToString:@"POST"]) {
+        authorizationParameters = ([[request valueForHTTPHeaderField:@"Content-Type"] hasPrefix:@"application/x-www-form-urlencoded"] ? parameters : nil);
+    }
+    
+    [request setValue:[self authorizationHeaderForMethod:method path:path parameters:authorizationParameters] forHTTPHeaderField:@"Authorization"];
+    [request setHTTPShouldHandleCookies:NO];
+    
     return request;
 }
 
@@ -403,9 +415,13 @@ static inline NSString * AFHMACSHA1Signature(NSURLRequest *request, NSString *co
                               constructingBodyWithBlock:(void (^)(id <AFMultipartFormData> formData))block
 {
     NSMutableURLRequest *request = [super multipartFormRequestWithMethod:method path:path parameters:parameters constructingBodyWithBlock:block];
-    [request setValue:[self authorizationHeaderForMethod:method path:path parameters:parameters] forHTTPHeaderField:@"Authorization"];
-    [request setHTTPShouldHandleCookies:NO];
 
+    // Only use parameters in the HTTP POST request body (with a content-type of `application/x-www-form-urlencoded`).
+    // See RFC 5849, Section 3.4.1.3.1 http://tools.ietf.org/html/rfc5849#section-3.4
+    NSDictionary *authorizationParameters = ([[request valueForHTTPHeaderField:@"Content-Type"] hasPrefix:@"application/x-www-form-urlencoded"] ? parameters : nil);
+    [request setValue:[self authorizationHeaderForMethod:method path:path parameters:authorizationParameters] forHTTPHeaderField:@"Authorization"];
+    [request setHTTPShouldHandleCookies:NO];
+    
     return request;
 }
 
@@ -429,7 +445,7 @@ static inline NSString * AFHMACSHA1Signature(NSURLRequest *request, NSString *co
 
 - (void)encodeWithCoder:(NSCoder *)coder {
     [super encodeWithCoder:coder];
-
+    
     [coder encodeObject:self.key forKey:@"key"];
     [coder encodeObject:self.secret forKey:@"secret"];
     [coder encodeInteger:self.signatureMethod forKey:@"signatureMethod"];
@@ -441,7 +457,7 @@ static inline NSString * AFHMACSHA1Signature(NSURLRequest *request, NSString *co
 #pragma mark - NSCopying
 
 - (id)copyWithZone:(NSZone *)zone {
-    XNGOAuth1Client *copy = [[[self class] allocWithZone:zone] initWithBaseURL:self.baseURL key:self.key secret:self.secret];
+    AFOAuth1Client *copy = [[[self class] allocWithZone:zone] initWithBaseURL:self.baseURL key:self.key secret:self.secret];
     copy.signatureMethod = self.signatureMethod;
     copy.realm = self.realm;
     copy.accessToken = self.accessToken;
@@ -459,69 +475,47 @@ static inline NSString * AFHMACSHA1Signature(NSURLRequest *request, NSString *co
 @property (readwrite, nonatomic, copy) NSString *secret;
 @property (readwrite, nonatomic, copy) NSString *session;
 @property (readwrite, nonatomic, strong) NSDate *expiration;
-@property (readwrite, nonatomic, strong) NSDictionary *additionalParameters;
 @property (readwrite, nonatomic, assign, getter = canBeRenewed) BOOL renewable;
 @end
 
 @implementation AFOAuth1Token
-@synthesize key = _key;
-@synthesize secret = _secret;
-@synthesize session = _session;
-@synthesize verifier = _verifier;
-@synthesize expiration = _expiration;
-@synthesize additionalParameters = _additionalParameters;
-@synthesize renewable = _renewable;
 
 - (id)initWithQueryString:(NSString *)queryString {
     if (!queryString || [queryString length] == 0) {
         return nil;
     }
 
-    NSMutableDictionary *attributes = AFParametersFromQueryString(queryString);
-
-    if (attributes.count == 0) {
+    NSDictionary *attributes = AFParametersFromQueryString(queryString);
+    
+    if ([attributes count] == 0) {
         return nil;
     }
 
+    NSString *key = attributes[@"oauth_token"];
+    NSString *secret = attributes[@"oauth_token_secret"];
+    NSString *session = attributes[@"oauth_session_handle"];
+    
     NSDate *expiration = nil;
     if (attributes[@"oauth_token_duration"]) {
-        expiration = [NSDate dateWithTimeIntervalSinceNow:[[attributes objectForKey:@"oauth_token_duration"] doubleValue]];
+        expiration = [NSDate dateWithTimeIntervalSinceNow:[attributes[@"oauth_token_duration"] doubleValue]];
     }
 
     BOOL canBeRenewed = NO;
     if (attributes[@"oauth_token_renewable"]) {
-        canBeRenewed = AFQueryStringValueIsTrue([attributes objectForKey:@"oauth_token_renewable"]);
+        canBeRenewed = AFQueryStringValueIsTrue(attributes[@"oauth_token_renewable"]);
     }
 
-    NSString *token = [attributes objectForKey:@"oauth_token"];
-    [attributes removeObjectForKey:@"oauth_token"];
-    NSString *secret = [attributes objectForKey:@"oauth_token_secret"];
-    [attributes removeObjectForKey:@"oauth_token_secret"];
-    NSString *session = [attributes objectForKey:@"oauth_session_handle"];
-    [attributes removeObjectForKey:@"oauth_session_handle"];
-
-    return [self initWithKey:token secret:secret session:session expiration:expiration renewable:canBeRenewed additionalParameters:attributes];
-}
-
-- (id)initWithKey:(NSString *)key
-           secret:(NSString *)secret
-          session:(NSString *)session
-       expiration:(NSDate *)expiration
-        renewable:(BOOL)canBeRenewed
-{
-    NSParameterAssert(key);
-    NSParameterAssert(secret);
-
-    self = [super init];
+    self = [self initWithKey:key secret:secret session:session expiration:expiration renewable:canBeRenewed];
     if (!self) {
         return nil;
     }
 
-    self.key = key;
-    self.secret = secret;
-    self.session = session;
-    self.expiration = expiration;
-    self.renewable = canBeRenewed;
+    NSMutableDictionary *mutableUserInfo = [attributes mutableCopy];
+    [mutableUserInfo removeObjectsForKeys:@[@"oauth_token", @"oauth_token_secret", @"oauth_session_handle", @"oauth_token_duration", @"oauth_token_renewable"]];
+
+    if ([mutableUserInfo count] > 0) {
+        self.userInfo = [NSDictionary dictionaryWithDictionary:mutableUserInfo];
+    }
 
     return self;
 }
@@ -531,7 +525,6 @@ static inline NSString * AFHMACSHA1Signature(NSURLRequest *request, NSString *co
           session:(NSString *)session
        expiration:(NSDate *)expiration
         renewable:(BOOL)canBeRenewed
-additionalParameters:(NSDictionary *)parameters
 {
     NSParameterAssert(key);
     NSParameterAssert(secret);
@@ -546,13 +539,75 @@ additionalParameters:(NSDictionary *)parameters
     self.session = session;
     self.expiration = expiration;
     self.renewable = canBeRenewed;
-    self.additionalParameters = parameters;
-
+    
     return self;
 }
 
 - (BOOL)isExpired{
     return [self.expiration compare:[NSDate date]] == NSOrderedDescending;
+}
+
+#pragma mark -
+
++ (AFOAuth1Token *)retrieveCredentialWithIdentifier:(NSString *)identifier {
+    NSMutableDictionary *mutableQueryDictionary = [AFKeychainQueryDictionaryWithIdentifier(identifier) mutableCopy];
+    mutableQueryDictionary[(__bridge id)kSecReturnData] = (__bridge id)kCFBooleanTrue;
+    mutableQueryDictionary[(__bridge id)kSecMatchLimit] = (__bridge id)kSecMatchLimitOne;
+
+    CFDataRef result = nil;
+    OSStatus status = SecItemCopyMatching((__bridge CFDictionaryRef)mutableQueryDictionary, (CFTypeRef *)&result);
+
+    if (status != errSecSuccess) {
+        NSLog(@"Unable to fetch credential with identifier \"%@\" (Error %li)", identifier, (long int)status);
+        return nil;
+    }
+
+    NSData *data = (__bridge_transfer NSData *)result;
+    AFOAuth1Token *credential = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+
+    return credential;
+}
+
++ (BOOL)deleteCredentialWithIdentifier:(NSString *)identifier {
+    NSMutableDictionary *mutableQueryDictionary = [AFKeychainQueryDictionaryWithIdentifier(identifier) mutableCopy];
+
+    OSStatus status = SecItemDelete((__bridge CFDictionaryRef)mutableQueryDictionary);
+
+    if (status != errSecSuccess) {
+        NSLog(@"Unable to delete credential with identifier \"%@\" (Error %li)", identifier, (long int)status);
+    }
+
+    return (status == errSecSuccess);
+}
+
++ (BOOL)storeCredential:(AFOAuth1Token *)credential
+         withIdentifier:(NSString *)identifier
+{
+    NSMutableDictionary *mutableQueryDictionary = [AFKeychainQueryDictionaryWithIdentifier(identifier) mutableCopy];
+
+    if (!credential) {
+        return [self deleteCredentialWithIdentifier:identifier];
+    }
+
+    NSMutableDictionary *mutableUpdateDictionary = [NSMutableDictionary dictionary];
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:credential];
+    mutableUpdateDictionary[(__bridge id)kSecValueData] = data;
+
+    OSStatus status;
+    BOOL exists = !![self retrieveCredentialWithIdentifier:identifier];
+
+    if (exists) {
+        status = SecItemUpdate((__bridge CFDictionaryRef)mutableQueryDictionary, (__bridge CFDictionaryRef)mutableUpdateDictionary);
+    } else {
+        [mutableQueryDictionary addEntriesFromDictionary:mutableUpdateDictionary];
+        status = SecItemAdd((__bridge CFDictionaryRef)mutableQueryDictionary, NULL);
+    }
+
+    if (status != errSecSuccess) {
+        NSLog(@"Unable to %@ credential with identifier \"%@\" (Error %li)", exists ? @"update" : @"add", identifier, (long int)status);
+    }
+
+    return (status == errSecSuccess);
 }
 
 #pragma mark - NSCoding
@@ -569,6 +624,7 @@ additionalParameters:(NSDictionary *)parameters
     self.verifier = [decoder decodeObjectForKey:@"verifier"];
     self.expiration = [decoder decodeObjectForKey:@"expiration"];
     self.renewable = [decoder decodeBoolForKey:@"renewable"];
+    self.userInfo = [decoder decodeObjectForKey:@"userInfo"];
 
     return self;
 }
@@ -580,6 +636,7 @@ additionalParameters:(NSDictionary *)parameters
     [coder encodeObject:self.verifier forKey:@"verifier"];
     [coder encodeObject:self.expiration forKey:@"expiration"];
     [coder encodeBool:self.renewable forKey:@"renewable"];
+    [coder encodeObject:self.userInfo forKey:@"userInfo"];
 }
 
 #pragma mark - NSCopying
@@ -592,6 +649,7 @@ additionalParameters:(NSDictionary *)parameters
     copy.verifier = self.verifier;
     copy.expiration = self.expiration;
     copy.renewable = self.renewable;
+    copy.userInfo = self.userInfo;
 
     return copy;
 }

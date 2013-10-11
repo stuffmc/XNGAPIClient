@@ -51,7 +51,7 @@
 		12C5BE24178423F200DD0C58 /* NSString+URLEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 12C5BE22178423F200DD0C58 /* NSString+URLEncoding.m */; };
 		12C5BE27178472E600DD0C58 /* XNGExampleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 12C5BE26178472E600DD0C58 /* XNGExampleViewController.m */; };
 		8E0AAF7117FAF6A600020B93 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E0AAF7017FAF6A600020B93 /* MobileCoreServices.framework */; };
-		8E6C31AC17A13014009ED3C6 /* XNGOAuth1Client.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E6C31AB17A13014009ED3C6 /* XNGOAuth1Client.m */; };
+		DD162B6A18088D9A00806605 /* AFOAuth1Client.m in Sources */ = {isa = PBXBuildFile; fileRef = DD162B6918088D9A00806605 /* AFOAuth1Client.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -136,8 +136,8 @@
 		12C5BE25178472E600DD0C58 /* XNGExampleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XNGExampleViewController.h; sourceTree = "<group>"; };
 		12C5BE26178472E600DD0C58 /* XNGExampleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XNGExampleViewController.m; sourceTree = "<group>"; };
 		8E0AAF7017FAF6A600020B93 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
-		8E6C31AA17A13014009ED3C6 /* XNGOAuth1Client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XNGOAuth1Client.h; path = ../XNGAPIClient/XNGOAuth1Client.h; sourceTree = "<group>"; };
-		8E6C31AB17A13014009ED3C6 /* XNGOAuth1Client.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XNGOAuth1Client.m; path = ../XNGAPIClient/XNGOAuth1Client.m; sourceTree = "<group>"; };
+		DD162B6818088D9A00806605 /* AFOAuth1Client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFOAuth1Client.h; sourceTree = "<group>"; };
+		DD162B6918088D9A00806605 /* AFOAuth1Client.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFOAuth1Client.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -193,6 +193,7 @@
 			children = (
 				12C5BE0B1783626F00DD0C58 /* SFHFKeychainUtils */,
 				12A91DE417835C89002C219E /* GTMOauth */,
+				DD162B6718088D8300806605 /* AFOAuth1Client */,
 				12A91DC71783518B002C219E /* AFNetworking */,
 				123EDB021783066E00B70CD4 /* XNGAppDelegate.h */,
 				123EDB031783066E00B70CD4 /* XNGAppDelegate.m */,
@@ -222,8 +223,6 @@
 			children = (
 				12A91D971783516A002C219E /* XNGAPIClient.h */,
 				12A91D981783516A002C219E /* XNGAPIClient.m */,
-				8E6C31AA17A13014009ED3C6 /* XNGOAuth1Client.h */,
-				8E6C31AB17A13014009ED3C6 /* XNGOAuth1Client.m */,
 				12A91DAD1783516A002C219E /* XNGAPIClient+UserProfiles.h */,
 				12A91DAE1783516A002C219E /* XNGAPIClient+UserProfiles.m */,
 				12A91DA31783516A002C219E /* XNGAPIClient+Jobs.h */,
@@ -318,6 +317,15 @@
 			name = Helper;
 			sourceTree = "<group>";
 		};
+		DD162B6718088D8300806605 /* AFOAuth1Client */ = {
+			isa = PBXGroup;
+			children = (
+				DD162B6818088D9A00806605 /* AFOAuth1Client.h */,
+				DD162B6918088D9A00806605 /* AFOAuth1Client.m */,
+			);
+			name = AFOAuth1Client;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -388,6 +396,7 @@
 				123EDB041783066E00B70CD4 /* XNGAppDelegate.m in Sources */,
 				12A91DB71783516A002C219E /* XNGAPIClient.m in Sources */,
 				12A91DB81783516A002C219E /* XNGAPIClient+ContactPath.m in Sources */,
+				DD162B6A18088D9A00806605 /* AFOAuth1Client.m in Sources */,
 				12A91DB91783516A002C219E /* XNGAPIClient+ContactRequests.m in Sources */,
 				12A91DBA1783516A002C219E /* XNGAPIClient+Contacts.m in Sources */,
 				12A91DBB1783516A002C219E /* XNGAPIClient+GeoLocations.m in Sources */,
@@ -418,7 +427,6 @@
 				12C5BE23178423F200DD0C58 /* NSDictionary+Typecheck.m in Sources */,
 				12C5BE24178423F200DD0C58 /* NSString+URLEncoding.m in Sources */,
 				12C5BE27178472E600DD0C58 /* XNGExampleViewController.m in Sources */,
-				8E6C31AC17A13014009ED3C6 /* XNGOAuth1Client.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
