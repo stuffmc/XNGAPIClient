@@ -42,7 +42,7 @@
 		12A91DED17835CB7002C219E /* GTMHTTPFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 12A91DE617835CB7002C219E /* GTMHTTPFetcher.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		12A91DEE17835CB7002C219E /* GTMOAuthAuthentication.m in Sources */ = {isa = PBXBuildFile; fileRef = 12A91DE817835CB7002C219E /* GTMOAuthAuthentication.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		12A91DEF17835CB7002C219E /* GTMOAuthSignIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 12A91DEA17835CB7002C219E /* GTMOAuthSignIn.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		12A91DF017835CB7002C219E /* GTMOAuthViewControllerTouch.m in Sources */ = {isa = PBXBuildFile; fileRef = 12A91DEC17835CB7002C219E /* GTMOAuthViewControllerTouch.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		12A91DF017835CB7002C219E /* GTMOAuthViewControllerTouch.m in Sources */ = {isa = PBXBuildFile; fileRef = 12A91DEC17835CB7002C219E /* GTMOAuthViewControllerTouch.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc -w"; }; };
 		12C5BE0E178362F800DD0C58 /* SFHFKeychainUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 12C5BE0D178362F800DD0C58 /* SFHFKeychainUtils.m */; };
 		12C5BE1417840A0800DD0C58 /* NSError+XWS.m in Sources */ = {isa = PBXBuildFile; fileRef = 12C5BE1317840A0800DD0C58 /* NSError+XWS.m */; };
 		12C5BE16178420FC00DD0C58 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12C5BE15178420FC00DD0C58 /* Security.framework */; };
