@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
   s.source_files = 'XNGAPIClient/*.{h,m}'
   s.requires_arc = true
   s.homepage = 'https://www.xing.com'
-  s.dependency   'AFNetworking','= 1.3.0'
+  s.dependency   'AFNetworking','~> 1.3.0'
   s.dependency   'gtm-oauth', '= 0.0.1'
   s.dependency   'SFHFKeychainUtils', '= 0.0.1'
   s.frameworks = 'Security','SystemConfiguration'
