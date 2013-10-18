@@ -96,13 +96,12 @@
      */
     //login with manual authorization step
     
-    [[XNGAPIClient sharedClient] loginOAuthAcquiredRequestToken:^(NSURL *authURL) {
+    [[XNGAPIClient sharedClient] loginOAuthAuthorize:^(NSURL *authURL) {
         NSLog(@"Open AuthURL: %@",authURL);
         [[UIApplication sharedApplication] openURL:authURL];
     } loggedIn:^{
         [weakSelf setupLogoutButton];
         [weakSelf loadContacts];
-        
     } failuire:^(NSError *error) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
                                                             message:error.localizedDescription
