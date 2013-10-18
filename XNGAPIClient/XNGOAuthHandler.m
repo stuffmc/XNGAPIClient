@@ -47,7 +47,7 @@ static NSString *kAccessTokenName = @"AccessToken";//Keychain username
 		_userID = [SFHFKeychainUtils getPasswordForUsername:kUserIDName
                                              andServiceName:kIdentifier
                                                       error:&error];
-		NSAssert( !error || [error code] == -25291, @"KeychainUserIDReadError: %@",error);
+		NSAssert( !error || [error code] == errSecNotAvailable, @"KeychainUserIDReadError: %@",error);
 	}
 	return _userID;
 }
@@ -62,7 +62,7 @@ static NSString *kAccessTokenName = @"AccessToken";//Keychain username
 		_accessToken = [SFHFKeychainUtils getPasswordForUsername:kAccessTokenName
                                                   andServiceName:kIdentifier
                                                            error:&error];
-		NSAssert( !error || [error code] == -25291, @"KeychainUserAccesstokenError: %@",error);
+		NSAssert( !error || [error code] == errSecNotAvailable, @"KeychainUserAccesstokenError: %@",error);
 	}
 	return _accessToken;
 }
@@ -73,7 +73,7 @@ static NSString *kAccessTokenName = @"AccessToken";//Keychain username
 		_tokenSecret = [SFHFKeychainUtils getPasswordForUsername:kTokenSecretName
                                                   andServiceName:kIdentifier
                                                            error:&error];
-		NSAssert( !error || [error code] == -25291, @"KeychainTokenSecretReadError: %@",error);
+		NSAssert( !error || [error code] == errSecNotAvailable, @"KeychainTokenSecretReadError: %@",error);
 	}
 	return _tokenSecret;
 }
@@ -153,15 +153,15 @@ static NSString *kAccessTokenName = @"AccessToken";//Keychain username
 	_userID = nil;
 	[SFHFKeychainUtils deleteItemForUsername:kUserIDName
 							  andServiceName:kIdentifier error:&error];
-	NSAssert( !error || [error code] == -25300, @"KeychainUserIDDeleteError: %@",error);
+	NSAssert( !error || [error code] == errSecItemNotFound, @"KeychainUserIDDeleteError: %@",error);
 	_accessToken = nil;
 	[SFHFKeychainUtils deleteItemForUsername:kAccessTokenName
 							  andServiceName:kIdentifier error:&error];
-	NSAssert( !error || [error code] == -25300, @"KeychainAccessTokenDeleteError: %@",error);
+	NSAssert( !error || [error code] == errSecItemNotFound, @"KeychainAccessTokenDeleteError: %@",error);
 	_tokenSecret = nil;
 	[SFHFKeychainUtils deleteItemForUsername:kTokenSecretName
 							  andServiceName:kIdentifier error:&error];
-	NSAssert( !error || [error code] == -25300, @"KeychainTokenSecretDeleteError: %@",error);
+	NSAssert( !error || [error code] == errSecItemNotFound, @"KeychainTokenSecretDeleteError: %@",error);
 }
 
 
