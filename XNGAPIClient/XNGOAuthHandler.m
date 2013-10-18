@@ -23,7 +23,6 @@
 #import "XNGAPIClient.h"
 #import "NSString+URLEncoding.h"
 #import "SFHFKeychainUtils.h"
-#import "GTMOAuthAuthentication.h"
 #import "NSError+XWS.h"
 
 static NSString *kIdentifier = @"com.xing.iphone-app-2010";
@@ -35,25 +34,10 @@ static NSString *kAccessTokenName = @"AccessToken";//Keychain username
 @property (nonatomic, strong, readwrite) NSString *accessToken;
 @property (nonatomic, strong, readwrite) NSString *tokenSecret;
 @property (nonatomic, strong, readwrite) NSString *userID;
-@property (nonatomic, strong, readwrite) GTMOAuthAuthentication *GTMOAuthAuthentication;
 @end
 
 @implementation XNGOAuthHandler
 
-- (GTMOAuthAuthentication*) GTMOAuthAuthentication {
-    if (_GTMOAuthAuthentication == nil) {
-        _GTMOAuthAuthentication = [[GTMOAuthAuthentication alloc]initWithSignatureMethod:self.signatureMethod
-                                                                             consumerKey:self.consumerKey
-                                                                              privateKey:self.consumerSecret];
-
-        _GTMOAuthAuthentication.shouldUseParamsToAuthorize = YES;
-		_GTMOAuthAuthentication.serviceProvider = self.serviceProvider;
-		_GTMOAuthAuthentication.token = self.accessToken;
-		_GTMOAuthAuthentication.tokenSecret = self.tokenSecret;
-    }
-
-    return _GTMOAuthAuthentication;
-}
 
 #pragma mark - handling oauth consumer/secret
 
@@ -141,7 +125,6 @@ static NSString *kAccessTokenName = @"AccessToken";//Keychain username
                                error:&error];
     NSAssert( !error, @"KeychainAccessToksaenWriteError: %@",error);
     _accessToken = accessToken;
-    self.GTMOAuthAuthentication.token = accessToken;
 
     [SFHFKeychainUtils storeUsername:kTokenSecretName
                          andPassword:accessTokenSecret
@@ -150,7 +133,6 @@ static NSString *kAccessTokenName = @"AccessToken";//Keychain username
                                error:&error];
     NSAssert( !error, @"KeychainTokenSecretWriteError: %@",error);
     _tokenSecret = accessTokenSecret;
-    self.GTMOAuthAuthentication.tokenSecret = accessTokenSecret;
 
     if (error) {
         NSAssert(NO,@"Could not save into keychain");
@@ -165,7 +147,7 @@ static NSString *kAccessTokenName = @"AccessToken";//Keychain username
     }
 }
 
-- (void)deleteKeychainEntriesAndGTMOAuthAuthentication {
+- (void)deleteKeychainEntries {
 
 	NSError *error = nil;
 	_userID = nil;
@@ -180,27 +162,9 @@ static NSString *kAccessTokenName = @"AccessToken";//Keychain username
 	[SFHFKeychainUtils deleteItemForUsername:kTokenSecretName
 							  andServiceName:kIdentifier error:&error];
 	NSAssert( !error || [error code] == -25300, @"KeychainTokenSecretDeleteError: %@",error);
-
-    // delete the oauthAuthentication
-	self.GTMOAuthAuthentication = nil;
 }
 
-- (void) authorizeRequest:(NSMutableURLRequest *)request {
-    [self.GTMOAuthAuthentication authorizeRequest:request];
-}
 
-- (NSString *)serviceProvider {
-    if ([_serviceProvider length]) {
-        return _serviceProvider;
-    }
-    return @"api.xing.com";
-}
 
-- (NSString *)signatureMethod {
-    if ([_signatureMethod length]) {
-        return _signatureMethod;
-    }
-    return @"HMAC-SHA1";
-}
 
 @end

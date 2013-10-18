@@ -20,12 +20,9 @@
 // THE SOFTWARE.
 
 #import <Foundation/Foundation.h>
-#import "AFNetworking.h"
-#import "XNGJSONRequestOperation.h"
-#import "XNGOAuthHandler.h"
-#import "NSError+XWS.h"
+#import "AFOAuth1Client.h"
 
-@interface XNGAPIClient : AFHTTPClient
+@interface XNGAPIClient : AFOAuth1Client
 
 extern NSString * const XNGAPIClientInvalidTokenErrorNotification;
 extern NSString * const XNGAPIClientDeprecationErrorNotification;
@@ -86,8 +83,6 @@ extern NSString * const XNGAPIClientDeprecationWarningNotification;
 - (void)setConsumerKey:(NSString *)consumerKey;
 - (void)setConsumerSecret:(NSString *)consumerSecret;
 - (void)setCallbackScheme:(NSString*)callbackScheme;
-- (void)setSignatureMethod:(NSString *)signatureMethod;
-- (void)setServiceProvider:(NSString *)serviceProvider;
 - (void)setUserAgent:(NSString *)userAgent;
 
 @end

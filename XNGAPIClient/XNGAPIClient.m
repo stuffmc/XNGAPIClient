@@ -23,6 +23,14 @@
 #import "NSString+URLEncoding.h"
 #import "NSDictionary+Typecheck.h"
 #import "AFOAuth1Client.h"
+#import "XNGOAuthHandler.h"
+#import "XNGJSONRequestOperation.h"
+#import "NSError+XWS.h"
+
+@interface AFOAuth1Client (private)
+@property (readwrite, nonatomic, copy) NSString *key;
+@property (readwrite, nonatomic, copy) NSString *secret;
+@end
 
 @interface XNGAPIClient()
 @property(nonatomic, strong, readwrite) XNGOAuthHandler *oAuthHandler;
@@ -62,8 +70,10 @@ static XNGAPIClient *_sharedClient = nil;
     if (self) {
         _oAuthHandler = [[XNGOAuthHandler alloc] init];
         self.baseURL = url;
+        self.signatureMethod = AFHMACSHA1SignatureMethod;
         [self registerHTTPOperationClass:[XNGJSONRequestOperation class]];
         [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
+        self.accessToken = [self accessTokenFromKeychain];
     }
     return self;
 }
@@ -72,23 +82,13 @@ static XNGAPIClient *_sharedClient = nil;
 
 - (NSString *)callbackScheme {
     if (!_callbackScheme) {
-        _callbackScheme =[NSString stringWithFormat:@"xingapp%@",self.consumerKey];
+        _callbackScheme =[NSString stringWithFormat:@"xingapp%@",self.key];
     }
     return _callbackScheme;
 }
 
 - (void)setUserAgent:(NSString *)userAgent {
     [self setDefaultHeader:@"User-Agent" value:userAgent];
-}
-
-#pragma mark - XAuth signing
-
-- (NSMutableURLRequest *)requestWithMethod:(NSString *)method
-                                      path:(NSString *)path
-                                parameters:(NSDictionary *)parameters {
-    NSMutableURLRequest *request = [super requestWithMethod:method path:path parameters:parameters];
-    [self.oAuthHandler authorizeRequest:request];
-    return request;
 }
 
 #pragma mark - handling login / logout
@@ -98,7 +98,8 @@ static XNGAPIClient *_sharedClient = nil;
 }
 
 - (void)logout {
-    return [self.oAuthHandler deleteKeychainEntriesAndGTMOAuthAuthentication];
+    [self.oAuthHandler deleteKeychainEntries];
+    self.accessToken = nil;
 }
 
 static inline void XNGAPIClientCanLoginTests(XNGAPIClient *client) {
@@ -107,16 +108,20 @@ static inline void XNGAPIClientCanLoginTests(XNGAPIClient *client) {
         return;
     }
     
-    if ([client.consumerKey length] == 0) {
+    if ([client.key length] == 0) {
         [[client exceptionForNoConsumerKey] raise];
         return;
     }
     
-    if ([client.consumerSecret length] == 0) {
+    if ([client.secret length] == 0) {
         [[client exceptionForNoConsumerSecret] raise];
         return;
     }
 }
+
+static NSString * const XNGAPIClientOAuthRequestTokenPath = @"v1/request_token";
+static NSString * const XNGAPIClientOAuthAuthorizationPath = @"v1/authorize";
+static NSString * const XNGAPIClientOAuthAccessTokenPath = @"v1/access_token";
 
 
 - (void)loginOAuthWithSuccess:(void (^)(void))success
@@ -127,24 +132,21 @@ static inline void XNGAPIClientCanLoginTests(XNGAPIClient *client) {
     NSURL *callbackURL = [self oauthCallbackURL];
 
     __weak __typeof(&*self)weakSelf = self;
-    AFOAuth1Client *oauthClient = [[AFOAuth1Client alloc] initWithBaseURL:self.baseURL
-                                                                      key:self.consumerKey
-                                                                   secret:self.consumerSecret];
-    [oauthClient registerHTTPOperationClass:[AFJSONRequestOperation class]];
-    [oauthClient authorizeUsingOAuthWithRequestTokenPath:@"v1/request_token"
-                                   userAuthorizationPath:@"v1/authorize"
+    
+    [self authorizeUsingOAuthWithRequestTokenPath:XNGAPIClientOAuthRequestTokenPath
+                                   userAuthorizationPath:XNGAPIClientOAuthAuthorizationPath
                                              callbackURL:callbackURL
-                                         accessTokenPath:@"v1/access_token"
+                                         accessTokenPath:XNGAPIClientOAuthAccessTokenPath
                                             accessMethod:@"POST"
                                                    scope:nil
                                                  success:
      ^(AFOAuth1Token *accessToken, id responseObject) {
          NSString *userID = [accessToken.userInfo xng_stringForKey:@"user_id"];
          [weakSelf.oAuthHandler saveUserID:userID
-                               accessToken:accessToken.key
-                                    secret:accessToken.secret
-                                   success:success
-                                   failure:failure];
+                           accessToken:accessToken.key
+                                secret:accessToken.secret
+                               success:success
+                               failure:failure];
      } failure:^(NSError *error) {
          failure(error);
      }];
@@ -170,6 +172,7 @@ static inline void XNGAPIClientCanLoginTests(XNGAPIClient *client) {
                        failure:(void (^)(NSError *error))failure {
 
     XNGAPIClientCanLoginTests(self);
+    
     [self postRequestXAuthAccessTokenWithUsername:username
                                          password:password
                                           success:
@@ -193,13 +196,20 @@ static inline void XNGAPIClientCanLoginTests(XNGAPIClient *client) {
     NSParameterAssert(password);
 
 	NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    parameters[@"oauth_consumer_key"] =  self.consumerKey;
+    parameters[@"oauth_consumer_key"] =  self.key;
     parameters[@"x_auth_username"] = username;
     parameters[@"x_auth_password"] = password;
     parameters[@"x_auth_mode"] = @"client_auth";
 
     NSString* path = [NSString stringWithFormat:@"%@/v1/xauth", self.baseURL];
     [self postPath:path parameters:parameters success:success failure:failure];
+}
+
+- (AFOAuth1Token*)accessTokenFromKeychain {
+    if (self.oAuthHandler.accessToken && self.oAuthHandler.tokenSecret) {
+        return [[AFOAuth1Token alloc] initWithKey:self.oAuthHandler.accessToken secret:self.oAuthHandler.tokenSecret session:nil expiration:nil renewable:YES];
+    }
+    return nil;
 }
 
 #pragma mark - block-based GET / PUT / POST / DELETE
@@ -243,41 +253,17 @@ static inline void XNGAPIClientCanLoginTests(XNGAPIClient *client) {
 }
 
 - (void)setConsumerKey:(NSString *)consumerKey {
-    self.oAuthHandler.consumerKey = consumerKey;
+    self.key = consumerKey;
 }
 
 - (void)setConsumerSecret:(NSString *)consumerSecret {
-    self.oAuthHandler.consumerSecret = consumerSecret;
-}
-
-- (void)setSignatureMethod:(NSString *)signatureMethod {
-    self.oAuthHandler.signatureMethod = signatureMethod;
-}
-
-- (void)setServiceProvider:(NSString *)serviceProvider {
-    self.oAuthHandler.serviceProvider = serviceProvider;
+    self.secret = consumerSecret;
 }
 
 #pragma mark - OAuth related methods (private)
 
-- (NSString *)consumerKey {
-    NSAssert([self.oAuthHandler.consumerKey length], @"No ConsumerKey returned. \n Did you forget to implement XNGAPIClient delegate method consumerKeyForXNGAPIClient: ?");
-    return self.oAuthHandler.consumerKey;
-}
 
-- (NSString *)consumerSecret {
-    NSAssert([self.oAuthHandler.consumerSecret length], @"No ConsumerSecret returned. \n Did you forget to implement XNGAPIClient delegate method consumerSecretForXNGAPIClient: ?");
-    return self.oAuthHandler.consumerSecret;
-}
-
-- (NSString *)signatureMethod {
-    return self.oAuthHandler.signatureMethod;
-}
-
-- (NSString *)serviceProvider {
-    return self.oAuthHandler.serviceProvider;
-}
-- (NSURL*)oauthCallbackURL {
+- (NSURL*) oauthCallbackURL {
     return [NSURL URLWithString:[NSString stringWithFormat:@"%@://success",self.callbackScheme]];
 }
 
