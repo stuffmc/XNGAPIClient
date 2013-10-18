@@ -32,12 +32,45 @@ extern NSString * const XNGAPIClientDeprecationWarningNotification;
 + (XNGAPIClient *)sharedClient;
 + (void)setSharedClient:(XNGAPIClient *)sharedClient;
 
+
 #pragma mark - Login / Logout
 
+/**
+ *  Login with automatic authorization step in Safari.
+ *
+ *  @note -handleOpenURL: must be called with the result url of the authorize website to finish login.
+ *  @param success called when the whole login process is completed sucessfully.
+ *  @param failure called anytime when an error happens.
+ */
 - (void)loginOAuthWithSuccess:(void (^)(void))success
                       failure:(void (^)(NSError *error))failure;
 
+/**
+ *  Use this method for manual handling of the authorization step.
+ *
+ *  This method can be used to display the authorization website in an web view with the option to open Safari instead of directly switching to Safari.
+ *  @note When the acquiredTokenBlock is called, the authURL should opened in a web view or Safari.
+ *  -handleOpenURL: must be called with the result url of the authorize website to finish the login process.
+ *
+ *  @param authorizeBlock  Called when the request token was sucessfully acquired, use authURL to open the authorization website.
+ *  @param loggedInBlock   Called when the access token was sucessfilly acquired and the user is successfully logged in.
+ *  @param failureBlock    Called when one step in the process fails.
+ */
+- (void)loginOAuthAuthorize:(void (^)(NSURL*authURL))authorizeBlock
+                   loggedIn:(void (^)())loggedInBlock
+                   failuire:(void (^)(NSError *error))failureBlock;
+
+/**
+ *  Must be called for to complete both -loginOAuthWithSuccess:failure and -loginOAuthAcquiredRequestToken:loggedIn:failure calls
+ *
+ *  @param URL url to open
+ *
+ *  @return YES on success, NO on failure.
+ */
 - (BOOL)handleOpenURL:(NSURL *)URL;
+
+
+// XAuth
 - (void)loginXAuthWithUsername:(NSString*)username
                       password:(NSString*)password
                        success:(void (^)(void))success
