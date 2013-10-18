@@ -101,25 +101,30 @@ static XNGAPIClient *_sharedClient = nil;
     return [self.oAuthHandler deleteKeychainEntriesAndGTMOAuthAuthentication];
 }
 
+static inline void XNGAPIClientCanLoginTests(XNGAPIClient *client) {
+    if (client.isLoggedin) {
+        [[client exceptionForUserAlreadyLoggedIn] raise];
+        return;
+    }
+    
+    if ([client.consumerKey length] == 0) {
+        [[client exceptionForNoConsumerKey] raise];
+        return;
+    }
+    
+    if ([client.consumerSecret length] == 0) {
+        [[client exceptionForNoConsumerSecret] raise];
+        return;
+    }
+}
+
+
 - (void)loginOAuthWithSuccess:(void (^)(void))success
                       failure:(void (^)(NSError *error))failure {
-    if (self.isLoggedin) {
-        [[self exceptionForUserAlreadyLoggedIn] raise];
-        return;
-    }
 
-    if ([self.consumerKey length] == 0) {
-        [[self exceptionForNoConsumerKey] raise];
-        return;
-    }
-
-    if ([self.consumerSecret length] == 0) {
-        [[self exceptionForNoConsumerSecret] raise];
-        return;
-    }
-
-
-    NSURL *callbackURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@://success",self.callbackScheme]];
+    XNGAPIClientCanLoginTests(self);
+    
+    NSURL *callbackURL = [self oauthCallbackURL];
 
     __weak __typeof(&*self)weakSelf = self;
     AFOAuth1Client *oauthClient = [[AFOAuth1Client alloc] initWithBaseURL:self.baseURL
@@ -163,21 +168,8 @@ static XNGAPIClient *_sharedClient = nil;
                       password:(NSString*)password
                        success:(void (^)(void))success
                        failure:(void (^)(NSError *error))failure {
-    if (self.isLoggedin) {
-        [[self exceptionForUserAlreadyLoggedIn] raise];
-        return;
-    }
 
-    if ([self.consumerKey length] == 0) {
-        [[self exceptionForNoConsumerKey] raise];
-        return;
-    }
-
-    if ([self.consumerSecret length] == 0) {
-        [[self exceptionForNoConsumerSecret] raise];
-        return;
-    }
-
+    XNGAPIClientCanLoginTests(self);
     [self postRequestXAuthAccessTokenWithUsername:username
                                          password:password
                                           success:
@@ -284,6 +276,9 @@ static XNGAPIClient *_sharedClient = nil;
 
 - (NSString *)serviceProvider {
     return self.oAuthHandler.serviceProvider;
+}
+- (NSURL*)oauthCallbackURL {
+    return [NSURL URLWithString:[NSString stringWithFormat:@"%@://success",self.callbackScheme]];
 }
 
 #pragma mark - checking methods
