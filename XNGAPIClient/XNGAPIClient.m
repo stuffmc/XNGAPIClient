@@ -327,7 +327,9 @@ static XNGAPIClient *_sharedClient = nil;
 - (void)enqueueJSONRequest:(NSMutableURLRequest *)request
                    success:(void (^)(id JSON))success
                    failure:(void (^)(NSError *error))failure {
-    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    if (NO == [[[request allHTTPHeaderFields] allKeys] containsObject:@"Accept"]) {
+        [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    }
     __weak __typeof(&*self)weakSelf = self;
     XNGJSONRequestOperation *operation = nil;
     operation = [XNGJSONRequestOperation JSONRequestOperationWithRequest:request
