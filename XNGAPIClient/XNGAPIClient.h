@@ -34,6 +34,7 @@ extern NSString * const XNGAPIClientDeprecationWarningNotification;
 + (XNGAPIClient *)clientWithBaseURL:(NSURL *)url;
 + (XNGAPIClient *)sharedClient;
 + (void)setSharedClient:(XNGAPIClient *)sharedClient;
++ (void)addAcceptableContentTypes:(NSSet *)set;
 
 #pragma mark - Login / Logout
 

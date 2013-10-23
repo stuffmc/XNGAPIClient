@@ -25,8 +25,9 @@
 
 @synthesize responseJSON = _responseJSON;
 
-+ (NSSet *)acceptableContentTypes {
-    return [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript", @"text/html", nil];
++ (void)initialize {
+    [super initialize];
+    [self addAcceptableContentTypes:[NSSet setWithObjects:@"text/html", nil]];
 }
 
 - (id)responseJSON {
