@@ -255,6 +255,7 @@ static XNGAPIClient *_sharedClient = nil;
                failure:(void (^)(NSError *error))failure {
     [self deleteJSONPath:path
               parameters:parameters
+            acceptHeader:nil
                  success:success
                  failure:failure];
 }
@@ -266,7 +267,7 @@ static XNGAPIClient *_sharedClient = nil;
        acceptHeader:(NSString *)acceptHeader
             success:(void (^)(id))success
             failure:(void (^)(NSError *))failure {
-    NSMutableURLRequest *request = [self requestWithMethod:@"GET" path:path parameters:nil];
+    NSMutableURLRequest *request = [self requestWithMethod:@"GET" path:path parameters:parameters];
     if (acceptHeader) [request setValue:acceptHeader forHTTPHeaderField:@"Accept"];
     [self enqueueJSONRequest:request success:success failure:failure];
 }
@@ -276,7 +277,7 @@ static XNGAPIClient *_sharedClient = nil;
        acceptHeader:(NSString *)acceptHeader
             success:(void (^)(id))success
             failure:(void (^)(NSError *))failure {
-    NSMutableURLRequest *request = [self requestWithMethod:@"PUT" path:path parameters:nil];
+    NSMutableURLRequest *request = [self requestWithMethod:@"PUT" path:path parameters:parameters];
     if (acceptHeader) [request setValue:acceptHeader forHTTPHeaderField:@"Accept"];
     [self enqueueJSONRequest:request success:success failure:failure];
 }
@@ -286,7 +287,7 @@ static XNGAPIClient *_sharedClient = nil;
         acceptHeader:(NSString *)acceptHeader
              success:(void (^)(id))success
              failure:(void (^)(NSError *))failure {
-    NSMutableURLRequest *request = [self requestWithMethod:@"POST" path:path parameters:nil];
+    NSMutableURLRequest *request = [self requestWithMethod:@"POST" path:path parameters:parameters];
     if (acceptHeader) [request setValue:acceptHeader forHTTPHeaderField:@"Accept"];
     [self enqueueJSONRequest:request success:success failure:failure];
 }
@@ -296,7 +297,7 @@ static XNGAPIClient *_sharedClient = nil;
           acceptHeader:(NSString *)acceptHeader
                success:(void (^)(id))success
                failure:(void (^)(NSError *))failure {
-    NSMutableURLRequest *request = [self requestWithMethod:@"DELETE" path:path parameters:nil];
+    NSMutableURLRequest *request = [self requestWithMethod:@"DELETE" path:path parameters:parameters];
     if (acceptHeader) [request setValue:acceptHeader forHTTPHeaderField:@"Accept"];
     [self enqueueJSONRequest:request success:success failure:failure];
 }
