@@ -70,6 +70,46 @@ extern NSString * const XNGAPIClientDeprecationWarningNotification;
                success:(void (^)(id JSON))success
                failure:(void (^)(NSError *error))failure;
 
+#pragma mark - block-based GET / PUT / POST / DELETE with optional accept headers
+
+/**
+ use this method to make a GET call to a vendor resource of the XING API.
+ */
+- (void)getJSONPath:(NSString *)path
+         parameters:(NSDictionary *)parameters
+       acceptHeader:(NSString *)acceptHeader
+            success:(void (^)(id))success
+            failure:(void (^)(NSError *))failure;
+
+/**
+ use this method to make a PUT call to a vendor resource of the XING API.
+ */
+- (void)putJSONPath:(NSString *)path
+         parameters:(NSDictionary *)parameters
+       acceptHeader:(NSString *)acceptHeader
+            success:(void (^)(id))success
+            failure:(void (^)(NSError *))failure;
+
+/**
+ use this method to make a POST call to a vendor resource of the XING API.
+ */
+- (void)postJSONPath:(NSString *)path
+          parameters:(NSDictionary *)parameters
+        acceptHeader:(NSString *)acceptHeader
+             success:(void (^)(id))success
+             failure:(void (^)(NSError *))failure;
+
+/**
+ use this method to make a DELETE call to a vendor resource of the XING API.
+ */
+- (void)deleteJSONPath:(NSString *)path
+            parameters:(NSDictionary *)parameters
+          acceptHeader:(NSString *)acceptHeader
+               success:(void (^)(id))success
+               failure:(void (^)(NSError *))failure;
+
+#pragma mark - HTTP Operation queue methods
+
 - (void)enqueueJSONRequest:(NSMutableURLRequest *)request
                    success:(void (^)(id JSON))success
                    failure:(void (^)(NSError *error))failure;
