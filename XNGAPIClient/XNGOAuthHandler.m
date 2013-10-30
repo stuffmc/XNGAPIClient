@@ -22,7 +22,7 @@
 #import "XNGOAuthHandler.h"
 #import "XNGAPIClient.h"
 #import "NSString+URLEncoding.h"
-#import "SFHFKeychainUtils.h"
+#import "SSKeychain.h"
 #import "GTMOAuthAuthentication.h"
 #import "NSError+XWS.h"
 
@@ -60,10 +60,10 @@ static NSString *kAccessTokenName = @"AccessToken";//Keychain username
 - (NSString *)userID {
 	if (_userID == nil) {
 		NSError *error;
-		_userID = [SFHFKeychainUtils getPasswordForUsername:kUserIDName
-                                             andServiceName:kIdentifier
-                                                      error:&error];
-		NSAssert( !error || [error code] == -25291, @"KeychainUserIDReadError: %@",error);
+        _userID = [SSKeychain passwordForService:kIdentifier
+                                         account:kUserIDName
+                                           error:&error];
+		NSAssert( !error || [error code] == -25300, @"KeychainUserIDReadError: %@",error);
 	}
 	return _userID;
 }
@@ -75,10 +75,10 @@ static NSString *kAccessTokenName = @"AccessToken";//Keychain username
 - (NSString *)accessToken {
 	if (_accessToken == nil) {
 		NSError *error;
-		_accessToken = [SFHFKeychainUtils getPasswordForUsername:kAccessTokenName
-                                                  andServiceName:kIdentifier
-                                                           error:&error];
-		NSAssert( !error || [error code] == -25291, @"KeychainUserAccesstokenError: %@",error);
+        _accessToken = [SSKeychain passwordForService:kIdentifier
+                                         account:kAccessTokenName
+                                           error:&error];
+		NSAssert( !error || [error code] == -25300, @"KeychainUserAccesstokenError: %@",error);
 	}
 	return _accessToken;
 }
@@ -86,10 +86,10 @@ static NSString *kAccessTokenName = @"AccessToken";//Keychain username
 - (NSString *)tokenSecret {
 	if (_tokenSecret  == nil) {
 		NSError *error;
-		_tokenSecret = [SFHFKeychainUtils getPasswordForUsername:kTokenSecretName
-                                                  andServiceName:kIdentifier
-                                                           error:&error];
-		NSAssert( !error || [error code] == -25291, @"KeychainTokenSecretReadError: %@",error);
+        _tokenSecret = [SSKeychain passwordForService:kIdentifier
+                                              account:kTokenSecretName
+                                                error:&error];
+		NSAssert( !error || [error code] == -25300, @"KeychainTokenSecretReadError: %@",error);
 	}
 	return _tokenSecret;
 }
@@ -127,27 +127,27 @@ static NSString *kAccessTokenName = @"AccessToken";//Keychain username
 
     NSError *error = nil;
 
-    [SFHFKeychainUtils storeUsername:kUserIDName
-                         andPassword:userID
-                      forServiceName:kIdentifier
-                      updateExisting:YES
-                               error:&error];
+    [SSKeychain setPassword:userID
+                 forService:kIdentifier
+                    account:kUserIDName
+                      error:&error];
+
     NSAssert( !error, @"KeychainUserIDWriteError: %@",error);
 
-    [SFHFKeychainUtils storeUsername:kAccessTokenName
-                         andPassword:accessToken
-                      forServiceName:kIdentifier
-                      updateExisting:YES
-                               error:&error];
+    [SSKeychain setPassword:accessToken
+                 forService:kIdentifier
+                    account:kAccessTokenName
+                      error:&error];
+
     NSAssert( !error, @"KeychainAccessToksaenWriteError: %@",error);
     _accessToken = accessToken;
     self.GTMOAuthAuthentication.token = accessToken;
 
-    [SFHFKeychainUtils storeUsername:kTokenSecretName
-                         andPassword:accessTokenSecret
-                      forServiceName:kIdentifier
-                      updateExisting:YES
-                               error:&error];
+    [SSKeychain setPassword:accessTokenSecret
+                 forService:kIdentifier
+                    account:kTokenSecretName
+                      error:&error];
+
     NSAssert( !error, @"KeychainTokenSecretWriteError: %@",error);
     _tokenSecret = accessTokenSecret;
     self.GTMOAuthAuthentication.tokenSecret = accessTokenSecret;
@@ -169,16 +169,15 @@ static NSString *kAccessTokenName = @"AccessToken";//Keychain username
 
 	NSError *error = nil;
 	_userID = nil;
-	[SFHFKeychainUtils deleteItemForUsername:kUserIDName
-							  andServiceName:kIdentifier error:&error];
+    [SSKeychain deletePasswordForService:kIdentifier account:kUserIDName error:&error];
 	NSAssert( !error || [error code] == -25300, @"KeychainUserIDDeleteError: %@",error);
+
 	_accessToken = nil;
-	[SFHFKeychainUtils deleteItemForUsername:kAccessTokenName
-							  andServiceName:kIdentifier error:&error];
+    [SSKeychain deletePasswordForService:kIdentifier account:kAccessTokenName error:&error];
 	NSAssert( !error || [error code] == -25300, @"KeychainAccessTokenDeleteError: %@",error);
+
 	_tokenSecret = nil;
-	[SFHFKeychainUtils deleteItemForUsername:kTokenSecretName
-							  andServiceName:kIdentifier error:&error];
+    [SSKeychain deletePasswordForService:kIdentifier account:kTokenSecretName error:&error];
 	NSAssert( !error || [error code] == -25300, @"KeychainTokenSecretDeleteError: %@",error);
 
     // delete the oauthAuthentication

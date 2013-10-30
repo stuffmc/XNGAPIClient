@@ -1,8 +1,9 @@
 Pod::Spec.new do |s|
   s.name = 'XINGAPI'
   s.version = '0.0.3'
-  s.platform = :ios, '5.0'
   s.license = 'MIT'
+  s.ios.deployment_target = '6.0'
+  s.osx.deployment_target = '10.7'
   s.summary = 'The official Objective-C client for the XING API'
   s.author  = {
     'XING iOS Team' => 'iphonedev@xing.com'
@@ -16,7 +17,7 @@ Pod::Spec.new do |s|
   s.homepage = 'https://www.xing.com'
   s.dependency   'AFNetworking','~> 1.3.0'
   s.dependency   'gtm-oauth', '= 0.0.1'
-  s.dependency   'SFHFKeychainUtils', '= 0.0.1'
+  s.dependency   'SSKeychain', '= 1.2.0'
   s.dependency   'AFOAuth1Client', '~> 0.3.1'
   s.frameworks = 'Security','SystemConfiguration'
 end
