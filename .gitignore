@@ -16,7 +16,7 @@ Output/
 temp/
 
 # Xcode4
-XNGAPIClientExample/xcuserdata/
+xcuserdata/
 
 # Xcode5
 XNGAPIClientExample/XNGAPIClientExample.xcworkspace/xcshareddata/XING.xccheckout
