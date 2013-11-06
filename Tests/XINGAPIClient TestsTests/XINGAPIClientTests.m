@@ -1,11 +1,3 @@
-//
-//  XINGAPIClient_TestsTests.m
-//  XINGAPIClient TestsTests
-//
-//  Created by Stefan Munz on 11/6/13.
-//  Copyright (c) 2013 XING AG. All rights reserved.
-//
-
 #import <XCTest/XCTest.h>
 
 @interface XINGAPIClient_TestsTests : XCTestCase
