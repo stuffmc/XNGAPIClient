@@ -19,6 +19,9 @@
 		8E32EA03182A4D22004BAD3A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E32E9EB182A4D22004BAD3A /* UIKit.framework */; };
 		8E32EA0B182A4D22004BAD3A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8E32EA09182A4D22004BAD3A /* InfoPlist.strings */; };
 		8E32EA0D182A4D22004BAD3A /* XINGAPIClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E32EA0C182A4D22004BAD3A /* XINGAPIClientTests.m */; };
+		8E32EA17182A75D6004BAD3A /* XNGContactPathTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E32EA16182A75D6004BAD3A /* XNGContactPathTests.m */; };
+		8E32EA20182A7991004BAD3A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E32EA1E182A796B004BAD3A /* SystemConfiguration.framework */; };
+		8E32EA21182A7996004BAD3A /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E32EA1A182A794F004BAD3A /* MobileCoreServices.framework */; };
 		E28CC82A6531418D8DA6491F /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42DB8AC7602C42D2A5D39BB8 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -50,6 +53,10 @@
 		8E32EA08182A4D22004BAD3A /* XINGAPIClient Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "XINGAPIClient Tests-Info.plist"; sourceTree = "<group>"; };
 		8E32EA0A182A4D22004BAD3A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8E32EA0C182A4D22004BAD3A /* XINGAPIClientTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XINGAPIClientTests.m; sourceTree = "<group>"; };
+		8E32EA16182A75D6004BAD3A /* XNGContactPathTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XNGContactPathTests.m; sourceTree = "<group>"; };
+		8E32EA1A182A794F004BAD3A /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		8E32EA1C182A7955004BAD3A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		8E32EA1E182A796B004BAD3A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		BC5BE4A1E5A74365898173CC /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -58,6 +65,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E32EA21182A7996004BAD3A /* MobileCoreServices.framework in Frameworks */,
+				8E32EA20182A7991004BAD3A /* SystemConfiguration.framework in Frameworks */,
 				8E32E9EA182A4D22004BAD3A /* CoreGraphics.framework in Frameworks */,
 				8E32E9EC182A4D22004BAD3A /* UIKit.framework in Frameworks */,
 				8E32E9E8182A4D22004BAD3A /* Foundation.framework in Frameworks */,
@@ -101,6 +110,9 @@
 		8E32E9E6182A4D22004BAD3A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8E32EA1E182A796B004BAD3A /* SystemConfiguration.framework */,
+				8E32EA1C182A7955004BAD3A /* Security.framework */,
+				8E32EA1A182A794F004BAD3A /* MobileCoreServices.framework */,
 				8E32E9E7182A4D22004BAD3A /* Foundation.framework */,
 				8E32E9E9182A4D22004BAD3A /* CoreGraphics.framework */,
 				8E32E9EB182A4D22004BAD3A /* UIKit.framework */,
@@ -137,6 +149,7 @@
 			isa = PBXGroup;
 			children = (
 				8E32EA0C182A4D22004BAD3A /* XINGAPIClientTests.m */,
+				8E32EA16182A75D6004BAD3A /* XNGContactPathTests.m */,
 				8E32EA07182A4D22004BAD3A /* Supporting Files */,
 			);
 			name = "XINGAPIClient Tests";
@@ -293,6 +306,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8E32EA0D182A4D22004BAD3A /* XINGAPIClientTests.m in Sources */,
+				8E32EA17182A75D6004BAD3A /* XNGContactPathTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
