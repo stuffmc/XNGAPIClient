@@ -33,7 +33,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "8E32E9FE182A4D22004BAD3A"
-               BuildableName = "XINGAPIClient TestsTests.xctest"
+               BuildableName = "iOS Tests.xctest"
                BlueprintName = "iOS Tests"
                ReferencedContainer = "container:XINGAPIClient Tests.xcodeproj">
             </BuildableReference>

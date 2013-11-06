@@ -7,6 +7,10 @@ build/
 .idea/
 XNGAPIClientExample/.DS_Store
 
+# Test
+Tests/Pods/
+Tests/Podfile.lock
+
 # Doxygen Documentation
 Output/
 temp/
