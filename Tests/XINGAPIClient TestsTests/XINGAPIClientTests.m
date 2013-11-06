@@ -1,10 +1,10 @@
 #import <XCTest/XCTest.h>
 
-@interface XINGAPIClient_TestsTests : XCTestCase
+@interface XINGAPIClientTests : XCTestCase
 
 @end
 
-@implementation XINGAPIClient_TestsTests
+@implementation XINGAPIClientTests
 
 - (void)setUp
 {
