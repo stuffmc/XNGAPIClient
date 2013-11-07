@@ -1,4 +1,5 @@
 #import "XNGTestHelper.h"
+#import "XNGOAuthHandler.h"
 
 @implementation XNGTestHelper
 
