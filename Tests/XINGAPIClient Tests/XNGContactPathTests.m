@@ -1,9 +1,5 @@
 #import <XCTest/XCTest.h>
-#import <OHHTTPStubs/OHHTTPStubs.h>
-#define EXP_SHORTHAND
-#import <Expecta/Expecta.h>
-
-
+#import "XNGTestHelper.h"
 #import "XNGAPIClient+ContactPath.h"
 
 @interface XNGContactPathTests : XCTestCase
@@ -14,10 +10,10 @@
 
 - (void)setUp {
     [super setUp];
-    [[XNGAPIClient sharedClient] setConsumerKey:@"123"];
-    [[XNGAPIClient sharedClient] setConsumerSecret:@"456"];
-    XNGOAuthHandler *oauthHandler = [[XNGOAuthHandler alloc] init];
-    [oauthHandler saveUserID:@"1" accessToken:@"789" secret:@"456" success:nil failure:nil];
+
+    [XNGTestHelper setupOAuthCredentials];
+
+    [XNGTestHelper setupLoggedInUserWithUserID:@"1"];
 
     [OHHTTPStubs stubRequestsPassingTest:^BOOL(NSURLRequest *request) {
         return YES;
@@ -28,8 +24,11 @@
 
 - (void)tearDown {
     [super tearDown];
-    XNGOAuthHandler *oauthHandler = [[XNGOAuthHandler alloc] init];
-    [oauthHandler deleteKeychainEntriesAndGTMOAuthAuthentication];
+
+    [XNGTestHelper tearDownOAuthCredentials];
+
+    [XNGTestHelper tearDownLoggedInUser];
+
     [OHHTTPStubs removeAllStubs];
 }
 
@@ -38,8 +37,8 @@
         expect(request.URL.host).to.equal(@"www.xing.com");
         expect(request.URL.path).to.equal(@"/v1/users/me/network/1/paths");
 
-        NSMutableDictionary *queryDict = [self queryDictFromQueryString:request.URL.query];
-        [self assertAndRemoveOAuthParametersInQueryDict:queryDict];
+        NSMutableDictionary *queryDict = [XNGTestHelper queryDictFromQueryString:request.URL.query];
+        [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:queryDict];
 
         expect([queryDict allKeys]).to.haveCountOf(0);
     }];
@@ -58,11 +57,12 @@
         expect(request.URL.host).to.equal(@"www.xing.com");
         expect(request.URL.path).to.equal(@"/v1/users/me/network/1/paths");
 
-        NSMutableDictionary *queryDict = [self queryDictFromQueryString:request.URL.query];
-        [self assertAndRemoveOAuthParametersInQueryDict:queryDict];
+        NSMutableDictionary *queryDict = [XNGTestHelper queryDictFromQueryString:request.URL.query];
+        [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:queryDict];
 
         expect([queryDict valueForKey:@"user_fields"]).to.equal(@"display_name");
         [queryDict removeObjectForKey:@"user_fields"];
+
         expect([queryDict allKeys]).to.haveCountOf(0);
     }];
 
@@ -72,32 +72,6 @@
                                                       failure:nil];
 
     [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:.1]];
-}
-
-
-#pragma mark - Helper
-
-- (void)assertAndRemoveOAuthParametersInQueryDict:(NSMutableDictionary *)queryDict {
-    for (NSString *oauthParameter in @[ @"oauth_token",
-                                        @"oauth_signature_method",
-                                        @"oauth_version",
-                                        @"oauth_nonce",
-                                        @"oauth_consumer_key",
-                                        @"oauth_timestamp",
-                                        @"oauth_signature" ]) {
-        expect([queryDict valueForKey:oauthParameter]).toNot.beNil;
-        [queryDict removeObjectForKey:oauthParameter];
-    }
-}
-
-- (NSMutableDictionary *)queryDictFromQueryString:(NSString *)queryString {
-    NSArray *componentsArray = [queryString componentsSeparatedByString:@"&"];
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    for (NSString *keyValueString in componentsArray) {
-        NSArray *array = [keyValueString componentsSeparatedByString:@"="];
-        [dict setValue:array[1] forKey:array[0]];
-    }
-    return dict;
 }
 
 @end

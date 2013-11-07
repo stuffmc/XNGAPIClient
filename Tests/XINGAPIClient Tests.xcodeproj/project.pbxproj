@@ -21,6 +21,7 @@
 		F80DC25D182B965E00629B70 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F80DC259182B965E00629B70 /* main.m */; };
 		F80DC265182B975700629B70 /* XINGAPIClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F80DC25F182B973B00629B70 /* XINGAPIClientTests.m */; };
 		F80DC266182B975700629B70 /* XNGContactPathTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F80DC260182B973B00629B70 /* XNGContactPathTests.m */; };
+		F86AE37C182B99C100D13148 /* XNGTestHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F86AE37B182B99C100D13148 /* XNGTestHelper.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,8 @@
 		F80DC25B182B965E00629B70 /* XINGAPIClient Tests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "XINGAPIClient Tests-Prefix.pch"; path = "XINGAPIClient Tests App/XINGAPIClient Tests-Prefix.pch"; sourceTree = SOURCE_ROOT; };
 		F80DC25F182B973B00629B70 /* XINGAPIClientTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XINGAPIClientTests.m; path = "XINGAPIClient Tests/XINGAPIClientTests.m"; sourceTree = SOURCE_ROOT; };
 		F80DC260182B973B00629B70 /* XNGContactPathTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XNGContactPathTests.m; path = "XINGAPIClient Tests/XNGContactPathTests.m"; sourceTree = SOURCE_ROOT; };
+		F86AE37A182B99C100D13148 /* XNGTestHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XNGTestHelper.h; path = "XINGAPIClient Tests/XNGTestHelper.h"; sourceTree = SOURCE_ROOT; };
+		F86AE37B182B99C100D13148 /* XNGTestHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XNGTestHelper.m; path = "XINGAPIClient Tests/XNGTestHelper.m"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +147,8 @@
 			children = (
 				F80DC25F182B973B00629B70 /* XINGAPIClientTests.m */,
 				F80DC260182B973B00629B70 /* XNGContactPathTests.m */,
+				F86AE37A182B99C100D13148 /* XNGTestHelper.h */,
+				F86AE37B182B99C100D13148 /* XNGTestHelper.m */,
 			);
 			name = "XINGAPIClient Tests";
 			path = "XINGAPIClient TestsTests";
@@ -288,6 +293,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F80DC265182B975700629B70 /* XINGAPIClientTests.m in Sources */,
+				F86AE37C182B99C100D13148 /* XNGTestHelper.m in Sources */,
 				F80DC266182B975700629B70 /* XNGContactPathTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
