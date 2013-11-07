@@ -17,7 +17,6 @@
 		8E32EA21182A7996004BAD3A /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E32EA1A182A794F004BAD3A /* MobileCoreServices.framework */; };
 		E28CC82A6531418D8DA6491F /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42DB8AC7602C42D2A5D39BB8 /* libPods.a */; };
 		F80DC253182B964D00629B70 /* XNGAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F80DC252182B964D00629B70 /* XNGAppDelegate.m */; };
-		F80DC255182B965300629B70 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F80DC254182B965300629B70 /* Images.xcassets */; };
 		F80DC25D182B965E00629B70 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F80DC259182B965E00629B70 /* main.m */; };
 		F80DC265182B975700629B70 /* XINGAPIClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F80DC25F182B973B00629B70 /* XINGAPIClientTests.m */; };
 		F80DC266182B975700629B70 /* XNGContactPathTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F80DC260182B973B00629B70 /* XNGContactPathTests.m */; };
@@ -48,7 +47,6 @@
 		BC5BE4A1E5A74365898173CC /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		F80DC251182B964D00629B70 /* XNGAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XNGAppDelegate.h; path = "XINGAPIClient Tests App/XNGAppDelegate.h"; sourceTree = SOURCE_ROOT; };
 		F80DC252182B964D00629B70 /* XNGAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XNGAppDelegate.m; path = "XINGAPIClient Tests App/XNGAppDelegate.m"; sourceTree = SOURCE_ROOT; };
-		F80DC254182B965300629B70 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "XINGAPIClient Tests App/Images.xcassets"; sourceTree = SOURCE_ROOT; };
 		F80DC259182B965E00629B70 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = "XINGAPIClient Tests App/main.m"; sourceTree = SOURCE_ROOT; };
 		F80DC25A182B965E00629B70 /* XINGAPIClient Tests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "XINGAPIClient Tests-Info.plist"; path = "XINGAPIClient Tests App/XINGAPIClient Tests-Info.plist"; sourceTree = SOURCE_ROOT; };
 		F80DC25B182B965E00629B70 /* XINGAPIClient Tests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "XINGAPIClient Tests-Prefix.pch"; path = "XINGAPIClient Tests App/XINGAPIClient Tests-Prefix.pch"; sourceTree = SOURCE_ROOT; };
@@ -135,7 +133,6 @@
 			isa = PBXGroup;
 			children = (
 				F80DC259182B965E00629B70 /* main.m */,
-				F80DC254182B965300629B70 /* Images.xcassets */,
 				F80DC25A182B965E00629B70 /* XINGAPIClient Tests-Info.plist */,
 				F80DC25B182B965E00629B70 /* XINGAPIClient Tests-Prefix.pch */,
 			);
@@ -232,7 +229,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F80DC255182B965300629B70 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
