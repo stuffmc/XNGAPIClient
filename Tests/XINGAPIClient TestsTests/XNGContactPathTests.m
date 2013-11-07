@@ -1,5 +1,8 @@
 #import <XCTest/XCTest.h>
 #import <OHHTTPStubs/OHHTTPStubs.h>
+#define EXP_SHORTHAND
+#import <Expecta/Expecta.h>
+
 
 #import "XNGAPIClient+ContactPath.h"
 
@@ -11,6 +14,11 @@
 
 - (void)setUp {
     [super setUp];
+    [[XNGAPIClient sharedClient] setConsumerKey:@"123"];
+    [[XNGAPIClient sharedClient] setConsumerSecret:@"456"];
+    XNGOAuthHandler *oauthHandler = [[XNGOAuthHandler alloc] init];
+    [oauthHandler saveUserID:@"1" accessToken:@"789" secret:@"456" success:nil failure:nil];
+
     [OHHTTPStubs stubRequestsPassingTest:^BOOL(NSURLRequest *request) {
         return YES;
     } withStubResponse:^OHHTTPStubsResponse*(NSURLRequest *request) {
@@ -20,13 +28,15 @@
 
 - (void)tearDown {
     [super tearDown];
+    XNGOAuthHandler *oauthHandler = [[XNGOAuthHandler alloc] init];
+    [oauthHandler deleteKeychainEntriesAndGTMOAuthAuthentication];
     [OHHTTPStubs removeAllStubs];
 }
 
 - (void)testContactPath {
     [OHHTTPStubs onStubActivation:^(NSURLRequest *request, id<OHHTTPStubsDescriptor> stub) {
-        XCTAssertTrue([request.URL.host isEqualToString:@"www.xing.com"], @"called the wrong host");
-        XCTAssertTrue([request.URL.path isEqualToString:@"/v1/users/me/network/1/paths"], @"called the wrong path");
+        expect(request.URL.host).to.equal(@"www.xing.com");
+        expect(request.URL.path).to.equal(@"/v1/users/me/network/1/paths");
         NSDictionary *queryDict = [self queryDictFromQueryString:request.URL.query];
         [self assertOAuthParametersInQueryDict:queryDict];
     }];
@@ -42,11 +52,11 @@
 
 - (void)testContactPathWithUserFields {
     [OHHTTPStubs onStubActivation:^(NSURLRequest *request, id<OHHTTPStubsDescriptor> stub) {
-        XCTAssertTrue([request.URL.host isEqualToString:@"www.xing.com"], @"called the wrong host");
-        XCTAssertTrue([request.URL.path isEqualToString:@"/v1/users/me/network/1/paths"], @"called the wrong path");
+        expect(request.URL.host).to.equal(@"www.xing.com");
+        expect(request.URL.path).to.equal(@"/v1/users/me/network/1/paths");
         NSDictionary *queryDict = [self queryDictFromQueryString:request.URL.query];
         [self assertOAuthParametersInQueryDict:queryDict];
-        XCTAssertTrue([[queryDict valueForKey:@"user_fields"] isEqualToString:@"display_name"], @"no/incorrect user_fields in query");
+        expect([queryDict valueForKey:@"user_fields"]).to.equal(@"display_name");
     }];
 
     [[XNGAPIClient sharedClient] getContactPathForOtherUserID:@"1"
@@ -61,12 +71,12 @@
 #pragma mark - Helper
 
 - (void)assertOAuthParametersInQueryDict:(NSDictionary *)queryDict {
-    XCTAssertTrue([queryDict valueForKey:@"oauth_token"], @"no oauth_token in query");
-    XCTAssertTrue([queryDict valueForKey:@"oauth_signature_method"], @"no oauth_signature_method in query");
-    XCTAssertTrue([queryDict valueForKey:@"oauth_version"], @"no oauth_version in query");
-    XCTAssertTrue([queryDict valueForKey:@"oauth_nonce"], @"no oauth_nonce in query");
-    XCTAssertTrue([queryDict valueForKey:@"oauth_timestamp"], @"no oauth_timestamp in query");
-    XCTAssertTrue([queryDict valueForKey:@"oauth_signature"], @"no oauth_signature in query");
+    expect([queryDict valueForKey:@"oauth_token"]).toNot.beNil;
+    expect([queryDict valueForKey:@"oauth_signature_method"]).toNot.beNil;
+    expect([queryDict valueForKey:@"oauth_version"]).toNot.beNil;
+    expect([queryDict valueForKey:@"oauth_nonce"]).toNot.beNil;
+    expect([queryDict valueForKey:@"oauth_timestamp"]).toNot.beNil;
+    expect([queryDict valueForKey:@"oauth_signature"]).toNot.beNil;
 }
 
 - (NSDictionary *)queryDictFromQueryString:(NSString *)queryString {
