@@ -10,6 +10,9 @@
 - (void)setUp {
     [super setUp];
 
+    // make sure no user is logged in, e.g. from a dev or beta app.
+    [XNGTestHelper tearDownLoggedInUser];
+
     [XNGTestHelper setupOAuthCredentials];
 
     [OHHTTPStubs stubRequestsPassingTest:^BOOL(NSURLRequest *request) {
