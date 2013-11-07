@@ -48,7 +48,7 @@
                                                       success:nil
                                                       failure:nil];
 
-    [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:.1]];
+    [XNGTestHelper runRunLoopShortly];
 }
 
 
@@ -71,7 +71,7 @@
                                                       success:nil
                                                       failure:nil];
 
-    [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:.1]];
+    [XNGTestHelper runRunLoopShortly];
 }
 
 @end

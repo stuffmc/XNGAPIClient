@@ -63,4 +63,11 @@
     }
     return dict;
 }
+
+#pragma mark - runloop hackery
+
++ (void)runRunLoopShortly {
+    [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:.1]];
+}
+
 @end

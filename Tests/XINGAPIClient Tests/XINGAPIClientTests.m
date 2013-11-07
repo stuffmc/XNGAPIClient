@@ -64,7 +64,7 @@
                                                 success:^{}
                                                 failure:^(NSError *error) {}];
 
-    [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:.1]];
+    [XNGTestHelper runRunLoopShortly];
 }
 
 
@@ -79,7 +79,7 @@
     [[XNGAPIClient sharedClient] loginOAuthWithSuccess:^{}
                                                failure:^(NSError *error) {}];
 
-    [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:.1]];
+    [XNGTestHelper runRunLoopShortly];
 }
 
 @end
