@@ -37,8 +37,11 @@
     [OHHTTPStubs onStubActivation:^(NSURLRequest *request, id<OHHTTPStubsDescriptor> stub) {
         expect(request.URL.host).to.equal(@"www.xing.com");
         expect(request.URL.path).to.equal(@"/v1/users/me/network/1/paths");
-        NSDictionary *queryDict = [self queryDictFromQueryString:request.URL.query];
-        [self assertOAuthParametersInQueryDict:queryDict];
+
+        NSMutableDictionary *queryDict = [self queryDictFromQueryString:request.URL.query];
+        [self assertAndRemoveOAuthParametersInQueryDict:queryDict];
+
+        expect([queryDict allKeys]).to.haveCountOf(0);
     }];
 
     [[XNGAPIClient sharedClient] getContactPathForOtherUserID:@"1"
@@ -54,9 +57,13 @@
     [OHHTTPStubs onStubActivation:^(NSURLRequest *request, id<OHHTTPStubsDescriptor> stub) {
         expect(request.URL.host).to.equal(@"www.xing.com");
         expect(request.URL.path).to.equal(@"/v1/users/me/network/1/paths");
-        NSDictionary *queryDict = [self queryDictFromQueryString:request.URL.query];
-        [self assertOAuthParametersInQueryDict:queryDict];
+
+        NSMutableDictionary *queryDict = [self queryDictFromQueryString:request.URL.query];
+        [self assertAndRemoveOAuthParametersInQueryDict:queryDict];
+
         expect([queryDict valueForKey:@"user_fields"]).to.equal(@"display_name");
+        [queryDict removeObjectForKey:@"user_fields"];
+        expect([queryDict allKeys]).to.haveCountOf(0);
     }];
 
     [[XNGAPIClient sharedClient] getContactPathForOtherUserID:@"1"
@@ -70,16 +77,20 @@
 
 #pragma mark - Helper
 
-- (void)assertOAuthParametersInQueryDict:(NSDictionary *)queryDict {
-    expect([queryDict valueForKey:@"oauth_token"]).toNot.beNil;
-    expect([queryDict valueForKey:@"oauth_signature_method"]).toNot.beNil;
-    expect([queryDict valueForKey:@"oauth_version"]).toNot.beNil;
-    expect([queryDict valueForKey:@"oauth_nonce"]).toNot.beNil;
-    expect([queryDict valueForKey:@"oauth_timestamp"]).toNot.beNil;
-    expect([queryDict valueForKey:@"oauth_signature"]).toNot.beNil;
+- (void)assertAndRemoveOAuthParametersInQueryDict:(NSMutableDictionary *)queryDict {
+    for (NSString *oauthParameter in @[ @"oauth_token",
+                                        @"oauth_signature_method",
+                                        @"oauth_version",
+                                        @"oauth_nonce",
+                                        @"oauth_consumer_key",
+                                        @"oauth_timestamp",
+                                        @"oauth_signature" ]) {
+        expect([queryDict valueForKey:oauthParameter]).toNot.beNil;
+        [queryDict removeObjectForKey:oauthParameter];
+    }
 }
 
-- (NSDictionary *)queryDictFromQueryString:(NSString *)queryString {
+- (NSMutableDictionary *)queryDictFromQueryString:(NSString *)queryString {
     NSArray *componentsArray = [queryString componentsSeparatedByString:@"&"];
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     for (NSString *keyValueString in componentsArray) {
