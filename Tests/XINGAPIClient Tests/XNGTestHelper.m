@@ -39,6 +39,14 @@
     [oauthHandler deleteKeychainEntriesAndGTMOAuthAuthentication];
 }
 
+#pragma mark - body data helper
+
++ (NSString *)stringFromData:(NSData *)data {
+    return [[NSString alloc] initWithData:data
+                                 encoding:NSUTF8StringEncoding];
+
+}
+
 #pragma mark - oauth parameter helper
 
 + (void)assertAndRemoveOAuthParametersInQueryDict:(NSMutableDictionary *)queryDict {
@@ -59,7 +67,7 @@
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     for (NSString *keyValueString in componentsArray) {
         NSArray *array = [keyValueString componentsSeparatedByString:@"="];
-        [dict setValue:array[1] forKey:array[0]];
+        if (array.count == 2) [dict setValue:array[1] forKey:array[0]];
     }
     return dict;
 }

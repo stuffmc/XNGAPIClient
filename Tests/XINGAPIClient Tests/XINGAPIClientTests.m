@@ -36,11 +36,10 @@
     [OHHTTPStubs onStubActivation:^(NSURLRequest *request, id<OHHTTPStubsDescriptor> stub) {
         expect(request.URL.host).to.equal(@"www.xing.com");
         expect(request.URL.path).to.equal(@"/v1/xauth");
+        expect(request.HTTPMethod).to.equal(@"POST");
 
 
-        NSString *bodyString = [[NSString alloc] initWithData:request.HTTPBody
-                                                      encoding:NSUTF8StringEncoding];
-
+        NSString *bodyString = [XNGTestHelper stringFromData:request.HTTPBody];
         NSMutableDictionary *bodyDict = [XNGTestHelper dictFromQueryString:bodyString];
         expect([bodyDict valueForKey:@"oauth_consumer_key"]).to.equal([XNGTestHelper fakeOAuthConsumerKey]);
         [bodyDict removeObjectForKey:@"oauth_consumer_key"];
@@ -75,6 +74,7 @@
     [OHHTTPStubs onStubActivation:^(NSURLRequest *request, id<OHHTTPStubsDescriptor> stub) {
         expect(request.URL.host).to.equal(@"www.xing.com");
         expect(request.URL.path).to.equal(@"/v1/request_token");
+        expect(request.HTTPMethod).to.equal(@"POST");
         expect(request.URL.query).to.beNil;
         expect(request.HTTPBody).to.beNil;
     }];
