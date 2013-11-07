@@ -37,7 +37,7 @@
         expect(request.URL.host).to.equal(@"www.xing.com");
         expect(request.URL.path).to.equal(@"/v1/users/me/network/1/paths");
 
-        NSMutableDictionary *queryDict = [XNGTestHelper queryDictFromQueryString:request.URL.query];
+        NSMutableDictionary *queryDict = [XNGTestHelper dictFromQueryString:request.URL.query];
         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:queryDict];
 
         expect([queryDict allKeys]).to.haveCountOf(0);
@@ -57,7 +57,7 @@
         expect(request.URL.host).to.equal(@"www.xing.com");
         expect(request.URL.path).to.equal(@"/v1/users/me/network/1/paths");
 
-        NSMutableDictionary *queryDict = [XNGTestHelper queryDictFromQueryString:request.URL.query];
+        NSMutableDictionary *queryDict = [XNGTestHelper dictFromQueryString:request.URL.query];
         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:queryDict];
 
         expect([queryDict valueForKey:@"user_fields"]).to.equal(@"display_name");

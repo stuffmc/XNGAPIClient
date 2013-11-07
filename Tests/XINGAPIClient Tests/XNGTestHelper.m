@@ -2,11 +2,21 @@
 
 @implementation XNGTestHelper
 
+#pragma mark - fake data
+
++ (NSString *)fakeOAuthConsumerKey {
+    return @"123";
+}
+
++ (NSString *)fakeOAuthConsumerSecret {
+    return @"456";
+}
+
 #pragma mark - setup and teardown helper
 
 + (void)setupOAuthCredentials {
-    [[XNGAPIClient sharedClient] setConsumerKey:@"123"];
-    [[XNGAPIClient sharedClient] setConsumerSecret:@"456"];
+    [[XNGAPIClient sharedClient] setConsumerKey:[self fakeOAuthConsumerKey]];
+    [[XNGAPIClient sharedClient] setConsumerSecret:[self fakeOAuthConsumerSecret]];
 }
 
 + (void)tearDownOAuthCredentials {
@@ -43,7 +53,7 @@
     }
 }
 
-+ (NSMutableDictionary *)queryDictFromQueryString:(NSString *)queryString {
++ (NSMutableDictionary *)dictFromQueryString:(NSString *)queryString {
     NSArray *componentsArray = [queryString componentsSeparatedByString:@"&"];
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     for (NSString *keyValueString in componentsArray) {

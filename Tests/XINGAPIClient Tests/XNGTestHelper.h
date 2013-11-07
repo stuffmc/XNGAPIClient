@@ -8,6 +8,9 @@
 
 @interface XNGTestHelper : NSObject
 
++ (NSString *)fakeOAuthConsumerKey;
++ (NSString *)fakeOAuthConsumerSecret;
+
 + (void)setupOAuthCredentials;
 + (void)tearDownOAuthCredentials;
 
@@ -16,6 +19,6 @@
 
 
 + (void)assertAndRemoveOAuthParametersInQueryDict:(NSMutableDictionary *)queryDict;
-+ (NSMutableDictionary *)queryDictFromQueryString:(NSString *)queryString;
++ (NSMutableDictionary *)dictFromQueryString:(NSString *)queryString;
 
 @end
