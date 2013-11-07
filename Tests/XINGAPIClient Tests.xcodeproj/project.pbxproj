@@ -10,19 +10,17 @@
 		8E32E9E8182A4D22004BAD3A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E32E9E7182A4D22004BAD3A /* Foundation.framework */; };
 		8E32E9EA182A4D22004BAD3A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E32E9E9182A4D22004BAD3A /* CoreGraphics.framework */; };
 		8E32E9EC182A4D22004BAD3A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E32E9EB182A4D22004BAD3A /* UIKit.framework */; };
-		8E32E9F2182A4D22004BAD3A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8E32E9F0182A4D22004BAD3A /* InfoPlist.strings */; };
-		8E32E9F4182A4D22004BAD3A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E32E9F3182A4D22004BAD3A /* main.m */; };
-		8E32E9F8182A4D22004BAD3A /* XNGAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E32E9F7182A4D22004BAD3A /* XNGAppDelegate.m */; };
-		8E32E9FA182A4D22004BAD3A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E32E9F9182A4D22004BAD3A /* Images.xcassets */; };
 		8E32EA01182A4D22004BAD3A /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E32EA00182A4D22004BAD3A /* XCTest.framework */; };
 		8E32EA02182A4D22004BAD3A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E32E9E7182A4D22004BAD3A /* Foundation.framework */; };
 		8E32EA03182A4D22004BAD3A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E32E9EB182A4D22004BAD3A /* UIKit.framework */; };
-		8E32EA0B182A4D22004BAD3A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8E32EA09182A4D22004BAD3A /* InfoPlist.strings */; };
-		8E32EA0D182A4D22004BAD3A /* XINGAPIClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E32EA0C182A4D22004BAD3A /* XINGAPIClientTests.m */; };
-		8E32EA17182A75D6004BAD3A /* XNGContactPathTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E32EA16182A75D6004BAD3A /* XNGContactPathTests.m */; };
 		8E32EA20182A7991004BAD3A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E32EA1E182A796B004BAD3A /* SystemConfiguration.framework */; };
 		8E32EA21182A7996004BAD3A /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E32EA1A182A794F004BAD3A /* MobileCoreServices.framework */; };
 		E28CC82A6531418D8DA6491F /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42DB8AC7602C42D2A5D39BB8 /* libPods.a */; };
+		F80DC253182B964D00629B70 /* XNGAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F80DC252182B964D00629B70 /* XNGAppDelegate.m */; };
+		F80DC255182B965300629B70 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F80DC254182B965300629B70 /* Images.xcassets */; };
+		F80DC25D182B965E00629B70 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F80DC259182B965E00629B70 /* main.m */; };
+		F80DC265182B975700629B70 /* XINGAPIClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F80DC25F182B973B00629B70 /* XINGAPIClientTests.m */; };
+		F80DC266182B975700629B70 /* XNGContactPathTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F80DC260182B973B00629B70 /* XNGContactPathTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,23 +39,20 @@
 		8E32E9E7182A4D22004BAD3A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		8E32E9E9182A4D22004BAD3A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		8E32E9EB182A4D22004BAD3A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		8E32E9EF182A4D22004BAD3A /* XINGAPIClient Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "XINGAPIClient Tests-Info.plist"; sourceTree = "<group>"; };
-		8E32E9F1182A4D22004BAD3A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		8E32E9F3182A4D22004BAD3A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		8E32E9F5182A4D22004BAD3A /* XINGAPIClient Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XINGAPIClient Tests-Prefix.pch"; sourceTree = "<group>"; };
-		8E32E9F6182A4D22004BAD3A /* XNGAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XNGAppDelegate.h; sourceTree = "<group>"; };
-		8E32E9F7182A4D22004BAD3A /* XNGAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XNGAppDelegate.m; sourceTree = "<group>"; };
-		8E32E9F9182A4D22004BAD3A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		8E32E9FF182A4D22004BAD3A /* iOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "iOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E32EA00182A4D22004BAD3A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		8E32EA08182A4D22004BAD3A /* XINGAPIClient Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "XINGAPIClient Tests-Info.plist"; sourceTree = "<group>"; };
-		8E32EA0A182A4D22004BAD3A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		8E32EA0C182A4D22004BAD3A /* XINGAPIClientTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XINGAPIClientTests.m; sourceTree = "<group>"; };
-		8E32EA16182A75D6004BAD3A /* XNGContactPathTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XNGContactPathTests.m; sourceTree = "<group>"; };
 		8E32EA1A182A794F004BAD3A /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		8E32EA1C182A7955004BAD3A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		8E32EA1E182A796B004BAD3A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		BC5BE4A1E5A74365898173CC /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		F80DC251182B964D00629B70 /* XNGAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XNGAppDelegate.h; path = "XINGAPIClient Tests App/XNGAppDelegate.h"; sourceTree = SOURCE_ROOT; };
+		F80DC252182B964D00629B70 /* XNGAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XNGAppDelegate.m; path = "XINGAPIClient Tests App/XNGAppDelegate.m"; sourceTree = SOURCE_ROOT; };
+		F80DC254182B965300629B70 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "XINGAPIClient Tests App/Images.xcassets"; sourceTree = SOURCE_ROOT; };
+		F80DC259182B965E00629B70 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = "XINGAPIClient Tests App/main.m"; sourceTree = SOURCE_ROOT; };
+		F80DC25A182B965E00629B70 /* XINGAPIClient Tests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "XINGAPIClient Tests-Info.plist"; path = "XINGAPIClient Tests App/XINGAPIClient Tests-Info.plist"; sourceTree = SOURCE_ROOT; };
+		F80DC25B182B965E00629B70 /* XINGAPIClient Tests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "XINGAPIClient Tests-Prefix.pch"; path = "XINGAPIClient Tests App/XINGAPIClient Tests-Prefix.pch"; sourceTree = SOURCE_ROOT; };
+		F80DC25F182B973B00629B70 /* XINGAPIClientTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XINGAPIClientTests.m; path = "XINGAPIClient Tests/XINGAPIClientTests.m"; sourceTree = SOURCE_ROOT; };
+		F80DC260182B973B00629B70 /* XNGContactPathTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XNGContactPathTests.m; path = "XINGAPIClient Tests/XNGContactPathTests.m"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,9 +120,8 @@
 		8E32E9ED182A4D22004BAD3A /* XINGAPIClient Tests App */ = {
 			isa = PBXGroup;
 			children = (
-				8E32E9F6182A4D22004BAD3A /* XNGAppDelegate.h */,
-				8E32E9F7182A4D22004BAD3A /* XNGAppDelegate.m */,
-				8E32E9F9182A4D22004BAD3A /* Images.xcassets */,
+				F80DC251182B964D00629B70 /* XNGAppDelegate.h */,
+				F80DC252182B964D00629B70 /* XNGAppDelegate.m */,
 				8E32E9EE182A4D22004BAD3A /* Supporting Files */,
 			);
 			name = "XINGAPIClient Tests App";
@@ -137,10 +131,10 @@
 		8E32E9EE182A4D22004BAD3A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				8E32E9EF182A4D22004BAD3A /* XINGAPIClient Tests-Info.plist */,
-				8E32E9F0182A4D22004BAD3A /* InfoPlist.strings */,
-				8E32E9F3182A4D22004BAD3A /* main.m */,
-				8E32E9F5182A4D22004BAD3A /* XINGAPIClient Tests-Prefix.pch */,
+				F80DC259182B965E00629B70 /* main.m */,
+				F80DC254182B965300629B70 /* Images.xcassets */,
+				F80DC25A182B965E00629B70 /* XINGAPIClient Tests-Info.plist */,
+				F80DC25B182B965E00629B70 /* XINGAPIClient Tests-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -148,21 +142,11 @@
 		8E32EA06182A4D22004BAD3A /* XINGAPIClient Tests */ = {
 			isa = PBXGroup;
 			children = (
-				8E32EA0C182A4D22004BAD3A /* XINGAPIClientTests.m */,
-				8E32EA16182A75D6004BAD3A /* XNGContactPathTests.m */,
-				8E32EA07182A4D22004BAD3A /* Supporting Files */,
+				F80DC25F182B973B00629B70 /* XINGAPIClientTests.m */,
+				F80DC260182B973B00629B70 /* XNGContactPathTests.m */,
 			);
 			name = "XINGAPIClient Tests";
 			path = "XINGAPIClient TestsTests";
-			sourceTree = "<group>";
-		};
-		8E32EA07182A4D22004BAD3A /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				8E32EA08182A4D22004BAD3A /* XINGAPIClient Tests-Info.plist */,
-				8E32EA09182A4D22004BAD3A /* InfoPlist.strings */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -243,8 +227,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8E32E9F2182A4D22004BAD3A /* InfoPlist.strings in Resources */,
-				8E32E9FA182A4D22004BAD3A /* Images.xcassets in Resources */,
+				F80DC255182B965300629B70 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -252,7 +235,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8E32EA0B182A4D22004BAD3A /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -296,8 +278,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8E32E9F8182A4D22004BAD3A /* XNGAppDelegate.m in Sources */,
-				8E32E9F4182A4D22004BAD3A /* main.m in Sources */,
+				F80DC253182B964D00629B70 /* XNGAppDelegate.m in Sources */,
+				F80DC25D182B965E00629B70 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -305,8 +287,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8E32EA0D182A4D22004BAD3A /* XINGAPIClientTests.m in Sources */,
-				8E32EA17182A75D6004BAD3A /* XNGContactPathTests.m in Sources */,
+				F80DC265182B975700629B70 /* XINGAPIClientTests.m in Sources */,
+				F80DC266182B975700629B70 /* XNGContactPathTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -319,25 +301,6 @@
 			targetProxy = 8E32EA04182A4D22004BAD3A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		8E32E9F0182A4D22004BAD3A /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				8E32E9F1182A4D22004BAD3A /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		8E32EA09182A4D22004BAD3A /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				8E32EA0A182A4D22004BAD3A /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		8E32EA0E182A4D22004BAD3A /* Debug */ = {
@@ -418,8 +381,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "XINGAPIClient Tests/XINGAPIClient Tests-Prefix.pch";
-				INFOPLIST_FILE = "XINGAPIClient Tests/XINGAPIClient Tests-Info.plist";
+				GCC_PREFIX_HEADER = "XINGAPIClient Tests App/XINGAPIClient Tests-Prefix.pch";
+				INFOPLIST_FILE = "XINGAPIClient Tests App/XINGAPIClient Tests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -431,8 +394,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "XINGAPIClient Tests/XINGAPIClient Tests-Prefix.pch";
-				INFOPLIST_FILE = "XINGAPIClient Tests/XINGAPIClient Tests-Info.plist";
+				GCC_PREFIX_HEADER = "XINGAPIClient Tests App/XINGAPIClient Tests-Prefix.pch";
+				INFOPLIST_FILE = "XINGAPIClient Tests App/XINGAPIClient Tests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -450,12 +413,12 @@
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "XINGAPIClient Tests/XINGAPIClient Tests-Prefix.pch";
+				GCC_PREFIX_HEADER = "XINGAPIClient Tests App/XINGAPIClient Tests-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = "XINGAPIClient TestsTests/XINGAPIClient Tests-Info.plist";
+				INFOPLIST_FILE = "XINGAPIClient Tests App/XINGAPIClient Tests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
@@ -474,8 +437,8 @@
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "XINGAPIClient Tests/XINGAPIClient Tests-Prefix.pch";
-				INFOPLIST_FILE = "XINGAPIClient TestsTests/XINGAPIClient Tests-Info.plist";
+				GCC_PREFIX_HEADER = "XINGAPIClient Tests App/XINGAPIClient Tests-Prefix.pch";
+				INFOPLIST_FILE = "XINGAPIClient Tests App/XINGAPIClient Tests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
