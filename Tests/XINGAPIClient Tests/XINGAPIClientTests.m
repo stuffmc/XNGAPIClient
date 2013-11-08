@@ -40,7 +40,7 @@
                                                      success:^{}
                                                      failure:^(NSError *error) {}];
      }
-               withExpecations:
+               withExpectations:
      ^(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body) {
          expect(request.URL.host).to.equal(@"www.xing.com");
          expect(request.URL.path).to.equal(@"/v1/xauth");
@@ -70,7 +70,7 @@
          [[XNGAPIClient sharedClient] loginOAuthWithSuccess:^{}
                                                     failure:^(NSError *error) {}];
      }
-               withExpecations:
+               withExpectations:
      ^(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body) {
          expect(request.URL.host).to.equal(@"www.xing.com");
          expect(request.URL.path).to.equal(@"/v1/request_token");

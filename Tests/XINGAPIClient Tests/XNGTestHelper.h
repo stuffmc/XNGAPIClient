@@ -20,6 +20,6 @@
 + (void)assertAndRemoveOAuthParametersInQueryDict:(NSMutableDictionary *)queryDict;
 
 + (void)executeCall:(void (^)())call
-    withExpecations:(void (^)(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body))expectations;
+    withExpectations:(void (^)(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body))expectations;
 
 @end

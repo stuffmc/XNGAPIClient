@@ -43,7 +43,7 @@
                                                           success:nil
                                                           failure:nil];
      }
-               withExpecations:
+               withExpectations:
      ^(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body) {
          expect(request.URL.host).to.equal(@"www.xing.com");
          expect(request.URL.path).to.equal(@"/v1/users/me/contact_requests");
@@ -65,7 +65,7 @@
                                                           success:nil
                                                           failure:nil];
      }
-               withExpecations:
+               withExpectations:
      ^(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body) {
          expect(request.URL.host).to.equal(@"www.xing.com");
          expect(request.URL.path).to.equal(@"/v1/users/me/contact_requests");
@@ -93,7 +93,7 @@
                                                                    success:nil
                                                                    failure:nil];
      }
-               withExpecations:
+               withExpectations:
      ^(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body) {
          expect(request.URL.host).to.equal(@"www.xing.com");
          expect(request.URL.path).to.equal(@"/v1/users/2/contact_requests");
@@ -118,7 +118,7 @@
                                                                 success:nil
                                                                 failure:nil];
      }
-               withExpecations:
+               withExpectations:
      ^(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body) {
          expect(request.URL.host).to.equal(@"www.xing.com");
          expect(request.URL.path).to.equal(@"/v1/users/1/contact_requests/2/accept");
@@ -140,7 +140,7 @@
                                                                    success:nil
                                                                    failure:nil];
      }
-               withExpecations:
+               withExpectations:
      ^(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body) {
          expect(request.URL.host).to.equal(@"www.xing.com");
          expect(request.URL.path).to.equal(@"/v1/users/1/contact_requests/2");

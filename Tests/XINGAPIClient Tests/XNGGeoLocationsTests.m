@@ -43,7 +43,7 @@
                                                             success:nil
                                                             failure:nil];
      }
-               withExpecations:
+               withExpectations:
      ^(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body) {
          expect(request.URL.host).to.equal(@"www.xing.com");
          expect(request.URL.path).to.equal(@"/v1/users/1/geo_location");
@@ -75,7 +75,7 @@
                                                     success:nil
                                                     failure:nil];
      }
-               withExpecations:
+               withExpectations:
      ^(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body) {
          expect(request.URL.host).to.equal(@"www.xing.com");
          expect(request.URL.path).to.equal(@"/v1/users/me/nearby_users");

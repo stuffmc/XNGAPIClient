@@ -48,7 +48,7 @@
                                                     success:nil
                                                     failure:nil];
      }
-               withExpecations:
+               withExpectations:
      ^(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body) {
          expect(request.URL.host).to.equal(@"www.xing.com");
          expect(request.URL.path).to.equal(@"/v1/jobs/1");
@@ -70,7 +70,7 @@
                                                     success:nil
                                                     failure:nil];
      }
-               withExpecations:
+               withExpectations:
      ^(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body) {
          expect(request.URL.host).to.equal(@"www.xing.com");
          expect(request.URL.path).to.equal(@"/v1/jobs/1");
@@ -96,7 +96,7 @@
                                                            success:nil
                                                            failure:nil];
      }
-               withExpecations:
+               withExpectations:
      ^(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body) {
          expect(request.URL.host).to.equal(@"www.xing.com");
          expect(request.URL.path).to.equal(@"/v1/jobs/find");
@@ -122,7 +122,7 @@
                                                            success:nil
                                                            failure:nil];
      }
-               withExpecations:
+               withExpectations:
      ^(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body) {
          expect(request.URL.host).to.equal(@"www.xing.com");
          expect(request.URL.path).to.equal(@"/v1/jobs/find");
@@ -153,7 +153,7 @@
                                                              success:nil
                                                              failure:nil];
      }
-               withExpecations:
+               withExpectations:
      ^(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body) {
          expect(request.URL.host).to.equal(@"www.xing.com");
          expect(request.URL.path).to.equal(@"/v1/users/me/jobs/recommendations");
@@ -176,7 +176,7 @@
                                                              success:nil
                                                              failure:nil];
      }
-               withExpecations:
+               withExpectations:
      ^(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body) {
          expect(request.URL.host).to.equal(@"www.xing.com");
          expect(request.URL.path).to.equal(@"/v1/users/me/jobs/recommendations");
