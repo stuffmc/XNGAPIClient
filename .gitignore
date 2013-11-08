@@ -15,11 +15,6 @@ Tests/Podfile.lock
 Output/
 temp/
 
-# Xcode4
+# Xcode
 xcuserdata/
-
-# Xcode5
-XNGAPIClientExample/XNGAPIClientExample.xcworkspace/xcshareddata/XING.xccheckout
-XNGAPIClientExample/XNGAPIClientExample.xcodeproj/project.xcworkspace/xcshareddata/XNGAPIClientExample.xccheckout
-XNGAPIClientExample/XNGAPIClientExample.xcodeproj/project.xcworkspace/xcuserdata/
-XNGAPIClientExample/XNGAPIClientExample.xcodeproj/xcuserdata/
+*.xccheckout
