@@ -1,11 +1,3 @@
-//
-//  XNGJobsTests.m
-//  XINGAPIClient Tests
-//
-//  Created by Stefan Munz on 11/8/13.
-//  Copyright (c) 2013 XING AG. All rights reserved.
-//
-
 #import <XCTest/XCTest.h>
 #import "XNGTestHelper.h"
 #import "XNGAPIClient+Jobs.h"
