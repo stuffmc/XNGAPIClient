@@ -17,11 +17,9 @@
 + (void)setupLoggedInUserWithUserID:(NSString *)userID;
 + (void)tearDownLoggedInUser;
 
-+ (NSString *)stringFromData:(NSData *)data;
-
 + (void)assertAndRemoveOAuthParametersInQueryDict:(NSMutableDictionary *)queryDict;
-+ (NSMutableDictionary *)dictFromQueryString:(NSString *)queryString;
 
-+ (void)runRunLoopShortly;
++ (void)executeCall:(void (^)())call
+    withExpecations:(void (^)(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body))expectations;
 
 @end

@@ -33,56 +33,51 @@
 }
 
 - (void)testloginXAuth {
-    [OHHTTPStubs onStubActivation:^(NSURLRequest *request, id<OHHTTPStubsDescriptor> stub) {
-        expect(request.URL.host).to.equal(@"www.xing.com");
-        expect(request.URL.path).to.equal(@"/v1/xauth");
-        expect(request.HTTPMethod).to.equal(@"POST");
+    [XNGTestHelper executeCall:
+     ^{
+         [[XNGAPIClient sharedClient] loginXAuthWithUsername:@"username"
+                                                    password:@"password"
+                                                     success:^{}
+                                                     failure:^(NSError *error) {}];
+     }
+               withExpecations:
+     ^(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body) {
+         expect(request.URL.host).to.equal(@"www.xing.com");
+         expect(request.URL.path).to.equal(@"/v1/xauth");
+         expect(request.HTTPMethod).to.equal(@"POST");
 
+         expect([body valueForKey:@"oauth_consumer_key"]).to.equal([XNGTestHelper fakeOAuthConsumerKey]);
+         [body removeObjectForKey:@"oauth_consumer_key"];
 
-        NSString *bodyString = [XNGTestHelper stringFromData:request.HTTPBody];
-        NSMutableDictionary *bodyDict = [XNGTestHelper dictFromQueryString:bodyString];
-        expect([bodyDict valueForKey:@"oauth_consumer_key"]).to.equal([XNGTestHelper fakeOAuthConsumerKey]);
-        [bodyDict removeObjectForKey:@"oauth_consumer_key"];
+         expect([body valueForKey:@"x_auth_mode"]).to.equal(@"client_auth");
+         [body removeObjectForKey:@"x_auth_mode"];
 
-        expect([bodyDict valueForKey:@"x_auth_mode"]).to.equal(@"client_auth");
-        [bodyDict removeObjectForKey:@"x_auth_mode"];
+         expect([body valueForKey:@"x_auth_password"]).to.equal(@"password");
+         [body removeObjectForKey:@"x_auth_password"];
 
-        expect([bodyDict valueForKey:@"x_auth_password"]).to.equal(@"password");
-        [bodyDict removeObjectForKey:@"x_auth_password"];
+         expect([body valueForKey:@"x_auth_username"]).to.equal(@"username");
+         [body removeObjectForKey:@"x_auth_username"];
 
-        expect([bodyDict valueForKey:@"x_auth_username"]).to.equal(@"username");
-        [bodyDict removeObjectForKey:@"x_auth_username"];
+         expect([body allKeys]).to.haveCountOf(0);
 
-        expect([bodyDict allKeys]).to.haveCountOf(0);
-
-
-        NSMutableDictionary *queryDict = [XNGTestHelper dictFromQueryString:request.URL.query];
-        expect([queryDict allKeys]).to.haveCountOf(0);
-
-    }];
-
-    [[XNGAPIClient sharedClient] loginXAuthWithUsername:@"username"
-                                               password:@"password"
-                                                success:^{}
-                                                failure:^(NSError *error) {}];
-
-    [XNGTestHelper runRunLoopShortly];
+         expect([query allKeys]).to.haveCountOf(0);
+     }];
 }
 
-
 - (void)testLoginOAuth {
-    [OHHTTPStubs onStubActivation:^(NSURLRequest *request, id<OHHTTPStubsDescriptor> stub) {
-        expect(request.URL.host).to.equal(@"www.xing.com");
-        expect(request.URL.path).to.equal(@"/v1/request_token");
-        expect(request.HTTPMethod).to.equal(@"POST");
-        expect(request.URL.query).to.beNil;
-        expect(request.HTTPBody).to.beNil;
-    }];
-
-    [[XNGAPIClient sharedClient] loginOAuthWithSuccess:^{}
-                                               failure:^(NSError *error) {}];
-
-    [XNGTestHelper runRunLoopShortly];
+    [XNGTestHelper executeCall:
+     ^{
+         [[XNGAPIClient sharedClient] loginOAuthWithSuccess:^{}
+                                                    failure:^(NSError *error) {}];
+     }
+               withExpecations:
+     ^(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body) {
+         expect(request.URL.host).to.equal(@"www.xing.com");
+         expect(request.URL.path).to.equal(@"/v1/request_token");
+         expect(request.HTTPMethod).to.equal(@"POST");
+         expect([query allKeys]).to.haveCountOf(0);
+         expect([body allKeys]).to.haveCountOf(0);
+     }];
 }
 
 @end

@@ -35,129 +35,121 @@
 #pragma mark - get contact requests
 
 - (void)testGetContactRequests {
-    [OHHTTPStubs onStubActivation:^(NSURLRequest *request, id<OHHTTPStubsDescriptor> stub) {
-        expect(request.URL.host).to.equal(@"www.xing.com");
-        expect(request.URL.path).to.equal(@"/v1/users/me/contact_requests");
-        expect(request.HTTPMethod).to.equal(@"GET");
+    [XNGTestHelper executeCall:
+     ^{
+         [[XNGAPIClient sharedClient] getContactRequestsWithLimit:0
+                                                           offset:0
+                                                       userFields:nil
+                                                          success:nil
+                                                          failure:nil];
+     }
+               withExpecations:
+     ^(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body) {
+         expect(request.URL.host).to.equal(@"www.xing.com");
+         expect(request.URL.path).to.equal(@"/v1/users/me/contact_requests");
+         expect(request.HTTPMethod).to.equal(@"GET");
 
-        NSMutableDictionary *queryDict = [XNGTestHelper dictFromQueryString:request.URL.query];
-        [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:queryDict];
+         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         expect([query allKeys]).to.haveCountOf(0);
 
-        expect([queryDict allKeys]).to.haveCountOf(0);
+         expect([body allKeys]).to.haveCountOf(0);
     }];
-
-    [[XNGAPIClient sharedClient] getContactRequestsWithLimit:0
-                                                      offset:0
-                                                  userFields:nil
-                                                     success:nil
-                                                     failure:nil];
-
-    [XNGTestHelper runRunLoopShortly];
 }
 
 - (void)testGetContactRequestsWithLimitAndOffset {
-    [OHHTTPStubs onStubActivation:^(NSURLRequest *request, id<OHHTTPStubsDescriptor> stub) {
-        expect(request.URL.host).to.equal(@"www.xing.com");
-        expect(request.URL.path).to.equal(@"/v1/users/me/contact_requests");
-        expect(request.HTTPMethod).to.equal(@"GET");
+    [XNGTestHelper executeCall:
+     ^{
+         [[XNGAPIClient sharedClient] getContactRequestsWithLimit:20
+                                                           offset:40
+                                                       userFields:nil
+                                                          success:nil
+                                                          failure:nil];
+     }
+               withExpecations:
+     ^(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body) {
+         expect(request.URL.host).to.equal(@"www.xing.com");
+         expect(request.URL.path).to.equal(@"/v1/users/me/contact_requests");
+         expect(request.HTTPMethod).to.equal(@"GET");
 
-        NSMutableDictionary *queryDict = [XNGTestHelper dictFromQueryString:request.URL.query];
-        [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:queryDict];
+         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
 
-        expect([queryDict valueForKey:@"limit"]).to.equal(@"20");
-        [queryDict removeObjectForKey:@"limit"];
-        expect([queryDict valueForKey:@"offset"]).to.equal(@"40");
-        [queryDict removeObjectForKey:@"offset"];
-        expect([queryDict allKeys]).to.haveCountOf(0);
-    }];
+         expect([query valueForKey:@"limit"]).to.equal(@"20");
+         [query removeObjectForKey:@"limit"];
+         expect([query valueForKey:@"offset"]).to.equal(@"40");
+         [query removeObjectForKey:@"offset"];
+         expect([query allKeys]).to.haveCountOf(0);
 
-    [[XNGAPIClient sharedClient] getContactRequestsWithLimit:20
-                                                      offset:40
-                                                  userFields:nil
-                                                     success:nil
-                                                     failure:nil];
-
-    [XNGTestHelper runRunLoopShortly];
+         expect([body allKeys]).to.haveCountOf(0);
+     }];
 }
 
 #pragma mark - put post delete calls
 
 - (void)testPostCreateContactRequest {
-    [OHHTTPStubs onStubActivation:^(NSURLRequest *request, id<OHHTTPStubsDescriptor> stub) {
-        expect(request.URL.host).to.equal(@"www.xing.com");
-        expect(request.URL.path).to.equal(@"/v1/users/2/contact_requests");
-        expect(request.HTTPMethod).to.equal(@"POST");
+    [XNGTestHelper executeCall:
+     ^{
+         [[XNGAPIClient sharedClient] postCreateContactRequestToUserWithID:@"2"
+                                                                   message:@"blalup"
+                                                                   success:nil
+                                                                   failure:nil];
+     }
+               withExpecations:
+     ^(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body) {
+         expect(request.URL.host).to.equal(@"www.xing.com");
+         expect(request.URL.path).to.equal(@"/v1/users/2/contact_requests");
+         expect(request.HTTPMethod).to.equal(@"POST");
 
-        NSMutableDictionary *queryDict = [XNGTestHelper dictFromQueryString:request.URL.query];
-        [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:queryDict];
+         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
 
-        expect([queryDict allKeys]).to.haveCountOf(0);
+         expect([query allKeys]).to.haveCountOf(0);
 
-        NSString *bodyString = [XNGTestHelper stringFromData:request.HTTPBody];
-        NSMutableDictionary *bodyDict = [XNGTestHelper dictFromQueryString:bodyString];
+         expect([body valueForKey:@"message"]).to.equal(@"blalup");
+         [body removeObjectForKey:@"message"];
 
-        expect([bodyDict valueForKey:@"message"]).to.equal(@"blalup");
-        [bodyDict removeObjectForKey:@"message"];
-
-        expect([bodyDict allKeys]).to.haveCountOf(0);
-    }];
-
-    [[XNGAPIClient sharedClient] postCreateContactRequestToUserWithID:@"2"
-                                                              message:@"blalup"
-                                                              success:nil
-                                                              failure:nil];
-
-    [XNGTestHelper runRunLoopShortly];
+         expect([body allKeys]).to.haveCountOf(0);
+     }];
 }
 
 - (void)testPutConfirmContactRequest {
-    [OHHTTPStubs onStubActivation:^(NSURLRequest *request, id<OHHTTPStubsDescriptor> stub) {
-        expect(request.URL.host).to.equal(@"www.xing.com");
-        expect(request.URL.path).to.equal(@"/v1/users/1/contact_requests/2/accept");
-        expect(request.HTTPMethod).to.equal(@"PUT");
+    [XNGTestHelper executeCall:
+     ^{
+         [[XNGAPIClient sharedClient] putConfirmContactRequestForUserID:@"1"
+                                                               senderID:@"2"
+                                                                success:nil
+                                                                failure:nil];
+     }
+               withExpecations:
+     ^(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body) {
+         expect(request.URL.host).to.equal(@"www.xing.com");
+         expect(request.URL.path).to.equal(@"/v1/users/1/contact_requests/2/accept");
+         expect(request.HTTPMethod).to.equal(@"PUT");
 
-        NSMutableDictionary *queryDict = [XNGTestHelper dictFromQueryString:request.URL.query];
-        [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:queryDict];
+         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
 
-        expect([queryDict allKeys]).to.haveCountOf(0);
+         expect([query allKeys]).to.haveCountOf(0);
 
-        NSString *bodyString = [XNGTestHelper stringFromData:request.HTTPBody];
-        NSMutableDictionary *bodyDict = [XNGTestHelper dictFromQueryString:bodyString];
-
-        expect([bodyDict allKeys]).to.haveCountOf(0);
-    }];
-
-    [[XNGAPIClient sharedClient] putConfirmContactRequestForUserID:@"1"
-                                                          senderID:@"2"
-                                                           success:nil
-                                                           failure:nil];
-    
-    [XNGTestHelper runRunLoopShortly];
+         expect([body allKeys]).to.haveCountOf(0);
+     }];
 }
 
 - (void)testDeleteDeclineContactRequest {
-    [OHHTTPStubs onStubActivation:^(NSURLRequest *request, id<OHHTTPStubsDescriptor> stub) {
-        expect(request.URL.host).to.equal(@"www.xing.com");
-        expect(request.URL.path).to.equal(@"/v1/users/1/contact_requests/2");
-        expect(request.HTTPMethod).to.equal(@"DELETE");
+    [XNGTestHelper executeCall:
+     ^{
+         [[XNGAPIClient sharedClient] deleteDeclineContactRequestForUserID:@"1"
+                                                                  senderID:@"2"
+                                                                   success:nil
+                                                                   failure:nil];
+     }
+               withExpecations:
+     ^(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body) {
+         expect(request.URL.host).to.equal(@"www.xing.com");
+         expect(request.URL.path).to.equal(@"/v1/users/1/contact_requests/2");
+         expect(request.HTTPMethod).to.equal(@"DELETE");
 
-        NSMutableDictionary *queryDict = [XNGTestHelper dictFromQueryString:request.URL.query];
-        [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:queryDict];
+         expect([query allKeys]).to.haveCountOf(0);
 
-        expect([queryDict allKeys]).to.haveCountOf(0);
-
-        NSString *bodyString = [XNGTestHelper stringFromData:request.HTTPBody];
-        NSMutableDictionary *bodyDict = [XNGTestHelper dictFromQueryString:bodyString];
-
-        expect([bodyDict allKeys]).to.haveCountOf(0);
-    }];
-
-    [[XNGAPIClient sharedClient] deleteDeclineContactRequestForUserID:@"1"
-                                                             senderID:@"2"
-                                                              success:nil
-                                                              failure:nil];
-
-    [XNGTestHelper runRunLoopShortly];
+         expect([body allKeys]).to.haveCountOf(0);
+     }];
 }
 
 @end

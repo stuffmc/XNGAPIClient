@@ -1,6 +1,14 @@
 #import "XNGTestHelper.h"
 #import "XNGOAuthHandler.h"
 
+@interface XNGTestHelper ()
+
++ (NSString *)stringFromData:(NSData *)data;
++ (NSMutableDictionary *)dictFromQueryString:(NSString *)queryString;
++ (void)runRunLoopShortly;
+
+@end
+
 @implementation XNGTestHelper
 
 #pragma mark - fake data
@@ -76,6 +84,26 @@
 
 + (void)runRunLoopShortly {
     [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:.1]];
+}
+
+#pragma mark - wrapper call
+
++ (void)executeCall:(void (^)())call
+    withExpecations:(void (^)(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body))expectations {
+
+    [OHHTTPStubs onStubActivation:^(NSURLRequest *request, id<OHHTTPStubsDescriptor> stub) {
+
+        NSMutableDictionary *query = [XNGTestHelper dictFromQueryString:request.URL.query];
+
+        NSString *bodyString = [XNGTestHelper stringFromData:request.HTTPBody];
+        NSMutableDictionary *body = [XNGTestHelper dictFromQueryString:bodyString];
+
+        if (expectations) expectations(request, query, body);
+    }];
+
+    if (call) call();
+
+    [XNGTestHelper runRunLoopShortly];
 }
 
 @end

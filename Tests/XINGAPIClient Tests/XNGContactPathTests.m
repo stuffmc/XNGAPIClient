@@ -33,47 +33,47 @@
 }
 
 - (void)testGetContactPath {
-    [OHHTTPStubs onStubActivation:^(NSURLRequest *request, id<OHHTTPStubsDescriptor> stub) {
-        expect(request.URL.host).to.equal(@"www.xing.com");
-        expect(request.URL.path).to.equal(@"/v1/users/me/network/1/paths");
-        expect(request.HTTPMethod).to.equal(@"GET");
+    [XNGTestHelper executeCall:
+     ^{
+         [[XNGAPIClient sharedClient] getContactPathForOtherUserID:@"1"
+                                                        userFields:nil
+                                                           success:nil
+                                                           failure:nil];
+     }
+               withExpecations:
+     ^(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body) {
+         expect(request.URL.host).to.equal(@"www.xing.com");
+         expect(request.URL.path).to.equal(@"/v1/users/me/network/1/paths");
+         expect(request.HTTPMethod).to.equal(@"GET");
 
-        NSMutableDictionary *queryDict = [XNGTestHelper dictFromQueryString:request.URL.query];
-        [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:queryDict];
+         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         expect([query allKeys]).to.haveCountOf(0);
 
-        expect([queryDict allKeys]).to.haveCountOf(0);
-    }];
-
-    [[XNGAPIClient sharedClient] getContactPathForOtherUserID:@"1"
-                                                   userFields:nil
-                                                      success:nil
-                                                      failure:nil];
-
-    [XNGTestHelper runRunLoopShortly];
+         expect([body allKeys]).to.haveCountOf(0);
+     }];
 }
 
-
 - (void)testGetContactPathWithUserFields {
-    [OHHTTPStubs onStubActivation:^(NSURLRequest *request, id<OHHTTPStubsDescriptor> stub) {
-        expect(request.URL.host).to.equal(@"www.xing.com");
-        expect(request.URL.path).to.equal(@"/v1/users/me/network/1/paths");
-        expect(request.HTTPMethod).to.equal(@"GET");
+    [XNGTestHelper executeCall:
+     ^{
+         [[XNGAPIClient sharedClient] getContactPathForOtherUserID:@"1"
+                                                        userFields:@"display_name"
+                                                           success:nil
+                                                           failure:nil];
+     }
+               withExpecations:
+     ^(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body) {
+         expect(request.URL.host).to.equal(@"www.xing.com");
+         expect(request.URL.path).to.equal(@"/v1/users/me/network/1/paths");
+         expect(request.HTTPMethod).to.equal(@"GET");
 
-        NSMutableDictionary *queryDict = [XNGTestHelper dictFromQueryString:request.URL.query];
-        [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:queryDict];
+         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         expect([query valueForKey:@"user_fields"]).to.equal(@"display_name");
+         [query removeObjectForKey:@"user_fields"];
+         expect([query allKeys]).to.haveCountOf(0);
 
-        expect([queryDict valueForKey:@"user_fields"]).to.equal(@"display_name");
-        [queryDict removeObjectForKey:@"user_fields"];
-
-        expect([queryDict allKeys]).to.haveCountOf(0);
-    }];
-
-    [[XNGAPIClient sharedClient] getContactPathForOtherUserID:@"1"
-                                                   userFields:@"display_name"
-                                                      success:nil
-                                                      failure:nil];
-
-    [XNGTestHelper runRunLoopShortly];
+         expect([body allKeys]).to.haveCountOf(0);
+     }];
 }
 
 @end
