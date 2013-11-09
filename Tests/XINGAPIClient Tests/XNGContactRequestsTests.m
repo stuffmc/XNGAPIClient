@@ -32,8 +32,6 @@
     [OHHTTPStubs removeAllStubs];
 }
 
-#pragma mark - get contact requests
-
 - (void)testGetContactRequests {
     [XNGTestHelper executeCall:
      ^{
@@ -82,8 +80,6 @@
          expect([body allKeys]).to.haveCountOf(0);
      }];
 }
-
-#pragma mark - put post delete calls
 
 - (void)testPostCreateContactRequest {
     [XNGTestHelper executeCall:
