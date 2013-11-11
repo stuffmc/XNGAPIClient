@@ -218,7 +218,6 @@
 
          expect([query valueForKey:@"limit"]).to.equal(@"0");
          [query removeObjectForKey:@"limit"];
-#warning Why is this in here, it should not be needed
          expect([query valueForKey:@"user_id"]).to.equal(@"1");
          [query removeObjectForKey:@"user_id"];
          expect([query allKeys]).to.haveCountOf(0);
