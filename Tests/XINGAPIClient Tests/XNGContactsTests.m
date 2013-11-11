@@ -218,8 +218,6 @@
 
          expect([query valueForKey:@"limit"]).to.equal(@"0");
          [query removeObjectForKey:@"limit"];
-         expect([query valueForKey:@"user_id"]).to.equal(@"1");
-         [query removeObjectForKey:@"user_id"];
          expect([query allKeys]).to.haveCountOf(0);
 
          expect([body allKeys]).to.haveCountOf(0);
