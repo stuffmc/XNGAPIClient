@@ -1,7 +1,7 @@
 namespace :test do
   desc "Run the XING Tests for iOS"
   task :ios do
-    $ios_success = system("xctool -workspace XNGAPIClient.xcworkspace -scheme 'XINGAPIClient Tests' test -sdk iphonesimulator6.1 -arch i386 ONLY_ACTIVE_ARCH=YES")
+    $ios_success = system("xctool -workspace XNGAPIClient.xcworkspace -scheme 'XINGAPIClient Tests' build test -sdk iphonesimulator -arch i386 ONLY_ACTIVE_ARCH=NO")
   end
 end
 
