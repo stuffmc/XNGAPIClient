@@ -1,5 +1,7 @@
 #  The official Objective-C XING API Client
 
+[![Build Status](https://travis-ci.org/xing/XNGAPIClient.png)](https://travis-ci.org/xing/XNGAPIClient)
+
 XNGAPIClient is the official client to access the XING API. In order to access the API, you only need an account on https://xing.com and an oauth consumer key and secret which can be obtained at https://dev.xing.com. Both is totally free and only takes a minute!
 
 XNGAPIClient is built on top of AFNetworking, so it takes full advantage of blocks. We also included an example project that takes care of storing your oauth token in the keychain to get you started even quicker. At the moment only iOS is supported. Not tested yet on Mac OS X.
