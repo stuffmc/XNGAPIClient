@@ -63,7 +63,9 @@ static XNGAPIClient *_sharedClient = nil;
         _oAuthHandler = [[XNGOAuthHandler alloc] init];
         self.baseURL = url;
         [self registerHTTPOperationClass:[XNGJSONRequestOperation class]];
+#ifndef TARGET_OS_MAC
         [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
+#endif
     }
     return self;
 }
