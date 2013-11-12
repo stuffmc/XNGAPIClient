@@ -131,7 +131,6 @@
     NSParameterAssert(userID);
 
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    parameters[@"user_id"] = userID;
     parameters[@"limit"] = @0;
 
     NSString *path = [self pathForGetContactsWithUserID:userID];
