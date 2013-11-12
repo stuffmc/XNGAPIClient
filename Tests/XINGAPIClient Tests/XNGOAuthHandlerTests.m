@@ -107,7 +107,7 @@
 
 - (void)testDeleting {
     XNGOAuthHandler *classUnderTest = [[XNGOAuthHandler alloc] init];
-    [classUnderTest deleteKeychainEntriesAndGTMOAuthAuthentication];
+    [classUnderTest deleteKeychainEntries];
 
     NSString *userID = [SSKeychain passwordForService:@"com.xing.iphone-app-2010" account:@"UserID"];
     expect(userID).to.beNil;
