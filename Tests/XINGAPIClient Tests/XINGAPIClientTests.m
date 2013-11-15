@@ -46,8 +46,8 @@
          expect(request.URL.path).to.equal(@"/v1/xauth");
          expect(request.HTTPMethod).to.equal(@"POST");
 
-         expect([body valueForKey:@"oauth_consumer_key"]).to.equal([XNGTestHelper fakeOAuthConsumerKey]);
-         [body removeObjectForKey:@"oauth_consumer_key"];
+         NSString *authHeader = [request.allHTTPHeaderFields valueForKey:@"Authorization"];
+         expect([authHeader hasPrefix:@"OAuth oauth_consumer_key=\"123\""]).to.beTruthy;
 
          expect([body valueForKey:@"x_auth_mode"]).to.equal(@"client_auth");
          [body removeObjectForKey:@"x_auth_mode"];
