@@ -17,6 +17,6 @@ Pod::Spec.new do |s|
   s.homepage = 'https://www.xing.com'
   s.dependency   'AFNetworking','~> 1.3.0'
   s.dependency   'SSKeychain', '= 1.2.0'
-  s.dependency   'AFOAuth1Client', '~> 0.3.1'
+  s.dependency   'AFOAuth1Client', '= 0.3.1'
   s.frameworks = 'Security','SystemConfiguration'
 end
