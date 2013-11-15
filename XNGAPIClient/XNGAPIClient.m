@@ -205,7 +205,6 @@ static NSString * const XNGAPIClientOAuthAccessTokenPath = @"v1/access_token";
     NSParameterAssert(password);
 
 	NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    parameters[@"oauth_consumer_key"] =  self.key;
     parameters[@"x_auth_username"] = username;
     parameters[@"x_auth_password"] = password;
     parameters[@"x_auth_mode"] = @"client_auth";
