@@ -39,10 +39,7 @@
 		12A91DE1178351D1002C219E /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 12A91DD6178351D1002C219E /* AFURLConnectionOperation.m */; };
 		12A91DE2178351D1002C219E /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 12A91DD8178351D1002C219E /* AFXMLRequestOperation.m */; };
 		12A91DE3178351D1002C219E /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 12A91DDA178351D1002C219E /* UIImageView+AFNetworking.m */; };
-		12A91DED17835CB7002C219E /* GTMHTTPFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 12A91DE617835CB7002C219E /* GTMHTTPFetcher.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		12A91DEE17835CB7002C219E /* GTMOAuthAuthentication.m in Sources */ = {isa = PBXBuildFile; fileRef = 12A91DE817835CB7002C219E /* GTMOAuthAuthentication.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		12A91DEF17835CB7002C219E /* GTMOAuthSignIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 12A91DEA17835CB7002C219E /* GTMOAuthSignIn.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		12A91DF017835CB7002C219E /* GTMOAuthViewControllerTouch.m in Sources */ = {isa = PBXBuildFile; fileRef = 12A91DEC17835CB7002C219E /* GTMOAuthViewControllerTouch.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc -w"; }; };
+
 		12C5BE1417840A0800DD0C58 /* NSError+XWS.m in Sources */ = {isa = PBXBuildFile; fileRef = 12C5BE1317840A0800DD0C58 /* NSError+XWS.m */; };
 		12C5BE16178420FC00DD0C58 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12C5BE15178420FC00DD0C58 /* Security.framework */; };
 		12C5BE1C1784216600DD0C58 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12C5BE1B1784216600DD0C58 /* SystemConfiguration.framework */; };
@@ -116,14 +113,6 @@
 		12A91DD8178351D1002C219E /* AFXMLRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFXMLRequestOperation.m; sourceTree = "<group>"; };
 		12A91DD9178351D1002C219E /* UIImageView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+AFNetworking.h"; sourceTree = "<group>"; };
 		12A91DDA178351D1002C219E /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
-		12A91DE517835CB7002C219E /* GTMHTTPFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMHTTPFetcher.h; sourceTree = "<group>"; };
-		12A91DE617835CB7002C219E /* GTMHTTPFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMHTTPFetcher.m; sourceTree = "<group>"; };
-		12A91DE717835CB7002C219E /* GTMOAuthAuthentication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMOAuthAuthentication.h; sourceTree = "<group>"; };
-		12A91DE817835CB7002C219E /* GTMOAuthAuthentication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMOAuthAuthentication.m; sourceTree = "<group>"; };
-		12A91DE917835CB7002C219E /* GTMOAuthSignIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMOAuthSignIn.h; sourceTree = "<group>"; };
-		12A91DEA17835CB7002C219E /* GTMOAuthSignIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMOAuthSignIn.m; sourceTree = "<group>"; };
-		12A91DEB17835CB7002C219E /* GTMOAuthViewControllerTouch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMOAuthViewControllerTouch.h; sourceTree = "<group>"; };
-		12A91DEC17835CB7002C219E /* GTMOAuthViewControllerTouch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMOAuthViewControllerTouch.m; sourceTree = "<group>"; };
 		12C5BE1217840A0800DD0C58 /* NSError+XWS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSError+XWS.h"; path = "../XNGAPIClient/NSError+XWS.h"; sourceTree = "<group>"; };
 		12C5BE1317840A0800DD0C58 /* NSError+XWS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSError+XWS.m"; path = "../XNGAPIClient/NSError+XWS.m"; sourceTree = "<group>"; };
 		12C5BE15178420FC00DD0C58 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -195,7 +184,6 @@
 			isa = PBXGroup;
 			children = (
 				F025583218217DB20097A1AA /* SSKeychain */,
-				12A91DE417835C89002C219E /* GTMOauth */,
 				DD162B6718088D8300806605 /* AFOAuth1Client */,
 				12A91DC71783518B002C219E /* AFNetworking */,
 				123EDB021783066E00B70CD4 /* XNGAppDelegate.h */,
@@ -279,21 +267,7 @@
 			name = AFNetworking;
 			sourceTree = "<group>";
 		};
-		12A91DE417835C89002C219E /* GTMOauth */ = {
-			isa = PBXGroup;
-			children = (
-				12A91DE517835CB7002C219E /* GTMHTTPFetcher.h */,
-				12A91DE617835CB7002C219E /* GTMHTTPFetcher.m */,
-				12A91DE717835CB7002C219E /* GTMOAuthAuthentication.h */,
-				12A91DE817835CB7002C219E /* GTMOAuthAuthentication.m */,
-				12A91DE917835CB7002C219E /* GTMOAuthSignIn.h */,
-				12A91DEA17835CB7002C219E /* GTMOAuthSignIn.m */,
-				12A91DEB17835CB7002C219E /* GTMOAuthViewControllerTouch.h */,
-				12A91DEC17835CB7002C219E /* GTMOAuthViewControllerTouch.m */,
-			);
-			name = GTMOauth;
-			sourceTree = "<group>";
-		};
+
 		12C5BE1D1784221F00DD0C58 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
@@ -424,11 +398,9 @@
 				12A91DE1178351D1002C219E /* AFURLConnectionOperation.m in Sources */,
 				12A91DE2178351D1002C219E /* AFXMLRequestOperation.m in Sources */,
 				12A91DE3178351D1002C219E /* UIImageView+AFNetworking.m in Sources */,
-				12A91DED17835CB7002C219E /* GTMHTTPFetcher.m in Sources */,
 				F025583118217DAF0097A1AA /* SSKeychainQuery.m in Sources */,
-				12A91DEE17835CB7002C219E /* GTMOAuthAuthentication.m in Sources */,
-				12A91DEF17835CB7002C219E /* GTMOAuthSignIn.m in Sources */,
-				12A91DF017835CB7002C219E /* GTMOAuthViewControllerTouch.m in Sources */,
+
+
 				12C5BE1417840A0800DD0C58 /* NSError+XWS.m in Sources */,
 				12C5BE23178423F200DD0C58 /* NSDictionary+Typecheck.m in Sources */,
 				12C5BE24178423F200DD0C58 /* NSString+URLEncoding.m in Sources */,

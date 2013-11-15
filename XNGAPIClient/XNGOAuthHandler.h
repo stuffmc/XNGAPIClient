@@ -19,15 +19,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "GTMOAuthAuthentication.h"
 #import "AFNetworking.h"
 
 @interface XNGOAuthHandler : NSObject
-@property (nonatomic, strong) NSString *xingUserID;
-@property (nonatomic, strong) NSString *consumerKey;
-@property (nonatomic, strong) NSString *consumerSecret;
-@property (nonatomic, strong) NSString *signatureMethod;
-@property (nonatomic, strong) NSString *serviceProvider;
 @property (nonatomic, strong, readonly) NSString *accessToken;
 @property (nonatomic, strong, readonly) NSString *tokenSecret;
 @property (nonatomic, strong, readonly) NSString *userID;
@@ -43,11 +37,9 @@
                                       success:(void (^)(void))success
                                       failure:(void (^)(NSError *error))failure;
 
-- (void)deleteKeychainEntriesAndGTMOAuthAuthentication;
+- (void)deleteKeychainEntries;
 
 - (BOOL)hasAccessToken;
-
-- (void)authorizeRequest:(NSMutableURLRequest *)request;
 
 
 @end

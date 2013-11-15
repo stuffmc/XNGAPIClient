@@ -44,7 +44,7 @@
 
 + (void)tearDownLoggedInUser {
     XNGOAuthHandler *oauthHandler = [[XNGOAuthHandler alloc] init];
-    [oauthHandler deleteKeychainEntriesAndGTMOAuthAuthentication];
+    [oauthHandler deleteKeychainEntries];
 }
 
 #pragma mark - body data helper
