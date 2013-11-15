@@ -187,7 +187,10 @@ static NSString * const XNGAPIClientOAuthAccessTokenPath = @"v1/access_token";
          NSDictionary *xAuthResponseFields = [NSString xng_URLDecodedDictionaryFromString:body];
 
          [self.oAuthHandler saveXAuthResponseParametersToKeychain:xAuthResponseFields
-                                                          success:success
+                                                          success:^{
+                                                              self.accessToken = [self accessTokenFromKeychain];
+                                                              if (success) success();
+                                                          }
                                                           failure:failure];
      } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
          failure(error);
