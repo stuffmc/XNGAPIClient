@@ -76,10 +76,16 @@ static XNGAPIClient *_sharedClient = nil;
         self.baseURL = url;
         self.signatureMethod = AFHMACSHA1SignatureMethod;
         [self registerHTTPOperationClass:[XNGJSONRequestOperation class]];
+#ifndef TARGET_OS_MAC
         [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
+#endif
         self.accessToken = [self accessTokenFromKeychain];
     }
     return self;
+}
+
++ (void)addAcceptableContentTypes:(NSSet *)set {
+    [XNGJSONRequestOperation addAcceptableContentTypes:set];
 }
 
 #pragma mark - Getters / Setters
@@ -252,7 +258,10 @@ static NSString * const XNGAPIClientOAuthAccessTokenPath = @"v1/access_token";
          NSDictionary *xAuthResponseFields = [NSString xng_URLDecodedDictionaryFromString:body];
          
          [self.oAuthHandler saveXAuthResponseParametersToKeychain:xAuthResponseFields
-                                                          success:success
+                                                          success:^{
+                                                              self.accessToken = [self accessTokenFromKeychain];
+                                                              if (success) success();
+                                                          }
                                                           failure:failure];
      } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
          failure(error);
@@ -267,7 +276,6 @@ static NSString * const XNGAPIClientOAuthAccessTokenPath = @"v1/access_token";
     NSParameterAssert(password);
     
 	NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    parameters[@"oauth_consumer_key"] =  self.key;
     parameters[@"x_auth_username"] = username;
     parameters[@"x_auth_password"] = password;
     parameters[@"x_auth_mode"] = @"client_auth";
@@ -289,31 +297,85 @@ static NSString * const XNGAPIClientOAuthAccessTokenPath = @"v1/access_token";
          parameters:(NSDictionary *)parameters
             success:(void (^)(id JSON))success
             failure:(void (^)(NSError *error))failure {
-    NSMutableURLRequest *request = [self requestWithMethod:@"GET" path:path parameters:parameters];
-    [self enqueueJSONRequest:request success:success failure:failure];
+    [self getJSONPath:path
+           parameters:parameters
+         acceptHeader:nil
+              success:success
+              failure:failure];
 }
 
 - (void)putJSONPath:(NSString *)path
          parameters:(NSDictionary *)parameters
             success:(void (^)(id JSON))success
             failure:(void (^)(NSError *error))failure {
-    NSMutableURLRequest *request = [self requestWithMethod:@"PUT" path:path parameters:parameters];
-    [self enqueueJSONRequest:request success:success failure:failure];
+    [self putJSONPath:path
+           parameters:parameters
+         acceptHeader:nil
+              success:success
+              failure:failure];
 }
 
 - (void)postJSONPath:(NSString *)path
           parameters:(NSDictionary *)parameters
              success:(void (^)(id JSON))success
              failure:(void (^)(NSError *error))failure {
-    NSMutableURLRequest *request = [self requestWithMethod:@"POST" path:path parameters:parameters];
-    [self enqueueJSONRequest:request success:success failure:failure];
+    [self postJSONPath:path
+            parameters:parameters
+          acceptHeader:nil
+               success:success
+               failure:failure];
 }
 
 - (void)deleteJSONPath:(NSString *)path
             parameters:(NSDictionary *)parameters
                success:(void (^)(id JSON))success
                failure:(void (^)(NSError *error))failure {
+    [self deleteJSONPath:path
+              parameters:parameters
+            acceptHeader:nil
+                 success:success
+                 failure:failure];
+}
+
+#pragma mark - block-based GET / PUT / POST / DELETE with optional accept headers
+
+- (void)getJSONPath:(NSString *)path
+         parameters:(NSDictionary *)parameters
+       acceptHeader:(NSString *)acceptHeader
+            success:(void (^)(id))success
+            failure:(void (^)(NSError *))failure {
+    NSMutableURLRequest *request = [self requestWithMethod:@"GET" path:path parameters:parameters];
+    if (acceptHeader) [request setValue:acceptHeader forHTTPHeaderField:@"Accept"];
+    [self enqueueJSONRequest:request success:success failure:failure];
+}
+
+- (void)putJSONPath:(NSString *)path
+         parameters:(NSDictionary *)parameters
+       acceptHeader:(NSString *)acceptHeader
+            success:(void (^)(id))success
+            failure:(void (^)(NSError *))failure {
+    NSMutableURLRequest *request = [self requestWithMethod:@"PUT" path:path parameters:parameters];
+    if (acceptHeader) [request setValue:acceptHeader forHTTPHeaderField:@"Accept"];
+    [self enqueueJSONRequest:request success:success failure:failure];
+}
+
+- (void)postJSONPath:(NSString *)path
+          parameters:(NSDictionary *)parameters
+        acceptHeader:(NSString *)acceptHeader
+             success:(void (^)(id))success
+             failure:(void (^)(NSError *))failure {
+    NSMutableURLRequest *request = [self requestWithMethod:@"POST" path:path parameters:parameters];
+    if (acceptHeader) [request setValue:acceptHeader forHTTPHeaderField:@"Accept"];
+    [self enqueueJSONRequest:request success:success failure:failure];
+}
+
+- (void)deleteJSONPath:(NSString *)path
+            parameters:(NSDictionary *)parameters
+          acceptHeader:(NSString *)acceptHeader
+               success:(void (^)(id))success
+               failure:(void (^)(NSError *))failure {
     NSMutableURLRequest *request = [self requestWithMethod:@"DELETE" path:path parameters:parameters];
+    if (acceptHeader) [request setValue:acceptHeader forHTTPHeaderField:@"Accept"];
     [self enqueueJSONRequest:request success:success failure:failure];
 }
 
@@ -386,7 +448,9 @@ static NSString * const XNGAPIClientOAuthAccessTokenPath = @"v1/access_token";
 - (void)enqueueJSONRequest:(NSMutableURLRequest *)request
                    success:(void (^)(id JSON))success
                    failure:(void (^)(NSError *error))failure {
-    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    if (NO == [[[request allHTTPHeaderFields] allKeys] containsObject:@"Accept"]) {
+        [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    }
     __weak __typeof(&*self)weakSelf = self;
     XNGJSONRequestOperation *operation = nil;
     operation = [XNGJSONRequestOperation JSONRequestOperationWithRequest:request

@@ -39,7 +39,7 @@
 		12A91DE1178351D1002C219E /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 12A91DD6178351D1002C219E /* AFURLConnectionOperation.m */; };
 		12A91DE2178351D1002C219E /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 12A91DD8178351D1002C219E /* AFXMLRequestOperation.m */; };
 		12A91DE3178351D1002C219E /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 12A91DDA178351D1002C219E /* UIImageView+AFNetworking.m */; };
-		12C5BE0E178362F800DD0C58 /* SFHFKeychainUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 12C5BE0D178362F800DD0C58 /* SFHFKeychainUtils.m */; };
+
 		12C5BE1417840A0800DD0C58 /* NSError+XWS.m in Sources */ = {isa = PBXBuildFile; fileRef = 12C5BE1317840A0800DD0C58 /* NSError+XWS.m */; };
 		12C5BE16178420FC00DD0C58 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12C5BE15178420FC00DD0C58 /* Security.framework */; };
 		12C5BE1C1784216600DD0C58 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12C5BE1B1784216600DD0C58 /* SystemConfiguration.framework */; };
@@ -48,6 +48,8 @@
 		12C5BE27178472E600DD0C58 /* XNGExampleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 12C5BE26178472E600DD0C58 /* XNGExampleViewController.m */; };
 		8E0AAF7117FAF6A600020B93 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E0AAF7017FAF6A600020B93 /* MobileCoreServices.framework */; };
 		DD162B6A18088D9A00806605 /* AFOAuth1Client.m in Sources */ = {isa = PBXBuildFile; fileRef = DD162B6918088D9A00806605 /* AFOAuth1Client.m */; };
+		F025583018217DAF0097A1AA /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = F025582D18217DAF0097A1AA /* SSKeychain.m */; };
+		F025583118217DAF0097A1AA /* SSKeychainQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = F025582F18217DAF0097A1AA /* SSKeychainQuery.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -111,8 +113,6 @@
 		12A91DD8178351D1002C219E /* AFXMLRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFXMLRequestOperation.m; sourceTree = "<group>"; };
 		12A91DD9178351D1002C219E /* UIImageView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+AFNetworking.h"; sourceTree = "<group>"; };
 		12A91DDA178351D1002C219E /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
-		12C5BE0C178362F800DD0C58 /* SFHFKeychainUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFHFKeychainUtils.h; sourceTree = "<group>"; };
-		12C5BE0D178362F800DD0C58 /* SFHFKeychainUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFHFKeychainUtils.m; sourceTree = "<group>"; };
 		12C5BE1217840A0800DD0C58 /* NSError+XWS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSError+XWS.h"; path = "../XNGAPIClient/NSError+XWS.h"; sourceTree = "<group>"; };
 		12C5BE1317840A0800DD0C58 /* NSError+XWS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSError+XWS.m"; path = "../XNGAPIClient/NSError+XWS.m"; sourceTree = "<group>"; };
 		12C5BE15178420FC00DD0C58 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -126,6 +126,10 @@
 		8E0AAF7017FAF6A600020B93 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		DD162B6818088D9A00806605 /* AFOAuth1Client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFOAuth1Client.h; sourceTree = "<group>"; };
 		DD162B6918088D9A00806605 /* AFOAuth1Client.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFOAuth1Client.m; sourceTree = "<group>"; };
+		F025582C18217DAF0097A1AA /* SSKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKeychain.h; sourceTree = "<group>"; };
+		F025582D18217DAF0097A1AA /* SSKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKeychain.m; sourceTree = "<group>"; };
+		F025582E18217DAF0097A1AA /* SSKeychainQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKeychainQuery.h; sourceTree = "<group>"; };
+		F025582F18217DAF0097A1AA /* SSKeychainQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKeychainQuery.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -179,7 +183,7 @@
 		123EDAF91783066E00B70CD4 /* XNGAPIClientExample */ = {
 			isa = PBXGroup;
 			children = (
-				12C5BE0B1783626F00DD0C58 /* SFHFKeychainUtils */,
+				F025583218217DB20097A1AA /* SSKeychain */,
 				DD162B6718088D8300806605 /* AFOAuth1Client */,
 				12A91DC71783518B002C219E /* AFNetworking */,
 				123EDB021783066E00B70CD4 /* XNGAppDelegate.h */,
@@ -263,15 +267,7 @@
 			name = AFNetworking;
 			sourceTree = "<group>";
 		};
-		12C5BE0B1783626F00DD0C58 /* SFHFKeychainUtils */ = {
-			isa = PBXGroup;
-			children = (
-				12C5BE0C178362F800DD0C58 /* SFHFKeychainUtils.h */,
-				12C5BE0D178362F800DD0C58 /* SFHFKeychainUtils.m */,
-			);
-			name = SFHFKeychainUtils;
-			sourceTree = "<group>";
-		};
+
 		12C5BE1D1784221F00DD0C58 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
@@ -296,6 +292,17 @@
 				DD162B6918088D9A00806605 /* AFOAuth1Client.m */,
 			);
 			name = AFOAuth1Client;
+			sourceTree = "<group>";
+		};
+		F025583218217DB20097A1AA /* SSKeychain */ = {
+			isa = PBXGroup;
+			children = (
+				F025582C18217DAF0097A1AA /* SSKeychain.h */,
+				F025582D18217DAF0097A1AA /* SSKeychain.m */,
+				F025582E18217DAF0097A1AA /* SSKeychainQuery.h */,
+				F025582F18217DAF0097A1AA /* SSKeychainQuery.m */,
+			);
+			name = SSKeychain;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -373,6 +380,7 @@
 				12A91DBA1783516A002C219E /* XNGAPIClient+Contacts.m in Sources */,
 				12A91DBB1783516A002C219E /* XNGAPIClient+GeoLocations.m in Sources */,
 				12A91DBC1783516A002C219E /* XNGAPIClient+Invitations.m in Sources */,
+				F025583018217DAF0097A1AA /* SSKeychain.m in Sources */,
 				12A91DBD1783516A002C219E /* XNGAPIClient+Jobs.m in Sources */,
 				12A91DBE1783516A002C219E /* XNGAPIClient+Messages.m in Sources */,
 				12A91DBF1783516A002C219E /* XNGAPIClient+NetworkFeed.m in Sources */,
@@ -390,7 +398,9 @@
 				12A91DE1178351D1002C219E /* AFURLConnectionOperation.m in Sources */,
 				12A91DE2178351D1002C219E /* AFXMLRequestOperation.m in Sources */,
 				12A91DE3178351D1002C219E /* UIImageView+AFNetworking.m in Sources */,
-				12C5BE0E178362F800DD0C58 /* SFHFKeychainUtils.m in Sources */,
+				F025583118217DAF0097A1AA /* SSKeychainQuery.m in Sources */,
+
+
 				12C5BE1417840A0800DD0C58 /* NSError+XWS.m in Sources */,
 				12C5BE23178423F200DD0C58 /* NSDictionary+Typecheck.m in Sources */,
 				12C5BE24178423F200DD0C58 /* NSString+URLEncoding.m in Sources */,
