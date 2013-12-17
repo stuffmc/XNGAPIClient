@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
   }
   s.source = {
     :git => 'https://github.com/xing/XNGAPIClient.git',
-    :tag => '0.0.3'
+    :commit => 'cf599a29f80d72264ce9f24820a868cfa2c78d49'
   }
   s.source_files = 'XNGAPIClient/*.{h,m}'
   s.requires_arc = true
