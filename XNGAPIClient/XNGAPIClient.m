@@ -27,6 +27,9 @@
 #import "XNGJSONRequestOperation.h"
 #import "NSError+XWS.h"
 
+typedef void(^XNGAPILoginOpenURLBlock)(NSURL*openURL);
+static NSDictionary * XNGParametersFromQueryString(NSString *queryString);
+
 @interface AFOAuth1Client (private)
 @property (readwrite, nonatomic, copy) NSString *key;
 @property (readwrite, nonatomic, copy) NSString *secret;
@@ -36,6 +39,7 @@
 @property(nonatomic, strong, readwrite) XNGOAuthHandler *oAuthHandler;
 @property(nonatomic, strong, readwrite) NSURL *baseURL;
 @property(nonatomic, strong, readwrite) NSString *callbackScheme;
+@property(nonatomic, copy, readwrite) XNGAPILoginOpenURLBlock loginOpenURLBlock;
 @end
 
 @implementation XNGAPIClient
@@ -132,43 +136,110 @@ static NSString * const XNGAPIClientOAuthAccessTokenPath = @"v1/access_token";
 
 - (void)loginOAuthWithSuccess:(void (^)(void))success
                       failure:(void (^)(NSError *error))failure {
-
+    
     XNGAPIClientCanLoginTests(self);
     
     NSURL *callbackURL = [self oauthCallbackURL];
-
+    
     __weak __typeof(&*self)weakSelf = self;
     
     [self authorizeUsingOAuthWithRequestTokenPath:XNGAPIClientOAuthRequestTokenPath
-                                   userAuthorizationPath:XNGAPIClientOAuthAuthorizationPath
-                                             callbackURL:callbackURL
-                                         accessTokenPath:XNGAPIClientOAuthAccessTokenPath
-                                            accessMethod:@"POST"
-                                                   scope:nil
-                                                 success:
+                            userAuthorizationPath:XNGAPIClientOAuthAuthorizationPath
+                                      callbackURL:callbackURL
+                                  accessTokenPath:XNGAPIClientOAuthAccessTokenPath
+                                     accessMethod:@"POST"
+                                            scope:nil
+                                          success:
      ^(AFOAuth1Token *accessToken, id responseObject) {
          NSString *userID = [accessToken.userInfo xng_stringForKey:@"user_id"];
          [weakSelf.oAuthHandler saveUserID:userID
-                           accessToken:accessToken.key
-                                secret:accessToken.secret
-                               success:success
-                               failure:failure];
+                               accessToken:accessToken.key
+                                    secret:accessToken.secret
+                                   success:success
+                                   failure:failure];
      } failure:^(NSError *error) {
          failure(error);
      }];
 }
 
+
+- (void)loginOAuthAuthorize:(void (^)(NSURL *))authorizeBlock
+                   loggedIn:(void (^)())loggedInBlock
+                   failuire:(void (^)(NSError *))failureBlock {
+
+    XNGAPIClientCanLoginTests(self);
+    
+    NSURL *callbackURL = [self oauthCallbackURL];
+    __weak __typeof(&*self)weakSelf = self;
+    
+    [self acquireOAuthRequestTokenWithPath:XNGAPIClientOAuthRequestTokenPath
+                               callbackURL:callbackURL
+                              accessMethod:@"POST"
+                                     scope:nil
+                                   success:
+     ^(AFOAuth1Token *requestToken, id responseObject) {
+         
+         weakSelf.loginOpenURLBlock = [weakSelf loginOpenURLBlockWithRequestToken:requestToken loggedIn:loggedInBlock failuire:failureBlock];
+
+         NSDictionary *parameters = @{@"oauth_token": requestToken.key};
+         NSURL *authURL = [weakSelf oAuthAuthorizationURLWithParameters:parameters];
+         authorizeBlock(authURL);
+     }
+                                   failure:
+     ^(NSError *error) {
+         failureBlock(error);
+     }];
+    
+}
+
+- (XNGAPILoginOpenURLBlock) loginOpenURLBlockWithRequestToken:(AFOAuth1Token*)requestToken
+                                                     loggedIn:(void (^)())loggedInBlock
+                                                     failuire:(void (^)(NSError *))failureBlock  {
+    __weak __typeof(&*self)weakSelf = self;
+    
+    return ^(NSURL*openURL){
+        
+        NSDictionary *queryDictionary = XNGParametersFromQueryString(openURL.query);
+        requestToken.verifier = queryDictionary[@"oauth_verifier"];
+        
+        [weakSelf acquireOAuthAccessTokenWithPath:XNGAPIClientOAuthAccessTokenPath
+                                 requestToken:requestToken
+                                 accessMethod:@"POST"
+                                      success:^(AFOAuth1Token *accessToken, id responseObject) {
+                                          [weakSelf saveAuthDataFromToken:accessToken success:loggedInBlock failure:failureBlock];
+                                          loggedInBlock();
+                                      } failure:failureBlock];
+    };
+}
+- (void) saveAuthDataFromToken:(AFOAuth1Token*)accessToken
+                       success:(void (^)(void))success
+                       failure:(void (^)(NSError *error))failure  {
+    self.accessToken = accessToken;
+    NSString *userID = [accessToken.userInfo xng_stringForKey:@"user_id"];
+    [self.oAuthHandler saveUserID:userID
+                      accessToken:accessToken.key
+                           secret:accessToken.secret
+                          success:success
+                          failure:failure];
+}
+
+
 - (BOOL)handleOpenURL:(NSURL *)URL {
     if([[URL scheme] isEqualToString:self.callbackScheme] == NO) {
         return NO;
     }
-
+    
+    if (self.loginOpenURLBlock) {
+        self.loginOpenURLBlock(URL);
+        self.loginOpenURLBlock = nil;
+    }
+    
     NSDictionary *dict = [NSDictionary dictionaryWithObject:URL forKey:kAFApplicationLaunchOptionsURLKey];
     NSNotification *notification = [NSNotification notificationWithName:kAFApplicationLaunchedWithURLNotification
                                                                  object:nil
                                                                userInfo:dict];
     [[NSNotificationCenter defaultCenter] postNotification:notification];
-
+    
     return YES;
 }
 
@@ -176,7 +247,7 @@ static NSString * const XNGAPIClientOAuthAccessTokenPath = @"v1/access_token";
                       password:(NSString*)password
                        success:(void (^)(void))success
                        failure:(void (^)(NSError *error))failure {
-
+    
     XNGAPIClientCanLoginTests(self);
     
     [self postRequestXAuthAccessTokenWithUsername:username
@@ -185,7 +256,7 @@ static NSString * const XNGAPIClientOAuthAccessTokenPath = @"v1/access_token";
      ^(AFHTTPRequestOperation *operation, id responseJSON) {
          NSString *body = [[NSString alloc] initWithData:operation.responseData encoding:NSUTF8StringEncoding];
          NSDictionary *xAuthResponseFields = [NSString xng_URLDecodedDictionaryFromString:body];
-
+         
          [self.oAuthHandler saveXAuthResponseParametersToKeychain:xAuthResponseFields
                                                           success:^{
                                                               self.accessToken = [self accessTokenFromKeychain];
@@ -203,12 +274,12 @@ static NSString * const XNGAPIClientOAuthAccessTokenPath = @"v1/access_token";
                                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
     NSParameterAssert(username);
     NSParameterAssert(password);
-
+    
 	NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     parameters[@"x_auth_username"] = username;
     parameters[@"x_auth_password"] = password;
     parameters[@"x_auth_mode"] = @"client_auth";
-
+    
     NSString* path = [NSString stringWithFormat:@"%@/v1/xauth", self.baseURL];
     [self postPath:path parameters:parameters success:success failure:failure];
 }
@@ -325,8 +396,15 @@ static NSString * const XNGAPIClientOAuthAccessTokenPath = @"v1/access_token";
 #pragma mark - OAuth related methods (private)
 
 
-- (NSURL*) oauthCallbackURL {
+- (NSURL*)oauthCallbackURL {
     return [NSURL URLWithString:[NSString stringWithFormat:@"%@://success",self.callbackScheme]];
+}
+
+- (NSURL*)oAuthAuthorizationURLWithParameters:(NSDictionary*)parameters {
+    NSString *query = AFQueryStringFromParametersWithEncoding(parameters, self.stringEncoding);
+
+    NSString *pathAndQuery = [XNGAPIClientOAuthAuthorizationPath stringByAppendingFormat:@"?%@",query];
+    return [[NSURL URLWithString:pathAndQuery relativeToURL:self.baseURL] absoluteURL];
 }
 
 #pragma mark - checking methods
@@ -386,12 +464,12 @@ static NSString * const XNGAPIClientOAuthAccessTokenPath = @"v1/access_token";
                  ^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
                      [weakSelf checkForDeprecation:response];
                      [weakSelf checkForGlobalErrors:response withJSON:JSON];
-
+                     
                      if ([JSON isKindOfClass:[NSDictionary class]]) {
                          error = [NSError xwsErrorWithStatusCode:response.statusCode
                                                         userInfo:JSON];
                      }
-
+                     
                      if (failure) {
                          failure(error);
                      }
@@ -415,6 +493,31 @@ static NSString * const XNGAPIClientOAuthAccessTokenPath = @"v1/access_token";
     return [NSException exceptionWithName:@"XNGNoConsumerSecretException"
                                    reason:@"There is no Consumer Secret set yet. Please set it first before invoking login."
                                  userInfo:nil];
+}
+
+static NSDictionary * XNGParametersFromQueryString(NSString *queryString) {
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    if (queryString) {
+        NSScanner *parameterScanner = [[NSScanner alloc] initWithString:queryString];
+        NSString *name = nil;
+        NSString *value = nil;
+        
+        while (![parameterScanner isAtEnd]) {
+            name = nil;
+            [parameterScanner scanUpToString:@"=" intoString:&name];
+            [parameterScanner scanString:@"=" intoString:NULL];
+            
+            value = nil;
+            [parameterScanner scanUpToString:@"&" intoString:&value];
+            [parameterScanner scanString:@"&" intoString:NULL];
+            
+            if (name && value) {
+                parameters[[name stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]] = [value stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+            }
+        }
+    }
+    
+    return parameters;
 }
 
 @end
