@@ -16,6 +16,7 @@
 		123EDB061783066E00B70CD4 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 123EDB051783066E00B70CD4 /* Default.png */; };
 		123EDB081783066E00B70CD4 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 123EDB071783066E00B70CD4 /* Default@2x.png */; };
 		123EDB0A1783066E00B70CD4 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 123EDB091783066E00B70CD4 /* Default-568h@2x.png */; };
+		126388D7186306E700C01964 /* XNGLoginWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 126388D6186306E700C01964 /* XNGLoginWebViewController.m */; };
 		12A91DB71783516A002C219E /* XNGAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 12A91D981783516A002C219E /* XNGAPIClient.m */; };
 		12A91DB81783516A002C219E /* XNGAPIClient+ContactPath.m in Sources */ = {isa = PBXBuildFile; fileRef = 12A91D9A1783516A002C219E /* XNGAPIClient+ContactPath.m */; };
 		12A91DB91783516A002C219E /* XNGAPIClient+ContactRequests.m in Sources */ = {isa = PBXBuildFile; fileRef = 12A91D9C1783516A002C219E /* XNGAPIClient+ContactRequests.m */; };
@@ -39,7 +40,6 @@
 		12A91DE1178351D1002C219E /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 12A91DD6178351D1002C219E /* AFURLConnectionOperation.m */; };
 		12A91DE2178351D1002C219E /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 12A91DD8178351D1002C219E /* AFXMLRequestOperation.m */; };
 		12A91DE3178351D1002C219E /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 12A91DDA178351D1002C219E /* UIImageView+AFNetworking.m */; };
-
 		12C5BE1417840A0800DD0C58 /* NSError+XWS.m in Sources */ = {isa = PBXBuildFile; fileRef = 12C5BE1317840A0800DD0C58 /* NSError+XWS.m */; };
 		12C5BE16178420FC00DD0C58 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12C5BE15178420FC00DD0C58 /* Security.framework */; };
 		12C5BE1C1784216600DD0C58 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12C5BE1B1784216600DD0C58 /* SystemConfiguration.framework */; };
@@ -66,6 +66,8 @@
 		123EDB051783066E00B70CD4 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		123EDB071783066E00B70CD4 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		123EDB091783066E00B70CD4 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		126388D5186306E700C01964 /* XNGLoginWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XNGLoginWebViewController.h; sourceTree = "<group>"; };
+		126388D6186306E700C01964 /* XNGLoginWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XNGLoginWebViewController.m; sourceTree = "<group>"; };
 		12A91D971783516A002C219E /* XNGAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XNGAPIClient.h; path = ../XNGAPIClient/XNGAPIClient.h; sourceTree = "<group>"; };
 		12A91D981783516A002C219E /* XNGAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XNGAPIClient.m; path = ../XNGAPIClient/XNGAPIClient.m; sourceTree = "<group>"; };
 		12A91D991783516A002C219E /* XNGAPIClient+ContactPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "XNGAPIClient+ContactPath.h"; path = "../XNGAPIClient/XNGAPIClient+ContactPath.h"; sourceTree = "<group>"; };
@@ -190,6 +192,8 @@
 				123EDB031783066E00B70CD4 /* XNGAppDelegate.m */,
 				12C5BE25178472E600DD0C58 /* XNGExampleViewController.h */,
 				12C5BE26178472E600DD0C58 /* XNGExampleViewController.m */,
+				126388D5186306E700C01964 /* XNGLoginWebViewController.h */,
+				126388D6186306E700C01964 /* XNGLoginWebViewController.m */,
 				123EDAFA1783066E00B70CD4 /* Supporting Files */,
 			);
 			path = XNGAPIClientExample;
@@ -267,7 +271,6 @@
 			name = AFNetworking;
 			sourceTree = "<group>";
 		};
-
 		12C5BE1D1784221F00DD0C58 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
@@ -380,6 +383,7 @@
 				12A91DBA1783516A002C219E /* XNGAPIClient+Contacts.m in Sources */,
 				12A91DBB1783516A002C219E /* XNGAPIClient+GeoLocations.m in Sources */,
 				12A91DBC1783516A002C219E /* XNGAPIClient+Invitations.m in Sources */,
+				126388D7186306E700C01964 /* XNGLoginWebViewController.m in Sources */,
 				F025583018217DAF0097A1AA /* SSKeychain.m in Sources */,
 				12A91DBD1783516A002C219E /* XNGAPIClient+Jobs.m in Sources */,
 				12A91DBE1783516A002C219E /* XNGAPIClient+Messages.m in Sources */,
@@ -399,8 +403,6 @@
 				12A91DE2178351D1002C219E /* AFXMLRequestOperation.m in Sources */,
 				12A91DE3178351D1002C219E /* UIImageView+AFNetworking.m in Sources */,
 				F025583118217DAF0097A1AA /* SSKeychainQuery.m in Sources */,
-
-
 				12C5BE1417840A0800DD0C58 /* NSError+XWS.m in Sources */,
 				12C5BE23178423F200DD0C58 /* NSDictionary+Typecheck.m in Sources */,
 				12C5BE24178423F200DD0C58 /* NSString+URLEncoding.m in Sources */,

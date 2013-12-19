@@ -21,11 +21,13 @@
 
 #import "XNGExampleViewController.h"
 #import "XNGAPIClient+Contacts.h"
+#import "XNGLoginWebViewController.h"
 
 #define kCellID @"XNGCellID"
 
 @interface XNGExampleViewController ()
-@property (nonatomic,strong) NSArray *contacts;
+@property (nonatomic, strong) NSArray *contacts;
+@property (nonatomic, strong) XNGLoginWebViewController *loginWebViewController;
 @end
 
 @implementation XNGExampleViewController
@@ -77,31 +79,18 @@
 
 - (void)login {
     __weak __typeof(&*self)weakSelf = self;
-    // login with automatic authorization step
-    /*
-    [[XNGAPIClient sharedClient] loginOAuthWithSuccess:
-     ^{
-         [weakSelf setupLogoutButton];
-         [weakSelf loadContacts];
-     }
-                                               failure:
-     ^(NSError *error){
-         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                             message:error.localizedDescription
-                                                            delegate:nil
-                                                   cancelButtonTitle:@"OK"
-                                                   otherButtonTitles:nil];
-         [alertView show];
-     }];
-     */
-    //login with manual authorization step
     
     [[XNGAPIClient sharedClient] loginOAuthAuthorize:^(NSURL *authURL) {
-        NSLog(@"Open AuthURL: %@",authURL);
-        [[UIApplication sharedApplication] openURL:authURL];
+        self.loginWebViewController = [[XNGLoginWebViewController alloc] initWithAuthURL:authURL];
+        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:self.loginWebViewController];
+        NSLog(@"Gonna present");
+        [self presentViewController:navigationController animated:YES completion:NULL];
     } loggedIn:^{
         [weakSelf setupLogoutButton];
         [weakSelf loadContacts];
+        if (![weakSelf.presentedViewController isBeingDismissed]) {
+            [weakSelf.loginWebViewController dismiss];
+        } 
     } failuire:^(NSError *error) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
                                                             message:error.localizedDescription
@@ -109,6 +98,9 @@
                                                   cancelButtonTitle:@"OK"
                                                   otherButtonTitles:nil];
         [alertView show];
+        if (![weakSelf.presentedViewController isBeingDismissed]) {
+            [weakSelf.loginWebViewController dismiss];
+        }
     }];
 }
 
