@@ -1,5 +1,15 @@
 #  The official Objective-C XING API Client
 
+## NOTE
+
+The initial release of the Pod was named `XINGAPI`. This was confusing a lot of our users so we decided to rename it after the repository `XNGAPIClient`. 
+
+*PLEASE NOTE* that in favor of the new `XNGAPIClient` the `XINGAPI` pod will no longer be updated. Please switch your codebase to be future-proof.
+
+If you have any questions please open an issue.
+
+===
+
 [![Build Status](https://travis-ci.org/xing/XNGAPIClient.png)](https://travis-ci.org/xing/XNGAPIClient)
 
 XNGAPIClient is the official client to access the XING API. In order to access the API, you only need an account on https://xing.com and an oauth consumer key and secret which can be obtained at https://dev.xing.com. Both is totally free and only takes a minute!
@@ -9,7 +19,7 @@ XNGAPIClient is built on top of AFNetworking, so it takes full advantage of bloc
 ## Getting started
 
 ### Option 1
-If you use [CocoaPods](http://cocoapods.org), you can add the ```XINGAPI``` pod to your Podfile. Then run ```pod install```, and the XING API Client will be available in your project.
+If you use [CocoaPods](http://cocoapods.org), you can add the ```XNGAPIClient``` pod to your Podfile. Then run ```pod install```, and the XING API Client will be available in your project.
 
 ### Option 2
 Clone & Watch our repository by visiting https://github.com/xing/XNGAPIClient
