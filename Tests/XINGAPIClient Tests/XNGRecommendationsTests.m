@@ -1,6 +1,6 @@
 #import <XCTest/XCTest.h>
 #import "XNGTestHelper.h"
-#import "XNGAPIClient+Recommendations.h"
+#import "XINGAPI.h"
 
 @interface XNGRecommendationsTests : XCTestCase
 

@@ -1,6 +1,6 @@
 #import <XCTest/XCTest.h>
 #import "XNGTestHelper.h"
-#import "XNGAPIClient+UserProfiles.h"
+#import "XINGAPI.h"
 
 @interface XNGUserProfilesTests : XCTestCase
 
