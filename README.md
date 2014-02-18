@@ -41,7 +41,7 @@ To set it up just these steps:
 
 ## Configure your App Delegate
 
-1. Import ```#import XINGAPI.h``` in your Application Delegate
+1. Import ```#import XNGAPI.h``` in your Application Delegate
 2. Add following method to your Application Delegate:
 ``` objective-c
 - (BOOL)application:(UIApplication *)application
