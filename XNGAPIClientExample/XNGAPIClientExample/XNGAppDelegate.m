@@ -21,7 +21,7 @@
 
 #import "XNGAppDelegate.h"
 #import "XNGExampleViewController.h"
-#import "XNGAPIClient.h"
+#import "XINGAPI.h"
 
 @implementation XNGAppDelegate
 

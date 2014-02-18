@@ -20,7 +20,7 @@
 // THE SOFTWARE.
 
 #import "XNGExampleViewController.h"
-#import "XNGAPIClient+Contacts.h"
+#import "XINGAPI.h"
 #import "XNGLoginWebViewController.h"
 
 #define kCellID @"XNGCellID"
