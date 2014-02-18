@@ -125,7 +125,7 @@
 		12C5BE22178423F200DD0C58 /* NSString+URLEncoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+URLEncoding.m"; path = "../XNGAPIClient/NSString+URLEncoding.m"; sourceTree = "<group>"; };
 		12C5BE25178472E600DD0C58 /* XNGExampleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XNGExampleViewController.h; sourceTree = "<group>"; };
 		12C5BE26178472E600DD0C58 /* XNGExampleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XNGExampleViewController.m; sourceTree = "<group>"; };
-		31C7B1B018B2403700446439 /* XINGAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XINGAPI.h; path = ../XNGAPIClient/XINGAPI.h; sourceTree = "<group>"; };
+		31C7B1B018B2403700446439 /* XNGAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XNGAPI.h; path = ../XNGAPIClient/XNGAPI.h; sourceTree = "<group>"; };
 		8E0AAF7017FAF6A600020B93 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		DD162B6818088D9A00806605 /* AFOAuth1Client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFOAuth1Client.h; sourceTree = "<group>"; };
 		DD162B6918088D9A00806605 /* AFOAuth1Client.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFOAuth1Client.m; sourceTree = "<group>"; };
@@ -217,7 +217,7 @@
 		12A91D961783514D002C219E /* XNGAPIClient */ = {
 			isa = PBXGroup;
 			children = (
-				31C7B1B018B2403700446439 /* XINGAPI.h */,
+				31C7B1B018B2403700446439 /* XNGAPI.h */,
 				12A91D971783516A002C219E /* XNGAPIClient.h */,
 				12A91D981783516A002C219E /* XNGAPIClient.m */,
 				12A91DAD1783516A002C219E /* XNGAPIClient+UserProfiles.h */,

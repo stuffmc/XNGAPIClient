@@ -20,7 +20,7 @@
 // THE SOFTWARE.
 
 #import <UIKit/UIKit.h>
-#import "XINGAPI.h"
+#import "XNGAPI.h"
 
 @interface XNGExampleViewController : UITableViewController
 
