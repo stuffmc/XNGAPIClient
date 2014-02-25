@@ -393,9 +393,8 @@ static NSString * const XNGAPIClientOAuthAccessTokenPath = @"v1/access_token";
 
 #pragma mark - OAuth related methods (private)
 
-
 - (NSURL*)oauthCallbackURL {
-    return [NSURL URLWithString:[NSString stringWithFormat:@"%@://success",self.callbackScheme]];
+    return [NSURL URLWithString:[NSString stringWithFormat:@"%@://success", self.callbackScheme]];
 }
 
 #pragma mark - checking methods
