@@ -398,13 +398,6 @@ static NSString * const XNGAPIClientOAuthAccessTokenPath = @"v1/access_token";
     return [NSURL URLWithString:[NSString stringWithFormat:@"%@://success",self.callbackScheme]];
 }
 
-- (NSURL*)oAuthAuthorizationURLWithParameters:(NSDictionary*)parameters {
-    NSString *query = AFQueryStringFromParametersWithEncoding(parameters, self.stringEncoding);
-
-    NSString *pathAndQuery = [XNGAPIClientOAuthAuthorizationPath stringByAppendingFormat:@"?%@",query];
-    return [[NSURL URLWithString:pathAndQuery relativeToURL:self.baseURL] absoluteURL];
-}
-
 #pragma mark - checking methods
 
 - (void)checkForGlobalErrors:(NSHTTPURLResponse *)response
