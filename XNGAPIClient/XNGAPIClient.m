@@ -80,7 +80,8 @@ static XNGAPIClient *_sharedClient = nil;
 }
 
 + (void)addAcceptableContentTypes:(NSSet *)set {
-    [XNGJSONRequestOperation addAcceptableContentTypes:set];
+    // TODO: is this needed?
+//    [XNGJSONRequestOperation addAcceptableContentTypes:set];
 }
 
 #pragma mark - Getters / Setters
