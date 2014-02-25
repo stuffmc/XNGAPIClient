@@ -36,9 +36,9 @@ NSString * const kAFApplicationLaunchOptionsURLKey = @"NSApplicationLaunchOption
 #endif
 
 @interface XNGAPIClient()
-@property(nonatomic, strong, readwrite) NSURL *baseURL;
-@property(nonatomic, strong, readwrite) NSString *callbackScheme;
-@property(nonatomic, copy, readwrite) XNGAPILoginOpenURLBlock loginOpenURLBlock;
+@property (nonatomic) NSURL *baseURL;
+@property (nonatomic) NSString *callbackScheme;
+@property (nonatomic, copy) XNGAPILoginOpenURLBlock loginOpenURLBlock;
 @end
 
 @implementation XNGAPIClient
