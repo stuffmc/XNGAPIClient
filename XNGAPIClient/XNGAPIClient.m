@@ -93,7 +93,8 @@ static XNGAPIClient *_sharedClient = nil;
 }
 
 - (void)setUserAgent:(NSString *)userAgent {
-    [self setDefaultHeader:@"User-Agent" value:userAgent];
+    // TODO: needs to be tested
+    [self.requestSerializer setValue:userAgent forHTTPHeaderField:@"User-Agent"];
 }
 
 #pragma mark - handling login / logout
