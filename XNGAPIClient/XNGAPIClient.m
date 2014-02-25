@@ -218,8 +218,8 @@ static NSString * const XNGAPIClientOAuthAccessTokenPath = @"v1/access_token";
         self.loginOpenURLBlock = nil;
     }
     
-    NSDictionary *dict = [NSDictionary dictionaryWithObject:URL forKey:kAFApplicationLaunchOptionsURLKey];
-    NSNotification *notification = [NSNotification notificationWithName:kAFApplicationLaunchedWithURLNotification
+    NSDictionary *dict = [NSDictionary dictionaryWithObject:URL forKey:kXNGApplicationLaunchOptionsURLKey];
+    NSNotification *notification = [NSNotification notificationWithName:kXNGApplicationLaunchedWithURLNotification
                                                                  object:nil
                                                                userInfo:dict];
     [[NSNotificationCenter defaultCenter] postNotification:notification];
