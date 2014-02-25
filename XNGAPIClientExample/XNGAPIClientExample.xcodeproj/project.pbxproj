@@ -29,8 +29,6 @@
 		12A91DC01783516A002C219E /* XNGAPIClient+ProfileVisits.m in Sources */ = {isa = PBXBuildFile; fileRef = 12A91DAA1783516A002C219E /* XNGAPIClient+ProfileVisits.m */; };
 		12A91DC11783516A002C219E /* XNGAPIClient+Recommendations.m in Sources */ = {isa = PBXBuildFile; fileRef = 12A91DAC1783516A002C219E /* XNGAPIClient+Recommendations.m */; };
 		12A91DC21783516A002C219E /* XNGAPIClient+UserProfiles.m in Sources */ = {isa = PBXBuildFile; fileRef = 12A91DAE1783516A002C219E /* XNGAPIClient+UserProfiles.m */; };
-		12A91DC51783516A002C219E /* XNGJSONRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 12A91DB41783516A002C219E /* XNGJSONRequestOperation.m */; };
-		12A91DC61783516A002C219E /* XNGOAuthHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 12A91DB61783516A002C219E /* XNGOAuthHandler.m */; };
 		12A91DDB178351D1002C219E /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 12A91DC9178351D1002C219E /* AFHTTPClient.m */; };
 		12A91DDC178351D1002C219E /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 12A91DCB178351D1002C219E /* AFHTTPRequestOperation.m */; };
 		12A91DDD178351D1002C219E /* AFImageRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 12A91DCD178351D1002C219E /* AFImageRequestOperation.m */; };
@@ -92,10 +90,6 @@
 		12A91DAC1783516A002C219E /* XNGAPIClient+Recommendations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "XNGAPIClient+Recommendations.m"; path = "../XNGAPIClient/XNGAPIClient+Recommendations.m"; sourceTree = "<group>"; };
 		12A91DAD1783516A002C219E /* XNGAPIClient+UserProfiles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "XNGAPIClient+UserProfiles.h"; path = "../XNGAPIClient/XNGAPIClient+UserProfiles.h"; sourceTree = "<group>"; };
 		12A91DAE1783516A002C219E /* XNGAPIClient+UserProfiles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "XNGAPIClient+UserProfiles.m"; path = "../XNGAPIClient/XNGAPIClient+UserProfiles.m"; sourceTree = "<group>"; };
-		12A91DB31783516A002C219E /* XNGJSONRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XNGJSONRequestOperation.h; path = ../XNGAPIClient/XNGJSONRequestOperation.h; sourceTree = "<group>"; };
-		12A91DB41783516A002C219E /* XNGJSONRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XNGJSONRequestOperation.m; path = ../XNGAPIClient/XNGJSONRequestOperation.m; sourceTree = "<group>"; };
-		12A91DB51783516A002C219E /* XNGOAuthHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XNGOAuthHandler.h; path = ../XNGAPIClient/XNGOAuthHandler.h; sourceTree = "<group>"; };
-		12A91DB61783516A002C219E /* XNGOAuthHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XNGOAuthHandler.m; path = ../XNGAPIClient/XNGOAuthHandler.m; sourceTree = "<group>"; };
 		12A91DC8178351D1002C219E /* AFHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPClient.h; sourceTree = "<group>"; };
 		12A91DC9178351D1002C219E /* AFHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPClient.m; sourceTree = "<group>"; };
 		12A91DCA178351D1002C219E /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
@@ -280,10 +274,6 @@
 				12C5BE20178423F200DD0C58 /* NSDictionary+Typecheck.m */,
 				12C5BE21178423F200DD0C58 /* NSString+URLEncoding.h */,
 				12C5BE22178423F200DD0C58 /* NSString+URLEncoding.m */,
-				12A91DB31783516A002C219E /* XNGJSONRequestOperation.h */,
-				12A91DB41783516A002C219E /* XNGJSONRequestOperation.m */,
-				12A91DB51783516A002C219E /* XNGOAuthHandler.h */,
-				12A91DB61783516A002C219E /* XNGOAuthHandler.m */,
 				12C5BE1217840A0800DD0C58 /* NSError+XWS.h */,
 				12C5BE1317840A0800DD0C58 /* NSError+XWS.m */,
 			);
@@ -393,8 +383,6 @@
 				12A91DC01783516A002C219E /* XNGAPIClient+ProfileVisits.m in Sources */,
 				12A91DC11783516A002C219E /* XNGAPIClient+Recommendations.m in Sources */,
 				12A91DC21783516A002C219E /* XNGAPIClient+UserProfiles.m in Sources */,
-				12A91DC51783516A002C219E /* XNGJSONRequestOperation.m in Sources */,
-				12A91DC61783516A002C219E /* XNGOAuthHandler.m in Sources */,
 				12A91DDB178351D1002C219E /* AFHTTPClient.m in Sources */,
 				12A91DDC178351D1002C219E /* AFHTTPRequestOperation.m in Sources */,
 				12A91DDD178351D1002C219E /* AFImageRequestOperation.m in Sources */,
