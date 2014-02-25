@@ -23,7 +23,6 @@
 #import "NSString+URLEncoding.h"
 #import "NSDictionary+Typecheck.h"
 #import "AFOAuth1Client.h"
-#import "XNGOAuthHandler.h"
 #import "XNGJSONRequestOperation.h"
 #import "NSError+XWS.h"
 
@@ -37,7 +36,6 @@ NSString * const kAFApplicationLaunchOptionsURLKey = @"NSApplicationLaunchOption
 #endif
 
 @interface XNGAPIClient()
-@property(nonatomic, strong, readwrite) XNGOAuthHandler *oAuthHandler;
 @property(nonatomic, strong, readwrite) NSURL *baseURL;
 @property(nonatomic, strong, readwrite) NSString *callbackScheme;
 @property(nonatomic, copy, readwrite) XNGAPILoginOpenURLBlock loginOpenURLBlock;
@@ -73,7 +71,6 @@ static XNGAPIClient *_sharedClient = nil;
 - (id)initWithBaseURL:(NSURL *)url {
     self = [super initWithBaseURL:url];
     if (self) {
-        _oAuthHandler = [[XNGOAuthHandler alloc] init];
         self.baseURL = url;
         self.signatureMethod = AFHMACSHA1SignatureMethod;
         [self registerHTTPOperationClass:[XNGJSONRequestOperation class]];
