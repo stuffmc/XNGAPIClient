@@ -441,14 +441,6 @@ static NSString * const XNGAPIClientOAuthAccessTokenPath = @"v1/access_token";
         [self cancelAllHTTPOperationsWithMethod:method path:path];
     }
 }
-
-- (void)cancelAllHTTPOperations {
-    for (NSOperation *operation in self.operationQueue.operations) {
-        operation.completionBlock = nil;
-        [operation cancel];
-    }
-}
-
 #pragma mark - HTTP Operation queue methods
 
 - (void)enqueueJSONRequest:(NSMutableURLRequest *)request

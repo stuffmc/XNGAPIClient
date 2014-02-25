@@ -162,7 +162,6 @@ extern NSString * const XNGAPIClientDeprecationWarningNotification;
 #pragma mark - cancel requests methods
 
 - (void)cancelAllHTTPOperationsWithMethod:(NSString *)method paths:(NSArray *)paths;
-- (void)cancelAllHTTPOperations;
 
 #pragma mark - OAuth related methods
 
