@@ -23,6 +23,8 @@
 #import "AFOAuth1Client.h"
 
 @interface XNGAPIClient : AFOAuth1Client
+FOUNDATION_EXPORT NSString * const kXNGApplicationLaunchedWithURLNotification;
+FOUNDATION_EXPORT NSString * const kXNGApplicationLaunchOptionsURLKey;
 
 extern NSString * const XNGAPIClientInvalidTokenErrorNotification;
 extern NSString * const XNGAPIClientDeprecationErrorNotification;

@@ -29,6 +29,12 @@
 
 typedef void(^XNGAPILoginOpenURLBlock)(NSURL*openURL);
 static NSDictionary * XNGParametersFromQueryString(NSString *queryString);
+NSString * const kXNGApplicationLaunchedWithURLNotification = @"kAFApplicationLaunchedWithURLNotification";
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
+NSString * const kXNGApplicationLaunchOptionsURLKey = @"UIApplicationLaunchOptionsURLKey";
+#else
+NSString * const kAFApplicationLaunchOptionsURLKey = @"NSApplicationLaunchOptionsURLKey";
+#endif
 
 @interface AFOAuth1Client (private)
 @property (readwrite, nonatomic, copy) NSString *key;
