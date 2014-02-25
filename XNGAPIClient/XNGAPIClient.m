@@ -69,7 +69,8 @@ static XNGAPIClient *_sharedClient = nil;
     self = [super initWithBaseURL:url];
     if (self) {
         self.baseURL = url;
-        self.signatureMethod = AFHMACSHA1SignatureMethod;
+// TODO: find AFHMACSHA1SignatureMethod replacement
+//        self.signatureMethod = AFHMACSHA1SignatureMethod;
         self.responseSerializer = [[AFJSONRequestSerializer alloc] init];
 #ifndef TARGET_OS_MAC
         [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
