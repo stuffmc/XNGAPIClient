@@ -52,7 +52,7 @@
 
 - (void)cancelAllConversationsHTTPOperations {
     NSString *path = [NSString stringWithFormat:@"v1/users/me/conversations"];
-    [self cancelAllHTTPOperationsWithMethod:@"GET" path:path];
+    [self cancelAllHTTPOperationsWithMethod:@"GET" paths:@[path]];
 }
 
 
@@ -146,7 +146,7 @@
 
 - (void)cancelAllMessagesHTTPOperationsForConversationID:(NSString *)conversationID {
     NSString *path = [NSString stringWithFormat:@"v1/users/me/conversations/%@",conversationID];
-    [self cancelAllHTTPOperationsWithMethod:@"GET" path:path];
+    [self cancelAllHTTPOperationsWithMethod:@"GET" paths:@[path]];
 }
 
 - (void)putMarkMessageAsReadWithMessageID:(NSString*)messageID

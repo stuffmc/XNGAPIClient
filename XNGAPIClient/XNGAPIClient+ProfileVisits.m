@@ -50,7 +50,7 @@
 }
 
 - (void)cancelAllGetVisitsOperations {
-    [self cancelAllHTTPOperationsWithMethod:@"GET" path:[self visitsPath]];
+    [self cancelAllHTTPOperationsWithMethod:@"GET" paths:@[[self visitsPath]]];
 }
 
 - (void)postReportProfileVisitForUserID:(NSString *)userID

@@ -47,7 +47,7 @@
 
 - (void)cancelAllNetworkFeedHTTPOperations {
     NSString *path = [self pathForNetworkFeed];
-    [self cancelAllHTTPOperationsWithMethod:@"GET" path:path];
+    [self cancelAllHTTPOperationsWithMethod:@"GET" paths:@[path]];
 }
 
 - (void)getUserFeedForUserID:(NSString *)userID
@@ -73,7 +73,7 @@
 
 - (void)cancelAllUserFeedHTTPOperationsForUserID:(NSString *)userID {
     NSString *path = [self pathForUserFeedWithUserID:userID];
-    [self cancelAllHTTPOperationsWithMethod:@"GET" path:path];
+    [self cancelAllHTTPOperationsWithMethod:@"GET" paths:@[path]];
 }
 
 - (void)postStatusMessage:(NSString*)statusMessage
@@ -116,7 +116,7 @@
 
 - (void)cancelAllSingleActivityHTTPOperationsForActivityID:(NSString *)activityID {
     NSString *path = [self pathForSingleActivityWithActivityID:activityID];
-    [self cancelAllHTTPOperationsWithMethod:@"GET" path:path];
+    [self cancelAllHTTPOperationsWithMethod:@"GET" paths:@[path]];
 }
 
 - (void)postRecommendActivityWithID:(NSString*)activityID
