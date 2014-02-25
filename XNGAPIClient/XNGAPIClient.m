@@ -187,17 +187,16 @@ static NSString * const XNGAPIClientOAuthAccessTokenPath = @"v1/access_token";
     __weak __typeof(&*self)weakSelf = self;
     
     return ^(NSURL*openURL){
-        
-        NSDictionary *queryDictionary = XNGParametersFromQueryString(openURL.query);
-        requestToken.verifier = queryDictionary[@"oauth_verifier"];
-        
-        [weakSelf acquireOAuthAccessTokenWithPath:XNGAPIClientOAuthAccessTokenPath
-                                 requestToken:requestToken
-                                 accessMethod:@"POST"
-                                      success:^(AFOAuth1Token *accessToken, id responseObject) {
-                                          [weakSelf saveAuthDataFromToken:accessToken success:loggedInBlock failure:failureBlock];
-                                          loggedInBlock();
-                                      } failure:failureBlock];
+
+        [weakSelf acquireOAuthRequestTokenWithPath:XNGAPIClientOAuthAccessTokenPath
+                                       callbackURL:nil
+                                      accessMethod:@"POST"
+                                      requestToken:requestToken
+                                             scope:nil
+                                           success:^(XNGOAuthToken *accessToken, id responseObject) {
+                                               [weakSelf saveAuthDataFromToken:accessToken success:loggedInBlock failure:failureBlock];
+                                               loggedInBlock();
+                                           } failure:failureBlock];
     };
 }
 - (void) saveAuthDataFromToken:(XNGOAuthToken *)accessToken
