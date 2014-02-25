@@ -262,13 +262,6 @@ static NSString * const XNGAPIClientOAuthAccessTokenPath = @"v1/access_token";
     [self postPath:path parameters:parameters success:success failure:failure];
 }
 
-- (AFOAuth1Token*)accessTokenFromKeychain {
-    if (self.oAuthHandler.accessToken && self.oAuthHandler.tokenSecret) {
-        return [[AFOAuth1Token alloc] initWithKey:self.oAuthHandler.accessToken secret:self.oAuthHandler.tokenSecret session:nil expiration:nil renewable:YES];
-    }
-    return nil;
-}
-
 #pragma mark - block-based GET / PUT / POST / DELETE
 
 - (void)getJSONPath:(NSString *)path
