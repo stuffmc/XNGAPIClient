@@ -26,7 +26,6 @@
 		8EA5C2B9182D446100884170 /* XNGUserProfilesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA5C2B8182D446100884170 /* XNGUserProfilesTests.m */; };
 		8EE63673182BEF5500E30D62 /* XNGContactRequestsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE63672182BEF5500E30D62 /* XNGContactRequestsTests.m */; };
 		E28CC82A6531418D8DA6491F /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42DB8AC7602C42D2A5D39BB8 /* libPods.a */; };
-		F08681511831565E00B07E60 /* XNGOAuthHandlerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F08681501831565E00B07E60 /* XNGOAuthHandlerTests.m */; };
 		F0D4545D1831308800F560C7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E32EA1C182A7955004BAD3A /* Security.framework */; };
 		F80DC253182B964D00629B70 /* XNGAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F80DC252182B964D00629B70 /* XNGAppDelegate.m */; };
 		F80DC25D182B965E00629B70 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F80DC259182B965E00629B70 /* main.m */; };
@@ -66,7 +65,6 @@
 		8EA5C2B8182D446100884170 /* XNGUserProfilesTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XNGUserProfilesTests.m; path = "XINGAPIClient Tests/XNGUserProfilesTests.m"; sourceTree = SOURCE_ROOT; };
 		8EE63672182BEF5500E30D62 /* XNGContactRequestsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XNGContactRequestsTests.m; path = "XINGAPIClient Tests/XNGContactRequestsTests.m"; sourceTree = SOURCE_ROOT; };
 		BC5BE4A1E5A74365898173CC /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
-		F08681501831565E00B07E60 /* XNGOAuthHandlerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XNGOAuthHandlerTests.m; path = "XINGAPIClient Tests/XNGOAuthHandlerTests.m"; sourceTree = SOURCE_ROOT; };
 		F80DC251182B964D00629B70 /* XNGAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XNGAppDelegate.h; path = "XINGAPIClient Tests App/XNGAppDelegate.h"; sourceTree = SOURCE_ROOT; };
 		F80DC252182B964D00629B70 /* XNGAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XNGAppDelegate.m; path = "XINGAPIClient Tests App/XNGAppDelegate.m"; sourceTree = SOURCE_ROOT; };
 		F80DC259182B965E00629B70 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = "XINGAPIClient Tests App/main.m"; sourceTree = SOURCE_ROOT; };
@@ -175,7 +173,6 @@
 				8EA5C2B4182D380300884170 /* XNGProfileVisitsTests.m */,
 				8EA5C2B6182D41A700884170 /* XNGRecommendationsTests.m */,
 				8EA5C2B8182D446100884170 /* XNGUserProfilesTests.m */,
-				F08681501831565E00B07E60 /* XNGOAuthHandlerTests.m */,
 			);
 			name = "XINGAPIClient Tests";
 			path = "XINGAPIClient TestsTests";
@@ -325,7 +322,6 @@
 				8EA5C2B1182D257A00884170 /* XNGMessagesTests.m in Sources */,
 				8EA5C2B9182D446100884170 /* XNGUserProfilesTests.m in Sources */,
 				8E965786182D1B20008F9EF5 /* XNGGeoLocationsTests.m in Sources */,
-				F08681511831565E00B07E60 /* XNGOAuthHandlerTests.m in Sources */,
 				8EA5C2B5182D380300884170 /* XNGProfileVisitsTests.m in Sources */,
 				8EA5C2AD182D1E0D00884170 /* XNGInvitationsTests.m in Sources */,
 				F80DC266182B975700629B70 /* XNGContactPathTests.m in Sources */,
