@@ -162,25 +162,21 @@ static NSString * const XNGAPIClientOAuthAccessTokenPath = @"v1/access_token";
     
     NSURL *callbackURL = [self oauthCallbackURL];
     __weak __typeof(&*self)weakSelf = self;
-    
-    [self acquireOAuthRequestTokenWithPath:XNGAPIClientOAuthRequestTokenPath
+
+    [self acquireOAuthRequestTokenWithPath:XNGAPIClientOAuthAccessTokenPath
                                callbackURL:callbackURL
                               accessMethod:@"POST"
+                              requestToken:self.requestSerializer.requestToken
                                      scope:nil
                                    success:
-     ^(AFOAuth1Token *requestToken, id responseObject) {
-         
-         weakSelf.loginOpenURLBlock = [weakSelf loginOpenURLBlockWithRequestToken:requestToken loggedIn:loggedInBlock failuire:failureBlock];
-
-         NSDictionary *parameters = @{@"oauth_token": requestToken.key};
-         NSURL *authURL = [weakSelf oAuthAuthorizationURLWithParameters:parameters];
-         authorizeBlock(authURL);
-     }
-                                   failure:
-     ^(NSError *error) {
-         failureBlock(error);
-     }];
-    
+    ^(XNGOAuthToken *requestToken, id responseObject) {
+        weakSelf.loginOpenURLBlock = [weakSelf loginOpenURLBlockWithRequestToken:requestToken loggedIn:loggedInBlock failuire:failureBlock];
+//         NSDictionary *parameters = @{@"oauth_token": requestToken.key};
+//         NSURL *authURL = [weakSelf oAuthAuthorizationURLWithParameters:parameters];
+//         authorizeBlock(authURL);
+    } failure:^(NSError *error) {
+        failureBlock(error);
+    }];
 }
 
 - (XNGAPILoginOpenURLBlock) loginOpenURLBlockWithRequestToken:(XNGOAuthToken *)requestToken
