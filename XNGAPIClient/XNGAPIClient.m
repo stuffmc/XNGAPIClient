@@ -365,19 +365,6 @@ static NSString * const XNGAPIClientOAuthAccessTokenPath = @"v1/access_token";
           acceptHeader:(NSString *)acceptHeader
                success:(void (^)(id))success
                failure:(void (^)(NSError *))failure {
-
-#pragma mark - OAuth related methods
-
-- (NSString *)currentUserID {
-    return self.oAuthHandler.userID;
-}
-
-- (void)setConsumerKey:(NSString *)consumerKey {
-    self.key = consumerKey;
-}
-
-- (void)setConsumerSecret:(NSString *)consumerSecret {
-    self.secret = consumerSecret;
     if (acceptHeader) [self.requestSerializer setValue:acceptHeader forHTTPHeaderField:@"Accept"];
     [self DELETE:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (success) {
@@ -388,6 +375,21 @@ static NSString * const XNGAPIClientOAuthAccessTokenPath = @"v1/access_token";
             failure(error);
         }
     }];
+}
+
+#pragma mark - OAuth related methods
+
+- (NSString *)currentUserID {
+    // TODO: set user ID
+    return @"0";
+}
+
+- (void)setConsumerKey:(NSString *)consumerKey {
+    // TODO: set consumer key
+}
+
+- (void)setConsumerSecret:(NSString *)consumerSecret {
+    // TODO: set consumer secret
 }
 
 #pragma mark - OAuth related methods (private)
