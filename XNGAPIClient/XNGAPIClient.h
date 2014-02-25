@@ -20,11 +20,12 @@
 // THE SOFTWARE.
 
 #import <Foundation/Foundation.h>
-#import "AFOAuth1Client.h"
+#import <XNGOAuth1Client/XNGOAuth1RequestOperationManager.h>
 
-@interface XNGAPIClient : AFOAuth1Client
 FOUNDATION_EXPORT NSString * const kXNGApplicationLaunchedWithURLNotification;
 FOUNDATION_EXPORT NSString * const kXNGApplicationLaunchOptionsURLKey;
+
+@interface XNGAPIClient : XNGOAuth1RequestOperationManager
 
 extern NSString * const XNGAPIClientInvalidTokenErrorNotification;
 extern NSString * const XNGAPIClientDeprecationErrorNotification;
