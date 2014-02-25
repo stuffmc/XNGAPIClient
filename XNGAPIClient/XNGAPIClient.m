@@ -430,7 +430,7 @@ static NSString * const XNGAPIClientOAuthAccessTokenPath = @"v1/access_token";
 
 - (void)cancelAllHTTPOperationsWithMethod:(NSString *)method paths:(NSArray *)paths {
     for (NSString* path in paths) {
-        [self cancelAllHTTPOperationsWithMethod:method path:path];
+        [self cancelAllHTTPOperationsWithMethod:method paths:@[path]];
     }
 }
 
