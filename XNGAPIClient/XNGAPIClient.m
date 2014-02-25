@@ -28,18 +28,13 @@
 #import "NSError+XWS.h"
 
 typedef void(^XNGAPILoginOpenURLBlock)(NSURL*openURL);
-static NSDictionary * XNGParametersFromQueryString(NSString *queryString);
+
 NSString * const kXNGApplicationLaunchedWithURLNotification = @"kAFApplicationLaunchedWithURLNotification";
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
 NSString * const kXNGApplicationLaunchOptionsURLKey = @"UIApplicationLaunchOptionsURLKey";
 #else
 NSString * const kAFApplicationLaunchOptionsURLKey = @"NSApplicationLaunchOptionsURLKey";
 #endif
-
-@interface AFOAuth1Client (private)
-@property (readwrite, nonatomic, copy) NSString *key;
-@property (readwrite, nonatomic, copy) NSString *secret;
-@end
 
 @interface XNGAPIClient()
 @property(nonatomic, strong, readwrite) XNGOAuthHandler *oAuthHandler;
@@ -85,7 +80,6 @@ static XNGAPIClient *_sharedClient = nil;
 #ifndef TARGET_OS_MAC
         [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
 #endif
-        self.accessToken = [self accessTokenFromKeychain];
     }
     return self;
 }
@@ -98,7 +92,7 @@ static XNGAPIClient *_sharedClient = nil;
 
 - (NSString *)callbackScheme {
     if (!_callbackScheme) {
-        _callbackScheme =[NSString stringWithFormat:@"xingapp%@",self.key];
+        _callbackScheme =[NSString stringWithFormat:@"xingapp%@", self.requestSerializer.accessToken.token];
     }
     return _callbackScheme;
 }
@@ -110,12 +104,11 @@ static XNGAPIClient *_sharedClient = nil;
 #pragma mark - handling login / logout
 
 - (BOOL)isLoggedin {
-    return [self.oAuthHandler hasAccessToken];
+    return self.requestSerializer.accessToken != nil;
 }
 
 - (void)logout {
-    [self.oAuthHandler deleteKeychainEntries];
-    self.accessToken = nil;
+    [self.requestSerializer removeAccessToken];
 }
 
 static inline void XNGAPIClientCanLoginTests(XNGAPIClient *client) {
@@ -124,12 +117,12 @@ static inline void XNGAPIClientCanLoginTests(XNGAPIClient *client) {
         return;
     }
     
-    if ([client.key length] == 0) {
+    if ([client.requestSerializer.accessToken.token length] == 0) {
         [[client exceptionForNoConsumerKey] raise];
         return;
     }
     
-    if ([client.secret length] == 0) {
+    if ([client.requestSerializer.accessToken.secret length] == 0) {
         [[client exceptionForNoConsumerSecret] raise];
         return;
     }
@@ -156,13 +149,9 @@ static NSString * const XNGAPIClientOAuthAccessTokenPath = @"v1/access_token";
                                      accessMethod:@"POST"
                                             scope:nil
                                           success:
-     ^(AFOAuth1Token *accessToken, id responseObject) {
+     ^(XNGOAuthToken *accessToken, id responseObject) {
          NSString *userID = [accessToken.userInfo xng_stringForKey:@"user_id"];
-         [weakSelf.oAuthHandler saveUserID:userID
-                               accessToken:accessToken.key
-                                    secret:accessToken.secret
-                                   success:success
-                                   failure:failure];
+         [weakSelf.requestSerializer saveAccessToken:accessToken];
      } failure:^(NSError *error) {
          failure(error);
      }];
@@ -198,7 +187,7 @@ static NSString * const XNGAPIClientOAuthAccessTokenPath = @"v1/access_token";
     
 }
 
-- (XNGAPILoginOpenURLBlock) loginOpenURLBlockWithRequestToken:(AFOAuth1Token*)requestToken
+- (XNGAPILoginOpenURLBlock) loginOpenURLBlockWithRequestToken:(XNGOAuthToken *)requestToken
                                                      loggedIn:(void (^)())loggedInBlock
                                                      failuire:(void (^)(NSError *))failureBlock  {
     __weak __typeof(&*self)weakSelf = self;
@@ -217,16 +206,12 @@ static NSString * const XNGAPIClientOAuthAccessTokenPath = @"v1/access_token";
                                       } failure:failureBlock];
     };
 }
-- (void) saveAuthDataFromToken:(AFOAuth1Token*)accessToken
+- (void) saveAuthDataFromToken:(XNGOAuthToken *)accessToken
                        success:(void (^)(void))success
                        failure:(void (^)(NSError *error))failure  {
-    self.accessToken = accessToken;
-    NSString *userID = [accessToken.userInfo xng_stringForKey:@"user_id"];
-    [self.oAuthHandler saveUserID:userID
-                      accessToken:accessToken.key
-                           secret:accessToken.secret
-                          success:success
-                          failure:failure];
+    [self.requestSerializer saveAccessToken:accessToken];
+    // TODO: save user ID
+//    NSString *userID = [accessToken.userInfo xng_stringForKey:@"user_id"];
 }
 
 
@@ -261,14 +246,8 @@ static NSString * const XNGAPIClientOAuthAccessTokenPath = @"v1/access_token";
                                           success:
      ^(AFHTTPRequestOperation *operation, id responseJSON) {
          NSString *body = [[NSString alloc] initWithData:operation.responseData encoding:NSUTF8StringEncoding];
-         NSDictionary *xAuthResponseFields = [NSString xng_URLDecodedDictionaryFromString:body];
-         
-         [self.oAuthHandler saveXAuthResponseParametersToKeychain:xAuthResponseFields
-                                                          success:^{
-                                                              self.accessToken = [self accessTokenFromKeychain];
-                                                              if (success) success();
-                                                          }
-                                                          failure:failure];
+         XNGOAuthToken *authToken = [[XNGOAuthToken alloc] initWithQueryString:body];
+         [self.requestSerializer saveAccessToken:authToken];
      } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
          failure(error);
      }];
