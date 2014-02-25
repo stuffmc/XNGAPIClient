@@ -417,39 +417,6 @@ static NSString * const XNGAPIClientOAuthAccessTokenPath = @"v1/access_token";
         [self cancelAllHTTPOperationsWithMethod:method path:path];
     }
 }
-#pragma mark - HTTP Operation queue methods
-
-- (void)enqueueJSONRequest:(NSMutableURLRequest *)request
-                   success:(void (^)(id JSON))success
-                   failure:(void (^)(NSError *error))failure {
-    if (NO == [[[request allHTTPHeaderFields] allKeys] containsObject:@"Accept"]) {
-        [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-    }
-    __weak __typeof(&*self)weakSelf = self;
-    XNGJSONRequestOperation *operation = nil;
-    operation = [XNGJSONRequestOperation JSONRequestOperationWithRequest:request
-                                                                 success:
-                 ^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-                     [weakSelf checkForDeprecation:response];
-                     if (success) {
-                         success(JSON);
-                     }
-                 } failure:
-                 ^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-                     [weakSelf checkForDeprecation:response];
-                     [weakSelf checkForGlobalErrors:response withJSON:JSON];
-                     
-                     if ([JSON isKindOfClass:[NSDictionary class]]) {
-                         error = [NSError xwsErrorWithStatusCode:response.statusCode
-                                                        userInfo:JSON];
-                     }
-                     
-                     if (failure) {
-                         failure(error);
-                     }
-                 }];
-    [self enqueueHTTPRequestOperation:operation];
-}
 
 #pragma mark - Helper methods
 
