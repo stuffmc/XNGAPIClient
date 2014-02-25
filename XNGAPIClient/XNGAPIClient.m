@@ -259,7 +259,7 @@ static NSString * const XNGAPIClientOAuthAccessTokenPath = @"v1/access_token";
     parameters[@"x_auth_mode"] = @"client_auth";
     
     NSString* path = [NSString stringWithFormat:@"%@/v1/xauth", self.baseURL];
-    [self postPath:path parameters:parameters success:success failure:failure];
+    [self POST:path parameters:parameters success:success failure:failure];
 }
 
 #pragma mark - block-based GET / PUT / POST / DELETE
@@ -315,9 +315,16 @@ static NSString * const XNGAPIClientOAuthAccessTokenPath = @"v1/access_token";
        acceptHeader:(NSString *)acceptHeader
             success:(void (^)(id))success
             failure:(void (^)(NSError *))failure {
-    NSMutableURLRequest *request = [self requestWithMethod:@"GET" path:path parameters:parameters];
-    if (acceptHeader) [request setValue:acceptHeader forHTTPHeaderField:@"Accept"];
-    [self enqueueJSONRequest:request success:success failure:failure];
+    if (acceptHeader) [self.requestSerializer setValue:acceptHeader forHTTPHeaderField:@"Accept"];
+    [self GET:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+          if (success) {
+              success(responseObject);
+          }
+      } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (failure) {
+            failure(error);
+        }
+    }];
 }
 
 - (void)putJSONPath:(NSString *)path
@@ -325,9 +332,16 @@ static NSString * const XNGAPIClientOAuthAccessTokenPath = @"v1/access_token";
        acceptHeader:(NSString *)acceptHeader
             success:(void (^)(id))success
             failure:(void (^)(NSError *))failure {
-    NSMutableURLRequest *request = [self requestWithMethod:@"PUT" path:path parameters:parameters];
-    if (acceptHeader) [request setValue:acceptHeader forHTTPHeaderField:@"Accept"];
-    [self enqueueJSONRequest:request success:success failure:failure];
+    if (acceptHeader) [self.requestSerializer setValue:acceptHeader forHTTPHeaderField:@"Accept"];
+    [self PUT:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (success) {
+            success(responseObject);
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (failure) {
+            failure(error);
+        }
+    }];
 }
 
 - (void)postJSONPath:(NSString *)path
@@ -335,9 +349,16 @@ static NSString * const XNGAPIClientOAuthAccessTokenPath = @"v1/access_token";
         acceptHeader:(NSString *)acceptHeader
              success:(void (^)(id))success
              failure:(void (^)(NSError *))failure {
-    NSMutableURLRequest *request = [self requestWithMethod:@"POST" path:path parameters:parameters];
-    if (acceptHeader) [request setValue:acceptHeader forHTTPHeaderField:@"Accept"];
-    [self enqueueJSONRequest:request success:success failure:failure];
+    if (acceptHeader) [self.requestSerializer setValue:acceptHeader forHTTPHeaderField:@"Accept"];
+    [self POST:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (success) {
+            success(responseObject);
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (error) {
+            failure(error);
+        }
+    }];
 }
 
 - (void)deleteJSONPath:(NSString *)path
@@ -345,10 +366,6 @@ static NSString * const XNGAPIClientOAuthAccessTokenPath = @"v1/access_token";
           acceptHeader:(NSString *)acceptHeader
                success:(void (^)(id))success
                failure:(void (^)(NSError *))failure {
-    NSMutableURLRequest *request = [self requestWithMethod:@"DELETE" path:path parameters:parameters];
-    if (acceptHeader) [request setValue:acceptHeader forHTTPHeaderField:@"Accept"];
-    [self enqueueJSONRequest:request success:success failure:failure];
-}
 
 #pragma mark - OAuth related methods
 
@@ -362,6 +379,16 @@ static NSString * const XNGAPIClientOAuthAccessTokenPath = @"v1/access_token";
 
 - (void)setConsumerSecret:(NSString *)consumerSecret {
     self.secret = consumerSecret;
+    if (acceptHeader) [self.requestSerializer setValue:acceptHeader forHTTPHeaderField:@"Accept"];
+    [self DELETE:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (success) {
+            success(responseObject);
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (failure) {
+            failure(error);
+        }
+    }];
 }
 
 #pragma mark - OAuth related methods (private)
