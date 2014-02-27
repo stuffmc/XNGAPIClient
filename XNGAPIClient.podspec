@@ -1,5 +1,5 @@
 Pod::Spec.new do |s|
-  s.name = 'XINGAPI'
+  s.name = 'XNGAPIClient'
   s.version = '0.1.1'
   s.license = 'MIT'
   s.ios.deployment_target = '6.0'
@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
     'XING iOS Team' => 'iphonedev@xing.com'
   }
   s.source = {
-    :git => 'https://github.com/xing/XNGAPIClient.git',
+    :git => 'https://source.xing.com/ios-pods/XNGAPIClient.git',
     :tag => s.version.to_s
   }
   s.source_files = 'XNGAPIClient/*.{h,m}'
