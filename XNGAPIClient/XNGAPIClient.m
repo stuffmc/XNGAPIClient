@@ -47,6 +47,7 @@ static NSDictionary * XNGParametersFromQueryString(NSString *queryString);
 NSString * const XNGAPIClientInvalidTokenErrorNotification = @"com.xing.apiClient.error.invalidToken";
 NSString * const XNGAPIClientDeprecationErrorNotification = @"com.xing.apiClient.error.deprecatedAPI";
 NSString * const XNGAPIClientDeprecationWarningNotification = @"com.xing.apiClient.warning.deprecatedAPI";
+NSInteger * const XNGAPIClientDeprecationStatusCode = 410;
 
 static XNGAPIClient *_sharedClient = nil;
 
@@ -411,7 +412,7 @@ static NSString * const XNGAPIClientOAuthAccessTokenPath = @"v1/access_token";
 
 - (void)checkForGlobalErrors:(NSHTTPURLResponse *)response
                     withJSON:(id)JSON {
-    if (response.statusCode == 410) {
+    if (response.statusCode == XNGAPIClientDeprecationStatusCode) {
         [[NSNotificationCenter defaultCenter] postNotificationName:XNGAPIClientDeprecationErrorNotification object:response];
         return;
     }
@@ -425,7 +426,7 @@ static NSString * const XNGAPIClientOAuthAccessTokenPath = @"v1/access_token";
 - (void)checkForDeprecation:(NSHTTPURLResponse *)response {
     BOOL isDeprecated = [[response.allHeaderFields xng_stringForKey:@"X-Xing-Deprecation-Status"] isEqualToString:@"deprecated"];
 
-    if (response.statusCode != 410 && isDeprecated) {
+    if (response.statusCode != XNGAPIClientDeprecationStatusCode && isDeprecated) {
         [[NSNotificationCenter defaultCenter] postNotificationName:XNGAPIClientDeprecationWarningNotification object:nil];
     }
 }
