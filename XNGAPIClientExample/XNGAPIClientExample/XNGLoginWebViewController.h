@@ -20,8 +20,8 @@
 // THE SOFTWARE.
 
 #import <UIKit/UIKit.h>
-#import "XNGAPI.h"
 
-@interface XNGExampleViewController : UITableViewController
-
+@interface XNGLoginWebViewController : UIViewController
+- (id)initWithAuthURL:(NSURL *)authURL;
+- (void)dismiss;
 @end

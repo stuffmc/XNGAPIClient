@@ -1,6 +1,6 @@
 #import <XCTest/XCTest.h>
 #import "XNGTestHelper.h"
-#import "XNGAPIClient+NetworkFeed.h"
+#import "XNGAPI.h"
 
 @interface XNGNetworkFeedTests : XCTestCase
 

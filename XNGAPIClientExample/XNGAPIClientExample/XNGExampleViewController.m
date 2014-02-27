@@ -20,12 +20,14 @@
 // THE SOFTWARE.
 
 #import "XNGExampleViewController.h"
-#import "XNGAPIClient+Contacts.h"
+#import "XNGAPI.h"
+#import "XNGLoginWebViewController.h"
 
 #define kCellID @"XNGCellID"
 
 @interface XNGExampleViewController ()
-@property (nonatomic,strong) NSArray *contacts;
+@property (nonatomic, strong) NSArray *contacts;
+@property (nonatomic, strong) XNGLoginWebViewController *loginWebViewController;
 @end
 
 @implementation XNGExampleViewController
@@ -77,20 +79,29 @@
 
 - (void)login {
     __weak __typeof(&*self)weakSelf = self;
-    [[XNGAPIClient sharedClient] loginOAuthWithSuccess:
-     ^{
-         [weakSelf setupLogoutButton];
-         [weakSelf loadContacts];
-     }
-                                               failure:
-     ^(NSError *error){
-         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                             message:error.localizedDescription
-                                                            delegate:nil
-                                                   cancelButtonTitle:@"OK"
-                                                   otherButtonTitles:nil];
-         [alertView show];
-     }];
+    
+    [[XNGAPIClient sharedClient] loginOAuthAuthorize:^(NSURL *authURL) {
+        self.loginWebViewController = [[XNGLoginWebViewController alloc] initWithAuthURL:authURL];
+        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:self.loginWebViewController];
+        NSLog(@"Gonna present");
+        [self presentViewController:navigationController animated:YES completion:NULL];
+    } loggedIn:^{
+        [weakSelf setupLogoutButton];
+        [weakSelf loadContacts];
+        if (![weakSelf.presentedViewController isBeingDismissed]) {
+            [weakSelf.loginWebViewController dismiss];
+        } 
+    } failuire:^(NSError *error) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                            message:error.localizedDescription
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+        [alertView show];
+        if (![weakSelf.presentedViewController isBeingDismissed]) {
+            [weakSelf.loginWebViewController dismiss];
+        }
+    }];
 }
 
 - (void)logout {

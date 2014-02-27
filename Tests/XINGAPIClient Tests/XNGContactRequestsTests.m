@@ -1,6 +1,6 @@
 #import <XCTest/XCTest.h>
 #import "XNGTestHelper.h"
-#import "XNGAPIClient+ContactRequests.h"
+#import "XNGAPI.h"
 
 @interface XNGContactRequestsTests : XCTestCase
 

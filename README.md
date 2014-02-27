@@ -1,5 +1,15 @@
 #  The official Objective-C XING API Client
 
+## NOTE
+
+The initial release of the Pod was named `XINGAPI`. This was confusing a lot of our users so we decided to rename it after the repository `XNGAPIClient`. 
+
+*PLEASE NOTE* that in favor of the new `XNGAPIClient` the `XINGAPI` pod will no longer be updated. Please switch your codebase to be future-proof.
+
+If you have any questions please open an issue.
+
+===
+
 [![Build Status](https://travis-ci.org/xing/XNGAPIClient.png)](https://travis-ci.org/xing/XNGAPIClient)
 
 XNGAPIClient is the official client to access the XING API. In order to access the API, you only need an account on https://xing.com and an oauth consumer key and secret which can be obtained at https://dev.xing.com. Both is totally free and only takes a minute!
@@ -9,7 +19,7 @@ XNGAPIClient is built on top of AFNetworking, so it takes full advantage of bloc
 ## Getting started
 
 ### Option 1
-If you use [CocoaPods](http://cocoapods.org), you can add the ```XINGAPIClient``` pod to your Podfile. Then run ```pod install```, and the XING API Client will be available in your project.
+If you use [CocoaPods](http://cocoapods.org), you can add the ```XNGAPIClient``` pod to your Podfile. Then run ```pod install```, and the XING API Client will be available in your project.
 
 ### Option 2
 Clone & Watch our repository by visiting https://github.com/xing/XNGAPIClient
@@ -18,24 +28,20 @@ Clone & Watch our repository by visiting https://github.com/xing/XNGAPIClient
 You can optain a consumer key and consumer secret by visiting https://dev.xing.com/applications and pressing the create app button.
 
 ## Set callback URL for OAuth authentication
-To authenticate the user via OAuth we switch to Safari. You need to register a callback URL that we can redirect to after
-successful login. Using the XING API Client your callback URL scheme will be ```xingapp<YOUR CONSUMER KEY>://```. An example would be ```xingapp4a568854ef676b://```
+You need to setup the callback URL, which can be called after the user successfully logged in via Safari. Using the XING API Client your callback URL scheme will be ```xingapp<YOUR CONSUMER KEY>://```. An example would be ```xingapp4a568854ef676b://```
 
-### Step 1
-Register your callback URL on https://dev.xing.com/applications by clicking on the settings icon next to the app you just created and entering the callback URL scheme (as described above) in ```OAuth Dialogue / Callback domain``` field.
-
-### Step 2
-Register the same URL scheme in your apps Info.plist:
-
-▾ URL Types (Array)
-	▾ Item 0 (Dictionary)
-			URL Identifier (String) com.xing.xingapi
-			▾ URL Schemes (Array) (1 item)
-				Item 0	(String) <YOUR URL SCHEME, like "xingapp4a568854ef676b">
+To set it up just these steps:
+ 
+1. Click on your Project file.
+2. Make sure your main target is selected.
+3. Click on the Info button.
+4. Expand the URL Types section.
+5. Hit the + button.
+6. Add your scheme in the above described style
 
 ## Configure your App Delegate
 
-1. Import ```#import XNGAPIClient.h``` in your Application Delegate
+1. Import ```#import XNGAPI.h``` in your Application Delegate
 2. Add following method to your Application Delegate:
 ``` objective-c
 - (BOOL)application:(UIApplication *)application
