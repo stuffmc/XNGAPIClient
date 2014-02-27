@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = 'XINGAPI'
-  s.version = '0.1.0'
+  s.version = '0.1.1'
   s.license = 'MIT'
   s.ios.deployment_target = '6.0'
   s.osx.deployment_target = '10.7'
@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
   }
   s.source = {
     :git => 'https://github.com/xing/XNGAPIClient.git',
-    :commit => 'cf599a29f80d72264ce9f24820a868cfa2c78d49'
+    :tag => s.version.to_s
   }
   s.source_files = 'XNGAPIClient/*.{h,m}'
   s.requires_arc = true
