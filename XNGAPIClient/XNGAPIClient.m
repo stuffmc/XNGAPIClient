@@ -412,7 +412,7 @@ static NSString * const XNGAPIClientOAuthAccessTokenPath = @"v1/access_token";
 - (void)checkForGlobalErrors:(NSHTTPURLResponse *)response
                     withJSON:(id)JSON {
     if (response.statusCode == 410) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:XNGAPIClientDeprecationErrorNotification object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:XNGAPIClientDeprecationErrorNotification object:response];
         return;
     }
     if ([JSON isKindOfClass:[NSDictionary class]] &&
