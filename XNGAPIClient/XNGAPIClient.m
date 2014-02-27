@@ -47,7 +47,7 @@ static NSDictionary * XNGParametersFromQueryString(NSString *queryString);
 NSString * const XNGAPIClientInvalidTokenErrorNotification = @"com.xing.apiClient.error.invalidToken";
 NSString * const XNGAPIClientDeprecationErrorNotification = @"com.xing.apiClient.error.deprecatedAPI";
 NSString * const XNGAPIClientDeprecationWarningNotification = @"com.xing.apiClient.warning.deprecatedAPI";
-NSInteger * const XNGAPIClientDeprecationStatusCode = 410;
+NSInteger const XNGAPIClientDeprecationStatusCode = 410;
 
 static XNGAPIClient *_sharedClient = nil;
 
