@@ -423,7 +423,9 @@ static NSString * const XNGAPIClientOAuthAccessTokenPath = @"v1/access_token";
 }
 
 - (void)checkForDeprecation:(NSHTTPURLResponse *)response {
-    if ([[response.allHeaderFields xng_stringForKey:@"X-Xing-Deprecation-Status"] isEqualToString:@"deprecated"]) {
+    BOOL isDeprecated = [[response.allHeaderFields xng_stringForKey:@"X-Xing-Deprecation-Status"] isEqualToString:@"deprecated"];
+
+    if (response.statusCode != 410 && isDeprecated) {
         [[NSNotificationCenter defaultCenter] postNotificationName:XNGAPIClientDeprecationWarningNotification object:nil];
     }
 }
