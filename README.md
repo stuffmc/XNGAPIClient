@@ -28,7 +28,7 @@ Clone & Watch our repository by visiting https://github.com/xing/XNGAPIClient
 You can optain a consumer key and consumer secret by visiting https://dev.xing.com/applications and pressing the create app button.
 
 ## Set callback URL for OAuth authentication
-You need to setup the callback URL, which can be called after the user successfully logged in via Safari. Using the XING API Client your callback URL scheme will be ```xingapp<YOUR CONSUMER KEY>://```. An example would be ```xingapp4a568854ef676b://```
+You need to setup the callback URL, which can be called after the user successfully logged in via Safari. Using the XING API Client your callback URL scheme will be ```xingapp<YOUR CONSUMER KEY>```. An example would be ```xingapp4a568854ef676b```
 
 To set it up just these steps:
  
