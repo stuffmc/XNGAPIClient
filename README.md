@@ -10,7 +10,7 @@ If you have any questions please open an issue.
 
 ===
 
-[![Build Status](https://travis-ci.org/xing/XNGAPIClient.png)](https://travis-ci.org/xing/XNGAPIClient)
+[![Build Status](https://travis-ci.org/xing/XNGAPIClient.png?branch=master)](https://travis-ci.org/xing/XNGAPIClient)
 
 XNGAPIClient is the official client to access the XING API. In order to access the API, you only need an account on https://xing.com and an oauth consumer key and secret which can be obtained at https://dev.xing.com. Both is totally free and only takes a minute!
 
@@ -28,7 +28,7 @@ Clone & Watch our repository by visiting https://github.com/xing/XNGAPIClient
 You can optain a consumer key and consumer secret by visiting https://dev.xing.com/applications and pressing the create app button.
 
 ## Set callback URL for OAuth authentication
-You need to setup the callback URL, which can be called after the user successfully logged in via Safari. Using the XING API Client your callback URL scheme will be ```xingapp<YOUR CONSUMER KEY>://```. An example would be ```xingapp4a568854ef676b://```
+You need to setup the callback URL, which can be called after the user successfully logged in via Safari. Using the XING API Client your callback URL scheme will be ```xingapp<YOUR CONSUMER KEY>```. An example would be ```xingapp4a568854ef676b```
 
 To set it up just these steps:
  
