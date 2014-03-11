@@ -7,6 +7,6 @@ link_with 'iOS Tests'
 
 pod 'OCMock', '~> 2.1.1'
 pod 'Expecta', '~> 0.2.1'
-pod 'XNGAPIClient', :path => '../XNGAPIClient.podspec'
+pod 'XINGAPI', :path => '../XINGAPI.podspec'
 pod 'XINGAPIClientTester', '~> 0.0.1'
 pod 'OHHTTPStubs', '~> 3.0.2'
