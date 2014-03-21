@@ -10,7 +10,7 @@ If you have any questions please open an issue.
 
 ===
 
-[![Build Status](https://travis-ci.org/xing/XNGAPIClient.png?branch=master)](https://travis-ci.org/xing/XNGAPIClient) [![Dependency Status](https://www.versioneye.com/objective-c/xngapiclient/0.1.0/badge.png)](https://www.versioneye.com/objective-c/xngapiclient/0.1.0)
+[![Build Status](https://travis-ci.org/xing/XNGAPIClient.png?branch=master)](https://travis-ci.org/xing/XNGAPIClient) [![Dependency Status](https://www.versioneye.com/objective-c/xngapiclient/badge.png)](https://www.versioneye.com/objective-c/xngapiclient)
 
 XNGAPIClient is the official client to access the XING API. In order to access the API, you only need an account on https://xing.com and an oauth consumer key and secret which can be obtained at https://dev.xing.com. Both is totally free and only takes a minute!
 
