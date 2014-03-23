@@ -7,12 +7,11 @@
 //
 
 #import <XCTest/XCTest.h>
-#import <XINGAPI/XNGOAuthHandler.h>
+#import <XNGAPIClient/XNGOAuthHandler.h>
 #import <SSKeychain/SSKeychain.h>
 
 #define EXP_SHORTHAND
 #import <Expecta/Expecta.h>
-#import <OCMock/OCMock.h>
 
 @interface XNGOAuthHandlerTests : XCTestCase
 
