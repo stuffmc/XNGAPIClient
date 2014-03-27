@@ -4,6 +4,8 @@
 
 @interface XNGGeoLocationsTests : XCTestCase
 
+@property (nonatomic) XNGTestHelper *testHelper;
+
 @end
 
 @implementation XNGGeoLocationsTests
@@ -11,29 +13,17 @@
 - (void)setUp {
     [super setUp];
 
-    [XNGTestHelper setupOAuthCredentials];
-
-    [XNGTestHelper setupLoggedInUserWithUserID:@"1"];
-
-    [OHHTTPStubs stubRequestsPassingTest:^BOOL(NSURLRequest *request) {
-        return YES;
-    } withStubResponse:^OHHTTPStubsResponse*(NSURLRequest *request) {
-        return nil;
-    }];
+    self.testHelper = [[XNGTestHelper alloc] init];
+    [self.testHelper setup];
 }
 
 - (void)tearDown {
     [super tearDown];
-
-    [XNGTestHelper tearDownOAuthCredentials];
-
-    [XNGTestHelper tearDownLoggedInUser];
-
-    [OHHTTPStubs removeAllStubs];
+    [self.testHelper tearDown];
 }
 
 - (void)testPutUpdateGeoLocation {
-    [XNGTestHelper executeCall:
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] putUpdateGeoLocationForUserID:@"1"
                                                            accuracy:0.5
@@ -49,7 +39,7 @@
          expect(request.URL.path).to.equal(@"/v1/users/1/geo_location");
          expect(request.HTTPMethod).to.equal(@"PUT");
 
-         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         [self.testHelper removeOAuthParametersInQueryDict:query];
 
          expect([query valueForKey:@"accuracy"]).to.equal(@"0.500000");
          [query removeObjectForKey:@"accuracy"];
@@ -67,7 +57,7 @@
 }
 
 - (void)testGetNearbyUsers {
-    [XNGTestHelper executeCall:
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] getNearbyUsersWithAge:100
                                                      radius:400
@@ -81,7 +71,7 @@
          expect(request.URL.path).to.equal(@"/v1/users/me/nearby_users");
          expect(request.HTTPMethod).to.equal(@"GET");
 
-         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         [self.testHelper removeOAuthParametersInQueryDict:query];
 
          expect([query valueForKey:@"age"]).to.equal(@"100");
          [query removeObjectForKey:@"age"];

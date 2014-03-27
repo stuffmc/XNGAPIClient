@@ -4,6 +4,8 @@
 
 @interface XNGUserProfilesTests : XCTestCase
 
+@property (nonatomic) XNGTestHelper *testHelper;
+
 @end
 
 @implementation XNGUserProfilesTests
@@ -11,29 +13,17 @@
 - (void)setUp {
     [super setUp];
 
-    [XNGTestHelper setupOAuthCredentials];
-
-    [XNGTestHelper setupLoggedInUserWithUserID:@"1"];
-
-    [OHHTTPStubs stubRequestsPassingTest:^BOOL(NSURLRequest *request) {
-        return YES;
-    } withStubResponse:^OHHTTPStubsResponse*(NSURLRequest *request) {
-        return nil;
-    }];
+    self.testHelper = [[XNGTestHelper alloc] init];
+    [self.testHelper setup];
 }
 
 - (void)tearDown {
     [super tearDown];
-
-    [XNGTestHelper tearDownOAuthCredentials];
-
-    [XNGTestHelper tearDownLoggedInUser];
-
-    [OHHTTPStubs removeAllStubs];
+    [self.testHelper tearDown];
 }
 
 - (void)testGetUserWithParameters {
-    [XNGTestHelper executeCall:
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] getUserWithID:@"1"
                                          userFields:@"display_name"
@@ -46,7 +36,7 @@
          expect(request.URL.path).to.equal(@"/v1/users/1");
          expect(request.HTTPMethod).to.equal(@"GET");
 
-         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         [self.testHelper removeOAuthParametersInQueryDict:query];
          expect([query valueForKey:@"fields"]).to.equal(@"display_name");
          [query removeObjectForKey:@"fields"];
 
@@ -57,7 +47,7 @@
 }
 
 - (void)testSearchForUserByEmail {
-    [XNGTestHelper executeCall:
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] getSearchForUsersByEmail:@"blala@someone.com,blala2@someone.com"
                                                   hashFunction:@"MD5" userFields:@"display_name"
@@ -70,7 +60,7 @@
          expect(request.URL.path).to.equal(@"/v1/users/find_by_emails");
          expect(request.HTTPMethod).to.equal(@"GET");
 
-         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         [self.testHelper removeOAuthParametersInQueryDict:query];
          expect([query valueForKey:@"hash_function"]).to.equal(@"MD5");
          [query removeObjectForKey:@"hash_function"];
          expect([query valueForKey:@"user_fields"]).to.equal(@"display_name");
@@ -85,7 +75,7 @@
 }
 
 - (void)testGetUserLegalInformation {
-    [XNGTestHelper executeCall:^{
+    [self.testHelper executeCall:^{
         [[XNGAPIClient sharedClient] getLegalInformationWithID:@"1234"
                                                        success:nil
                                                        failure:nil];
@@ -94,7 +84,7 @@
         expect(request.URL.path).to.equal(@"/v1/users/1234/legal_information");
         expect(request.HTTPMethod).to.equal(@"GET");
 
-        [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+        [self.testHelper removeOAuthParametersInQueryDict:query];
         expect([query allKeys]).to.haveCountOf(0);
         expect([body allKeys]).to.haveCountOf(0);
     }];

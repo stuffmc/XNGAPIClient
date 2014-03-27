@@ -4,36 +4,25 @@
 
 @interface XNGNetworkFeedTests : XCTestCase
 
+@property (nonatomic) XNGTestHelper *testHelper;
+
 @end
 
 @implementation XNGNetworkFeedTests
 
 - (void)setUp {
     [super setUp];
-
-    [XNGTestHelper setupOAuthCredentials];
-
-    [XNGTestHelper setupLoggedInUserWithUserID:@"1"];
-
-    [OHHTTPStubs stubRequestsPassingTest:^BOOL(NSURLRequest *request) {
-        return YES;
-    } withStubResponse:^OHHTTPStubsResponse*(NSURLRequest *request) {
-        return nil;
-    }];
+    self.testHelper = [[XNGTestHelper alloc] init];
+    [self.testHelper setup];
 }
 
 - (void)tearDown {
     [super tearDown];
-
-    [XNGTestHelper tearDownOAuthCredentials];
-
-    [XNGTestHelper tearDownLoggedInUser];
-
-    [OHHTTPStubs removeAllStubs];
+    [self.testHelper tearDown];
 }
 
 - (void)testGetNetworkFeed {
-    [XNGTestHelper executeCall:
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] getNetworkFeedUntil:nil
                                                userFields:nil
@@ -46,7 +35,7 @@
          expect(request.URL.path).to.equal(@"/v1/users/me/network_feed");
          expect(request.HTTPMethod).to.equal(@"GET");
 
-         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         [self.testHelper removeOAuthParametersInQueryDict:query];
 
          expect([query allKeys]).to.haveCountOf(0);
 
@@ -55,7 +44,7 @@
 }
 
 - (void)testGetNetworkFeedWithParameters {
-    [XNGTestHelper executeCall:
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] getNetworkFeedUntil:@"1"
                                                userFields:@"display_name"
@@ -68,7 +57,7 @@
          expect(request.URL.path).to.equal(@"/v1/users/me/network_feed");
          expect(request.HTTPMethod).to.equal(@"GET");
 
-         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         [self.testHelper removeOAuthParametersInQueryDict:query];
 
          expect([query valueForKey:@"until"]).to.equal(@"1");
          [query removeObjectForKey:@"until"];
@@ -82,7 +71,7 @@
 }
 
 - (void)testGetUserFeed {
-    [XNGTestHelper executeCall:
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] getUserFeedForUserID:@"1"
                                                      until:nil
@@ -96,7 +85,7 @@
          expect(request.URL.path).to.equal(@"/v1/users/1/feed");
          expect(request.HTTPMethod).to.equal(@"GET");
 
-         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         [self.testHelper removeOAuthParametersInQueryDict:query];
 
          expect([query allKeys]).to.haveCountOf(0);
 
@@ -105,7 +94,7 @@
 }
 
 - (void)testGetUserFeedWithParameters {
-    [XNGTestHelper executeCall:
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] getUserFeedForUserID:@"1"
                                                      until:@"2"
@@ -119,7 +108,7 @@
          expect(request.URL.path).to.equal(@"/v1/users/1/feed");
          expect(request.HTTPMethod).to.equal(@"GET");
 
-         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         [self.testHelper removeOAuthParametersInQueryDict:query];
 
          expect([query valueForKey:@"until"]).to.equal(@"2");
          [query removeObjectForKey:@"until"];
@@ -133,7 +122,7 @@
 }
 
 - (void)testPostStatusMessage {
-    [XNGTestHelper executeCall:
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] postStatusMessage:@"status message"
                                                  userID:@"1"
@@ -146,7 +135,7 @@
          expect(request.URL.path).to.equal(@"/v1/users/1/status_message");
          expect(request.HTTPMethod).to.equal(@"POST");
 
-         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         [self.testHelper removeOAuthParametersInQueryDict:query];
 
          expect([query allKeys]).to.haveCountOf(0);
 
@@ -158,7 +147,7 @@
 }
 
 - (void)testPostLink {
-    [XNGTestHelper executeCall:
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] postLink:@"blalup"
                                        success:nil
@@ -170,7 +159,7 @@
          expect(request.URL.path).to.equal(@"/v1/users/me/share/link");
          expect(request.HTTPMethod).to.equal(@"POST");
 
-         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         [self.testHelper removeOAuthParametersInQueryDict:query];
 
          expect([query allKeys]).to.haveCountOf(0);
 
@@ -182,7 +171,7 @@
 }
 
 - (void)testGetSingleActivity {
-    [XNGTestHelper executeCall:
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] getSingleActivityWithID:@"1"
                                                    userFields:@"display_name"
@@ -195,7 +184,7 @@
          expect(request.URL.path).to.equal(@"/v1/activities/1");
          expect(request.HTTPMethod).to.equal(@"GET");
 
-         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         [self.testHelper removeOAuthParametersInQueryDict:query];
 
          expect([query valueForKey:@"user_fields"]).to.equal(@"display_name");
          [query removeObjectForKey:@"user_fields"];
@@ -207,7 +196,7 @@
 }
 
 - (void)testRecommendActivity {
-    [XNGTestHelper executeCall:
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] postRecommendActivityWithID:@"1"
                                                           success:nil
@@ -219,7 +208,7 @@
          expect(request.URL.path).to.equal(@"/v1/activities/1/share");
          expect(request.HTTPMethod).to.equal(@"POST");
 
-         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         [self.testHelper removeOAuthParametersInQueryDict:query];
 
          expect([query allKeys]).to.haveCountOf(0);
 
@@ -228,7 +217,7 @@
 }
 
 - (void)testDeleteActivity {
-    [XNGTestHelper executeCall:
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] deleteActivityWithID:@"1"
                                                    success:nil
@@ -240,7 +229,7 @@
          expect(request.URL.path).to.equal(@"/v1/activities/1");
          expect(request.HTTPMethod).to.equal(@"DELETE");
 
-         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         [self.testHelper removeOAuthParametersInQueryDict:query];
 
          expect([query allKeys]).to.haveCountOf(0);
 
@@ -249,7 +238,7 @@
 }
 
 - (void)testGetComments {
-    [XNGTestHelper executeCall:
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] getCommentsWithActivityID:@"1"
                                                      userFields:nil
@@ -264,7 +253,7 @@
          expect(request.URL.path).to.equal(@"/v1/activities/1/comments");
          expect(request.HTTPMethod).to.equal(@"GET");
 
-         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         [self.testHelper removeOAuthParametersInQueryDict:query];
 
          expect([query allKeys]).to.haveCountOf(0);
 
@@ -273,7 +262,7 @@
 }
 
 - (void)testGetCommentsWithParameters {
-    [XNGTestHelper executeCall:
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] getCommentsWithActivityID:@"1"
                                                      userFields:@"display_name"
@@ -288,7 +277,7 @@
          expect(request.URL.path).to.equal(@"/v1/activities/1/comments");
          expect(request.HTTPMethod).to.equal(@"GET");
 
-         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         [self.testHelper removeOAuthParametersInQueryDict:query];
 
          expect([query valueForKey:@"offset"]).to.equal(@"20");
          [query removeObjectForKey:@"offset"];
@@ -304,7 +293,7 @@
 }
 
 - (void)testPostNewComment {
-    [XNGTestHelper executeCall:
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] postNewComment:@"comment"
                                           activityID:@"1"
@@ -317,7 +306,7 @@
          expect(request.URL.path).to.equal(@"/v1/activities/1/comments");
          expect(request.HTTPMethod).to.equal(@"POST");
 
-         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         [self.testHelper removeOAuthParametersInQueryDict:query];
 
          expect([query allKeys]).to.haveCountOf(0);
 
@@ -328,7 +317,7 @@
 }
 
 - (void)testDeleteComment {
-    [XNGTestHelper executeCall:
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] deleteCommentWithID:@"1"
                                                activityID:@"2"
@@ -341,7 +330,7 @@
          expect(request.URL.path).to.equal(@"/v1/activities/2/comments/1");
          expect(request.HTTPMethod).to.equal(@"DELETE");
 
-         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         [self.testHelper removeOAuthParametersInQueryDict:query];
 
          expect([query allKeys]).to.haveCountOf(0);
 
@@ -350,7 +339,7 @@
 }
 
 - (void)testGetLikes {
-    [XNGTestHelper executeCall:
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] getLikesForActivityID:@"1"
                                                  userFields:nil
@@ -365,7 +354,7 @@
          expect(request.URL.path).to.equal(@"/v1/activities/1/likes");
          expect(request.HTTPMethod).to.equal(@"GET");
 
-         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         [self.testHelper removeOAuthParametersInQueryDict:query];
 
          expect([query allKeys]).to.haveCountOf(0);
 
@@ -374,7 +363,7 @@
 }
 
 - (void)testGetLikesWithParameters {
-    [XNGTestHelper executeCall:
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] getLikesForActivityID:@"1"
                                                  userFields:@"display_name"
@@ -389,7 +378,7 @@
          expect(request.URL.path).to.equal(@"/v1/activities/1/likes");
          expect(request.HTTPMethod).to.equal(@"GET");
 
-         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         [self.testHelper removeOAuthParametersInQueryDict:query];
 
          expect([query valueForKey:@"offset"]).to.equal(@"20");
          [query removeObjectForKey:@"offset"];
@@ -405,7 +394,7 @@
 }
 
 - (void)testLikeActivity {
-    [XNGTestHelper executeCall:
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] putLikeActivityWithID:@"1"
                                                     success:nil
@@ -417,7 +406,7 @@
          expect(request.URL.path).to.equal(@"/v1/activities/1/like");
          expect(request.HTTPMethod).to.equal(@"PUT");
 
-         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         [self.testHelper removeOAuthParametersInQueryDict:query];
 
          expect([query allKeys]).to.haveCountOf(0);
 
@@ -426,7 +415,7 @@
 }
 
 - (void)testUnlikeActivity {
-    [XNGTestHelper executeCall:
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] deleteUnlikeActivityWithID:@"1"
                                                          success:nil
@@ -438,7 +427,7 @@
          expect(request.URL.path).to.equal(@"/v1/activities/1/like");
          expect(request.HTTPMethod).to.equal(@"DELETE");
 
-         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         [self.testHelper removeOAuthParametersInQueryDict:query];
 
          expect([query allKeys]).to.haveCountOf(0);
 
