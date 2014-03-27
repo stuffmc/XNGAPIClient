@@ -84,4 +84,20 @@
      }];
 }
 
+- (void)testGetUserLegalInformation {
+    [XNGTestHelper executeCall:^{
+        [[XNGAPIClient sharedClient] getLegalInformationWithID:@"1234"
+                                                       success:nil
+                                                       failure:nil];
+    } withExpectations:^(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body) {
+        expect(request.URL.host).to.equal(@"www.xing.com");
+        expect(request.URL.path).to.equal(@"/v1/users/1234/legal_information");
+        expect(request.HTTPMethod).to.equal(@"GET");
+
+        [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+        expect([query allKeys]).to.haveCountOf(0);
+        expect([body allKeys]).to.haveCountOf(0);
+    }];
+}
+
 @end
