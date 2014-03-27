@@ -4,6 +4,8 @@
 
 @interface XNGContactRequestsTests : XCTestCase
 
+@property (nonatomic) XNGTestHelper *testHelper;
+
 @end
 
 @implementation XNGContactRequestsTests
@@ -11,29 +13,17 @@
 - (void)setUp {
     [super setUp];
 
-    [XNGTestHelper setupOAuthCredentials];
-
-    [XNGTestHelper setupLoggedInUserWithUserID:@"1"];
-
-    [OHHTTPStubs stubRequestsPassingTest:^BOOL(NSURLRequest *request) {
-        return YES;
-    } withStubResponse:^OHHTTPStubsResponse*(NSURLRequest *request) {
-        return nil;
-    }];
+    self.testHelper = [[XNGTestHelper alloc] init];
+    [self.testHelper setup];
 }
 
 - (void)tearDown {
     [super tearDown];
-
-    [XNGTestHelper tearDownOAuthCredentials];
-
-    [XNGTestHelper tearDownLoggedInUser];
-
-    [OHHTTPStubs removeAllStubs];
+    [self.testHelper tearDown];
 }
 
 - (void)testGetContactRequests {
-    [XNGTestHelper executeCall:
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] getContactRequestsWithLimit:0
                                                            offset:0
@@ -47,7 +37,7 @@
          expect(request.URL.path).to.equal(@"/v1/users/me/contact_requests");
          expect(request.HTTPMethod).to.equal(@"GET");
 
-         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         [self.testHelper removeOAuthParametersInQueryDict:query];
          expect([query allKeys]).to.haveCountOf(0);
 
          expect([body allKeys]).to.haveCountOf(0);
@@ -55,7 +45,7 @@
 }
 
 - (void)testGetContactRequestsWithLimitAndOffset {
-    [XNGTestHelper executeCall:
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] getContactRequestsWithLimit:20
                                                            offset:40
@@ -69,7 +59,7 @@
          expect(request.URL.path).to.equal(@"/v1/users/me/contact_requests");
          expect(request.HTTPMethod).to.equal(@"GET");
 
-         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         [self.testHelper removeOAuthParametersInQueryDict:query];
 
          expect([query valueForKey:@"limit"]).to.equal(@"20");
          [query removeObjectForKey:@"limit"];
@@ -82,7 +72,7 @@
 }
 
 - (void)testPostCreateContactRequest {
-    [XNGTestHelper executeCall:
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] postCreateContactRequestToUserWithID:@"2"
                                                                    message:@"blalup"
@@ -95,7 +85,7 @@
          expect(request.URL.path).to.equal(@"/v1/users/2/contact_requests");
          expect(request.HTTPMethod).to.equal(@"POST");
 
-         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         [self.testHelper removeOAuthParametersInQueryDict:query];
 
          expect([query allKeys]).to.haveCountOf(0);
 
@@ -107,7 +97,7 @@
 }
 
 - (void)testPutConfirmContactRequest {
-    [XNGTestHelper executeCall:
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] putConfirmContactRequestForUserID:@"1"
                                                                senderID:@"2"
@@ -120,7 +110,7 @@
          expect(request.URL.path).to.equal(@"/v1/users/1/contact_requests/2/accept");
          expect(request.HTTPMethod).to.equal(@"PUT");
 
-         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         [self.testHelper removeOAuthParametersInQueryDict:query];
 
          expect([query allKeys]).to.haveCountOf(0);
 
@@ -129,7 +119,7 @@
 }
 
 - (void)testDeleteDeclineContactRequest {
-    [XNGTestHelper executeCall:
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] deleteDeclineContactRequestForUserID:@"1"
                                                                   senderID:@"2"

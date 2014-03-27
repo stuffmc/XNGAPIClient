@@ -4,6 +4,8 @@
 
 @interface XNGContactsTests : XCTestCase
 
+@property (nonatomic) XNGTestHelper *testHelper;
+
 @end
 
 @implementation XNGContactsTests
@@ -11,29 +13,19 @@
 - (void)setUp {
     [super setUp];
 
-    [XNGTestHelper setupOAuthCredentials];
-
-    [XNGTestHelper setupLoggedInUserWithUserID:@"1"];
-
-    [OHHTTPStubs stubRequestsPassingTest:^BOOL(NSURLRequest *request) {
-        return YES;
-    } withStubResponse:^OHHTTPStubsResponse*(NSURLRequest *request) {
-        return nil;
-    }];
+    self.testHelper = [[XNGTestHelper alloc] init];
+    [self.testHelper setup];
 }
 
 - (void)tearDown {
     [super tearDown];
-
-    [XNGTestHelper tearDownOAuthCredentials];
-
-    [XNGTestHelper tearDownLoggedInUser];
+    [self.testHelper tearDown];
 }
 
 #pragma mark - get contacts
 
 - (void)testGetContacts {
-    [XNGTestHelper executeCall:
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] getContactsForUserID:@"1"
                                                      limit:0
@@ -49,7 +41,7 @@
          expect(request.URL.path).to.equal(@"/v1/users/1/contacts");
          expect(request.HTTPMethod).to.equal(@"GET");
 
-         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         [self.testHelper removeOAuthParametersInQueryDict:query];
          expect([query allKeys]).to.haveCountOf(0);
 
          expect([body allKeys]).to.haveCountOf(0);
@@ -57,7 +49,7 @@
 }
 
 - (void)testGetContactsWithParameters {
-    [XNGTestHelper executeCall:
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] getContactsForUserID:@"1"
                                                      limit:20
@@ -73,7 +65,7 @@
          expect(request.URL.path).to.equal(@"/v1/users/1/contacts");
          expect(request.HTTPMethod).to.equal(@"GET");
 
-         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         [self.testHelper removeOAuthParametersInQueryDict:query];
 
          expect([query valueForKey:@"user_fields"]).to.equal(@"display_name");
          [query removeObjectForKey:@"user_fields"];
@@ -92,7 +84,7 @@
 }
 
 - (void)testGetContactIDs {
-    [XNGTestHelper executeCall:
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] getContactIDsForUserID:@"1"
                                                        limit:0
@@ -106,7 +98,7 @@
          expect(request.URL.path).to.equal(@"/v1/users/1/contacts");
          expect(request.HTTPMethod).to.equal(@"GET");
 
-         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         [self.testHelper removeOAuthParametersInQueryDict:query];
 
          expect([query allKeys]).to.haveCountOf(0);
 
@@ -115,7 +107,7 @@
 }
 
 - (void)testGetContactIDsWithParameters {
-    [XNGTestHelper executeCall:
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] getContactIDsForUserID:@"1"
                                                        limit:20
@@ -129,7 +121,7 @@
          expect(request.URL.path).to.equal(@"/v1/users/1/contacts");
          expect(request.HTTPMethod).to.equal(@"GET");
 
-         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         [self.testHelper removeOAuthParametersInQueryDict:query];
 
          expect([query valueForKey:@"limit"]).to.equal(@"20");
          [query removeObjectForKey:@"limit"];
@@ -143,7 +135,7 @@
 }
 
 - (void)testGetSharedContacts {
-    [XNGTestHelper executeCall:
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] getSharedContactsForUserID:@"1"
                                                            limit:0
@@ -159,7 +151,7 @@
          expect(request.URL.path).to.equal(@"/v1/users/1/contacts/shared");
          expect(request.HTTPMethod).to.equal(@"GET");
 
-         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         [self.testHelper removeOAuthParametersInQueryDict:query];
 
          expect([query allKeys]).to.haveCountOf(0);
 
@@ -168,7 +160,7 @@
 }
 
 - (void)testGetSharedContactsWithParameters {
-    [XNGTestHelper executeCall:
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] getSharedContactsForUserID:@"1"
                                                            limit:20
@@ -184,7 +176,7 @@
          expect(request.URL.path).to.equal(@"/v1/users/1/contacts/shared");
          expect(request.HTTPMethod).to.equal(@"GET");
 
-         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         [self.testHelper removeOAuthParametersInQueryDict:query];
 
          expect([query valueForKey:@"user_fields"]).to.equal(@"display_name");
          [query removeObjectForKey:@"user_fields"];
@@ -202,7 +194,7 @@
 }
 
 - (void)testGetContactCount {
-    [XNGTestHelper executeCall:
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] getContactsCountForUserID:@"1"
                                                         success:nil
@@ -214,7 +206,7 @@
          expect(request.URL.path).to.equal(@"/v1/users/1/contacts");
          expect(request.HTTPMethod).to.equal(@"GET");
 
-         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         [self.testHelper removeOAuthParametersInQueryDict:query];
 
          expect([query valueForKey:@"limit"]).to.equal(@"0");
          [query removeObjectForKey:@"limit"];

@@ -4,6 +4,8 @@
 
 @interface XNGJobsTests : XCTestCase
 
+@property (nonatomic) XNGTestHelper *testHelper;
+
 @end
 
 @implementation XNGJobsTests
@@ -11,29 +13,17 @@
 - (void)setUp {
     [super setUp];
 
-    [XNGTestHelper setupOAuthCredentials];
-
-    [XNGTestHelper setupLoggedInUserWithUserID:@"1"];
-
-    [OHHTTPStubs stubRequestsPassingTest:^BOOL(NSURLRequest *request) {
-        return YES;
-    } withStubResponse:^OHHTTPStubsResponse*(NSURLRequest *request) {
-        return nil;
-    }];
+    self.testHelper = [[XNGTestHelper alloc] init];
+    [self.testHelper setup];
 }
 
 - (void)tearDown {
     [super tearDown];
-
-    [XNGTestHelper tearDownOAuthCredentials];
-
-    [XNGTestHelper tearDownLoggedInUser];
-
-    [OHHTTPStubs removeAllStubs];
+    [self.testHelper tearDown];
 }
 
 - (void)testGetJobDetails {
-    [XNGTestHelper executeCall:
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] getJobDetailsForJobID:@"1"
                                                  userFields:nil
@@ -46,7 +36,7 @@
          expect(request.URL.path).to.equal(@"/v1/jobs/1");
          expect(request.HTTPMethod).to.equal(@"GET");
 
-         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         [self.testHelper removeOAuthParametersInQueryDict:query];
 
          expect([query allKeys]).to.haveCountOf(0);
 
@@ -55,7 +45,7 @@
 }
 
 - (void)testGetJobDetailsWithParameters {
-    [XNGTestHelper executeCall:
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] getJobDetailsForJobID:@"1"
                                                  userFields:@"display_name"
@@ -68,7 +58,7 @@
          expect(request.URL.path).to.equal(@"/v1/jobs/1");
          expect(request.HTTPMethod).to.equal(@"GET");
 
-         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         [self.testHelper removeOAuthParametersInQueryDict:query];
          expect([query valueForKey:@"user_fields"]).to.equal(@"display_name");
          [query removeObjectForKey:@"user_fields"];
 
@@ -79,7 +69,7 @@
 }
 
 - (void)testGetJobSearchResults {
-    [XNGTestHelper executeCall:
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] getJobSearchResultsForString:@"bla"
                                                              limit:0
@@ -94,7 +84,7 @@
          expect(request.URL.path).to.equal(@"/v1/jobs/find");
          expect(request.HTTPMethod).to.equal(@"GET");
 
-         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         [self.testHelper removeOAuthParametersInQueryDict:query];
 
          expect([query valueForKey:@"query"]).to.equal(@"bla");
          [query removeObjectForKey:@"query"];
@@ -105,7 +95,7 @@
 }
 
 - (void)testGetJobSearchResultsWithParameters {
-    [XNGTestHelper executeCall:
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] getJobSearchResultsForString:@"bla"
                                                              limit:20
@@ -120,7 +110,7 @@
          expect(request.URL.path).to.equal(@"/v1/jobs/find");
          expect(request.HTTPMethod).to.equal(@"GET");
 
-         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         [self.testHelper removeOAuthParametersInQueryDict:query];
          expect([query valueForKey:@"query"]).to.equal(@"bla");
          [query removeObjectForKey:@"query"];
          expect([query valueForKey:@"limit"]).to.equal(@"20");
@@ -137,7 +127,7 @@
 }
 
 - (void)testGetJobRecommendations {
-    [XNGTestHelper executeCall:
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] getJobRecommendationsWithLimit:0
                                                               offset:0
@@ -151,7 +141,7 @@
          expect(request.URL.path).to.equal(@"/v1/users/me/jobs/recommendations");
          expect(request.HTTPMethod).to.equal(@"GET");
 
-         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         [self.testHelper removeOAuthParametersInQueryDict:query];
 
          expect([query allKeys]).to.haveCountOf(0);
 
@@ -160,7 +150,7 @@
 }
 
 - (void)testGetJobRecommendationsWithParameters {
-    [XNGTestHelper executeCall:
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] getJobRecommendationsWithLimit:20
                                                               offset:40
@@ -174,7 +164,7 @@
          expect(request.URL.path).to.equal(@"/v1/users/me/jobs/recommendations");
          expect(request.HTTPMethod).to.equal(@"GET");
 
-         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         [self.testHelper removeOAuthParametersInQueryDict:query];
          expect([query valueForKey:@"limit"]).to.equal(@"20");
          [query removeObjectForKey:@"limit"];
          expect([query valueForKey:@"offset"]).to.equal(@"40");

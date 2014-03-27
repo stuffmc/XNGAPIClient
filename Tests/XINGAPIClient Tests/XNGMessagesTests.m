@@ -4,6 +4,8 @@
 
 @interface XNGMessagesTests : XCTestCase
 
+@property (nonatomic) XNGTestHelper *testHelper;
+
 @end
 
 @implementation XNGMessagesTests
@@ -11,29 +13,17 @@
 - (void)setUp {
     [super setUp];
 
-    [XNGTestHelper setupOAuthCredentials];
-
-    [XNGTestHelper setupLoggedInUserWithUserID:@"1"];
-
-    [OHHTTPStubs stubRequestsPassingTest:^BOOL(NSURLRequest *request) {
-        return YES;
-    } withStubResponse:^OHHTTPStubsResponse*(NSURLRequest *request) {
-        return nil;
-    }];
+    self.testHelper = [[XNGTestHelper alloc] init];
+    [self.testHelper setup];
 }
 
 - (void)tearDown {
     [super tearDown];
-
-    [XNGTestHelper tearDownOAuthCredentials];
-
-    [XNGTestHelper tearDownLoggedInUser];
-
-    [OHHTTPStubs removeAllStubs];
+    [self.testHelper tearDown];
 }
 
 - (void)testGetConversations {
-    [XNGTestHelper executeCall:
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] getConversationsWithLimit:0
                                                          offset:0
@@ -48,7 +38,7 @@
          expect(request.URL.path).to.equal(@"/v1/users/me/conversations");
          expect(request.HTTPMethod).to.equal(@"GET");
 
-         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         [self.testHelper removeOAuthParametersInQueryDict:query];
 
          expect([query allKeys]).to.haveCountOf(0);
 
@@ -57,7 +47,7 @@
 }
 
 - (void)testGetConversationsWithParameters {
-    [XNGTestHelper executeCall:
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] getConversationsWithLimit:20
                                                          offset:40
@@ -72,7 +62,7 @@
          expect(request.URL.path).to.equal(@"/v1/users/me/conversations");
          expect(request.HTTPMethod).to.equal(@"GET");
 
-         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         [self.testHelper removeOAuthParametersInQueryDict:query];
 
          expect([query valueForKey:@"limit"]).to.equal(@"20");
          [query removeObjectForKey:@"limit"];
@@ -90,7 +80,7 @@
 }
 
 - (void)testPostNewConversation {
-    [XNGTestHelper executeCall:
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] postCreateNewConversationWithRecipientIDs:@"2"
                                                                         subject:@"Hey"
@@ -102,7 +92,7 @@
          expect(request.URL.path).to.equal(@"/v1/users/me/conversations");
          expect(request.HTTPMethod).to.equal(@"POST");
 
-         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         [self.testHelper removeOAuthParametersInQueryDict:query];
 
          expect([query allKeys]).to.haveCountOf(0);
 
@@ -118,7 +108,7 @@
 }
 
 - (void)testGetIsRecipientValid {
-    [XNGTestHelper executeCall:
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] getIsRecipientValidWithUserID:@"2"
                                                             success:nil
@@ -130,7 +120,7 @@
          expect(request.URL.path).to.equal(@"/v1/users/me/conversations/valid_recipients/2");
          expect(request.HTTPMethod).to.equal(@"GET");
 
-         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         [self.testHelper removeOAuthParametersInQueryDict:query];
 
          expect([query allKeys]).to.haveCountOf(0);
 
@@ -139,7 +129,7 @@
 }
 
 - (void)testGetConversation {
-    [XNGTestHelper executeCall:
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] getConversationWithID:@"1"
                                                  userFields:nil
@@ -153,7 +143,7 @@
          expect(request.URL.path).to.equal(@"/v1/users/me/conversations/1");
          expect(request.HTTPMethod).to.equal(@"GET");
 
-         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         [self.testHelper removeOAuthParametersInQueryDict:query];
 
          expect([query allKeys]).to.haveCountOf(0);
 
@@ -162,7 +152,7 @@
 }
 
 - (void)testGetConversationWithParameters {
-    [XNGTestHelper executeCall:
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] getConversationWithID:@"1"
                                                  userFields:@"display_name"
@@ -176,7 +166,7 @@
          expect(request.URL.path).to.equal(@"/v1/users/me/conversations/1");
          expect(request.HTTPMethod).to.equal(@"GET");
 
-         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         [self.testHelper removeOAuthParametersInQueryDict:query];
 
          expect([query valueForKey:@"user_fields"]).to.equal(@"display_name");
          [query removeObjectForKey:@"user_fields"];
@@ -191,7 +181,7 @@
 
 
 - (void)testPostDownloadURL {
-    [XNGTestHelper executeCall:
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] postDownloadURLForAttachmentID:@"1"
                                                       conversationID:@"2"
@@ -204,7 +194,7 @@
          expect(request.URL.path).to.equal(@"/v1/users/me/conversations/2/attachments/1/download");
          expect(request.HTTPMethod).to.equal(@"POST");
 
-         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         [self.testHelper removeOAuthParametersInQueryDict:query];
 
          expect([query allKeys]).to.haveCountOf(0);
 
@@ -213,7 +203,7 @@
 }
 
 - (void)testPutMarkConversationRead {
-    [XNGTestHelper executeCall:
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] putMarkConversationAsReadWithConversationID:@"1"
                                                                           success:nil
@@ -225,7 +215,7 @@
          expect(request.URL.path).to.equal(@"/v1/users/me/conversations/1/read");
          expect(request.HTTPMethod).to.equal(@"PUT");
 
-         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         [self.testHelper removeOAuthParametersInQueryDict:query];
 
          expect([query allKeys]).to.haveCountOf(0);
 
@@ -234,7 +224,7 @@
 }
 
 - (void)testGetMessages {
-    [XNGTestHelper executeCall:
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] getMessagesForConversationID:@"1"
                                                              limit:0
@@ -249,7 +239,7 @@
          expect(request.URL.path).to.equal(@"/v1/users/me/conversations/1/messages");
          expect(request.HTTPMethod).to.equal(@"GET");
 
-         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         [self.testHelper removeOAuthParametersInQueryDict:query];
 
          expect([query allKeys]).to.haveCountOf(0);
 
@@ -258,7 +248,7 @@
 }
 
 - (void)testMarkMessageRead {
-    [XNGTestHelper executeCall:
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] putMarkMessageAsReadWithMessageID:@"1"
                                                          conversationID:@"2"
@@ -271,7 +261,7 @@
          expect(request.URL.path).to.equal(@"/v1/users/me/conversations/2/messages/1/read");
          expect(request.HTTPMethod).to.equal(@"PUT");
 
-         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         [self.testHelper removeOAuthParametersInQueryDict:query];
 
          expect([query allKeys]).to.haveCountOf(0);
 
@@ -280,7 +270,7 @@
 }
 
 - (void)testMarkMessageUnread {
-    [XNGTestHelper executeCall:
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] deleteMarkMessageAsUnreadWithMessageID:@"1"
                                                               conversationID:@"2"
@@ -293,7 +283,7 @@
          expect(request.URL.path).to.equal(@"/v1/users/me/conversations/2/messages/1/read");
          expect(request.HTTPMethod).to.equal(@"DELETE");
 
-         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         [self.testHelper removeOAuthParametersInQueryDict:query];
 
          expect([query allKeys]).to.haveCountOf(0);
 
@@ -302,7 +292,7 @@
 }
 
 - (void)testCreateReply {
-    [XNGTestHelper executeCall:
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] postCreateReplyToConversationWithConversationID:@"1"
                                                                               content:@"blala"
@@ -315,7 +305,7 @@
          expect(request.URL.path).to.equal(@"/v1/users/me/conversations/1/messages");
          expect(request.HTTPMethod).to.equal(@"POST");
 
-         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         [self.testHelper removeOAuthParametersInQueryDict:query];
 
          expect([query allKeys]).to.haveCountOf(0);
 
@@ -327,7 +317,7 @@
 }
 
 - (void)testDeleteConversation {
-    [XNGTestHelper executeCall:
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] deleteConversationWithConversationID:@"1"
                                                                    success:nil
@@ -339,7 +329,7 @@
          expect(request.URL.path).to.equal(@"/v1/users/me/conversations/1");
          expect(request.HTTPMethod).to.equal(@"DELETE");
 
-         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         [self.testHelper removeOAuthParametersInQueryDict:query];
 
          expect([query allKeys]).to.haveCountOf(0);
 

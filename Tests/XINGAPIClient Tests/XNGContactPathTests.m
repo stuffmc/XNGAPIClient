@@ -4,6 +4,8 @@
 
 @interface XNGContactPathTests : XCTestCase
 
+@property (nonatomic) XNGTestHelper *testHelper;
+
 @end
 
 @implementation XNGContactPathTests
@@ -11,29 +13,17 @@
 - (void)setUp {
     [super setUp];
 
-    [XNGTestHelper setupOAuthCredentials];
-
-    [XNGTestHelper setupLoggedInUserWithUserID:@"1"];
-
-    [OHHTTPStubs stubRequestsPassingTest:^BOOL(NSURLRequest *request) {
-        return YES;
-    } withStubResponse:^OHHTTPStubsResponse*(NSURLRequest *request) {
-        return nil;
-    }];
+    self.testHelper = [[XNGTestHelper alloc] init];
+    [self.testHelper setup];
 }
 
 - (void)tearDown {
     [super tearDown];
-
-    [XNGTestHelper tearDownOAuthCredentials];
-
-    [XNGTestHelper tearDownLoggedInUser];
-
-    [OHHTTPStubs removeAllStubs];
+    [self.testHelper tearDown];
 }
 
 - (void)testGetContactPath {
-    [XNGTestHelper executeCall:
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] getContactPathForOtherUserID:@"1"
                                                         userFields:nil
@@ -46,7 +36,7 @@
          expect(request.URL.path).to.equal(@"/v1/users/me/network/1/paths");
          expect(request.HTTPMethod).to.equal(@"GET");
 
-         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         [self.testHelper removeOAuthParametersInQueryDict:query];
          expect([query allKeys]).to.haveCountOf(0);
 
          expect([body allKeys]).to.haveCountOf(0);
@@ -54,7 +44,7 @@
 }
 
 - (void)testGetContactPathWithUserFields {
-    [XNGTestHelper executeCall:
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] getContactPathForOtherUserID:@"1"
                                                         userFields:@"display_name"
@@ -67,7 +57,7 @@
          expect(request.URL.path).to.equal(@"/v1/users/me/network/1/paths");
          expect(request.HTTPMethod).to.equal(@"GET");
 
-         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         [self.testHelper removeOAuthParametersInQueryDict:query];
          expect([query valueForKey:@"user_fields"]).to.equal(@"display_name");
          [query removeObjectForKey:@"user_fields"];
          expect([query allKeys]).to.haveCountOf(0);

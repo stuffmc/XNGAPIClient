@@ -3,6 +3,8 @@
 
 @interface XINGAPIClientTests : XCTestCase
 
+@property (nonatomic) XNGTestHelper *testHelper;
+
 @end
 
 @implementation XINGAPIClientTests
@@ -10,11 +12,10 @@
 - (void)setUp {
     [super setUp];
 
-    // make sure no user is logged in, e.g. from a dev or beta app.
-    [XNGTestHelper tearDownLoggedInUser];
+    self.testHelper = [[XNGTestHelper alloc] init];
+    [self.testHelper setupOAuthCredentials];
 
-    [XNGTestHelper setupOAuthCredentials];
-
+    // stub all outgoing network requests
     [OHHTTPStubs stubRequestsPassingTest:^BOOL(NSURLRequest *request) {
         return YES;
     } withStubResponse:^OHHTTPStubsResponse*(NSURLRequest *request) {
@@ -24,16 +25,11 @@
 
 - (void)tearDown {
     [super tearDown];
-
-    [XNGTestHelper tearDownOAuthCredentials];
-
-    [XNGTestHelper tearDownLoggedInUser];
-
-    [OHHTTPStubs removeAllStubs];
+    [self.testHelper tearDown];
 }
 
-- (void)testloginXAuth {
-    [XNGTestHelper executeCall:
+- (void)testLoginXAuth {
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] loginXAuthWithUsername:@"username"
                                                     password:@"password"
@@ -65,7 +61,7 @@
 }
 
 - (void)testLoginOAuth {
-    [XNGTestHelper executeCall:
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] loginOAuthWithSuccess:^{}
                                                     failure:^(NSError *error) {}];

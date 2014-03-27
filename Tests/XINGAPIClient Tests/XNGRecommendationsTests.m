@@ -4,6 +4,8 @@
 
 @interface XNGRecommendationsTests : XCTestCase
 
+@property (nonatomic) XNGTestHelper *testHelper;
+
 @end
 
 @implementation XNGRecommendationsTests
@@ -11,29 +13,17 @@
 - (void)setUp {
     [super setUp];
 
-    [XNGTestHelper setupOAuthCredentials];
-
-    [XNGTestHelper setupLoggedInUserWithUserID:@"1"];
-
-    [OHHTTPStubs stubRequestsPassingTest:^BOOL(NSURLRequest *request) {
-        return YES;
-    } withStubResponse:^OHHTTPStubsResponse*(NSURLRequest *request) {
-        return nil;
-    }];
+    self.testHelper = [[XNGTestHelper alloc] init];
+    [self.testHelper setup];
 }
 
 - (void)tearDown {
     [super tearDown];
-
-    [XNGTestHelper tearDownOAuthCredentials];
-
-    [XNGTestHelper tearDownLoggedInUser];
-
-    [OHHTTPStubs removeAllStubs];
+    [self.testHelper tearDown];
 }
 
 - (void)testGetRecommendations {
-    [XNGTestHelper executeCall:
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] getContactRecommendationsWithLimit:0
                                                                   offset:0
@@ -48,7 +38,7 @@
          expect(request.URL.path).to.equal(@"/v1/users/me/network/recommendations");
          expect(request.HTTPMethod).to.equal(@"GET");
 
-         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         [self.testHelper removeOAuthParametersInQueryDict:query];
 
          expect([query allKeys]).to.haveCountOf(0);
 
@@ -57,7 +47,7 @@
 }
 
 - (void)testGetRecommendationsWithParameters {
-    [XNGTestHelper executeCall:
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] getContactRecommendationsWithLimit:20
                                                                   offset:40
@@ -72,7 +62,7 @@
          expect(request.URL.path).to.equal(@"/v1/users/me/network/recommendations");
          expect(request.HTTPMethod).to.equal(@"GET");
 
-         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         [self.testHelper removeOAuthParametersInQueryDict:query];
          expect([query valueForKey:@"limit"]).to.equal(@"20");
          [query removeObjectForKey:@"limit"];
          expect([query valueForKey:@"offset"]).to.equal(@"40");
@@ -89,7 +79,7 @@
 }
 
 - (void)testDeleteRecommendation {
-    [XNGTestHelper executeCall:
+    [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] deleteContactRecommendationsForUserIDToIgnore:@"1"
                                                                             success:nil
@@ -101,7 +91,7 @@
          expect(request.URL.path).to.equal(@"/v1/users/me/network/recommendations/user/1");
          expect(request.HTTPMethod).to.equal(@"DELETE");
 
-         [XNGTestHelper assertAndRemoveOAuthParametersInQueryDict:query];
+         [self.testHelper removeOAuthParametersInQueryDict:query];
 
          expect([query allKeys]).to.haveCountOf(0);
 
