@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = 'XNGAPIClient'
-  s.version = '0.1.0'
+  s.version = '0.2.0'
   s.license = 'MIT'
   s.ios.deployment_target = '6.0'
   s.osx.deployment_target = '10.7'
