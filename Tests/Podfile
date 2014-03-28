@@ -6,4 +6,4 @@ platform :ios, '7.0'
 link_with 'iOS Tests'
 
 pod 'XNGAPIClient', :path => '../XNGAPIClient.podspec'
-pod 'XNGAPIClientTester', :git => 'https://github.com/xing/XINGAPIClientTester', :tag => '0.1.0'
+pod 'XNGAPIClientTester'
