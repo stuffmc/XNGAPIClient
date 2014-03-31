@@ -125,14 +125,13 @@
     [self.testHelper executeCall:
      ^{
          [[XNGAPIClient sharedClient] postStatusMessage:@"status message"
-                                                 userID:@"1"
                                                 success:nil
                                                 failure:nil];
      }
               withExpectations:
      ^(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body) {
          expect(request.URL.host).to.equal(@"www.xing.com");
-         expect(request.URL.path).to.equal(@"/v1/users/1/status_message");
+         expect(request.URL.path).to.equal(@"/v1/users/me/status_message");
          expect(request.HTTPMethod).to.equal(@"POST");
 
          [self.testHelper removeOAuthParametersInQueryDict:query];
