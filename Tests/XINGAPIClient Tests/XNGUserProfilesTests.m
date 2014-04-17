@@ -32,7 +32,7 @@
      }
               withExpectations:
      ^(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body) {
-         expect(request.URL.host).to.equal(@"www.xing.com");
+         expect(request.URL.host).to.equal(@"api.xing.com");
          expect(request.URL.path).to.equal(@"/v1/users/1");
          expect(request.HTTPMethod).to.equal(@"GET");
 
@@ -56,7 +56,7 @@
      }
               withExpectations:
      ^(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body) {
-         expect(request.URL.host).to.equal(@"www.xing.com");
+         expect(request.URL.host).to.equal(@"api.xing.com");
          expect(request.URL.path).to.equal(@"/v1/users/find_by_emails");
          expect(request.HTTPMethod).to.equal(@"GET");
 
@@ -80,7 +80,7 @@
                                                        success:nil
                                                        failure:nil];
     } withExpectations:^(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body) {
-        expect(request.URL.host).to.equal(@"www.xing.com");
+        expect(request.URL.host).to.equal(@"api.xing.com");
         expect(request.URL.path).to.equal(@"/v1/users/1234/legal_information");
         expect(request.HTTPMethod).to.equal(@"GET");
 
