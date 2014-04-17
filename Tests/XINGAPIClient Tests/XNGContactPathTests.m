@@ -32,7 +32,7 @@
      }
                withExpectations:
      ^(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body) {
-         expect(request.URL.host).to.equal(@"www.xing.com");
+         expect(request.URL.host).to.equal(@"api.xing.com");
          expect(request.URL.path).to.equal(@"/v1/users/me/network/1/paths");
          expect(request.HTTPMethod).to.equal(@"GET");
 
@@ -53,7 +53,7 @@
      }
                withExpectations:
      ^(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body) {
-         expect(request.URL.host).to.equal(@"www.xing.com");
+         expect(request.URL.host).to.equal(@"api.xing.com");
          expect(request.URL.path).to.equal(@"/v1/users/me/network/1/paths");
          expect(request.HTTPMethod).to.equal(@"GET");
 

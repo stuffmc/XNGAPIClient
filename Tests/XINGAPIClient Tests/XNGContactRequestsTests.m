@@ -33,7 +33,7 @@
      }
                withExpectations:
      ^(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body) {
-         expect(request.URL.host).to.equal(@"www.xing.com");
+         expect(request.URL.host).to.equal(@"api.xing.com");
          expect(request.URL.path).to.equal(@"/v1/users/me/contact_requests");
          expect(request.HTTPMethod).to.equal(@"GET");
 
@@ -55,7 +55,7 @@
      }
                withExpectations:
      ^(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body) {
-         expect(request.URL.host).to.equal(@"www.xing.com");
+         expect(request.URL.host).to.equal(@"api.xing.com");
          expect(request.URL.path).to.equal(@"/v1/users/me/contact_requests");
          expect(request.HTTPMethod).to.equal(@"GET");
 
@@ -81,7 +81,7 @@
      }
                withExpectations:
      ^(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body) {
-         expect(request.URL.host).to.equal(@"www.xing.com");
+         expect(request.URL.host).to.equal(@"api.xing.com");
          expect(request.URL.path).to.equal(@"/v1/users/2/contact_requests");
          expect(request.HTTPMethod).to.equal(@"POST");
 
@@ -106,7 +106,7 @@
      }
                withExpectations:
      ^(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body) {
-         expect(request.URL.host).to.equal(@"www.xing.com");
+         expect(request.URL.host).to.equal(@"api.xing.com");
          expect(request.URL.path).to.equal(@"/v1/users/1/contact_requests/2/accept");
          expect(request.HTTPMethod).to.equal(@"PUT");
 
@@ -128,7 +128,7 @@
      }
                withExpectations:
      ^(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body) {
-         expect(request.URL.host).to.equal(@"www.xing.com");
+         expect(request.URL.host).to.equal(@"api.xing.com");
          expect(request.URL.path).to.equal(@"/v1/users/1/contact_requests/2");
          expect(request.HTTPMethod).to.equal(@"DELETE");
 

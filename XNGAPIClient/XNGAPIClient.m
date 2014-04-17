@@ -58,7 +58,7 @@ static XNGAPIClient *_sharedClient = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         if (_sharedClient == nil) {
-            NSURL *baseURL = [NSURL URLWithString:@"https://www.xing.com"];
+            NSURL *baseURL = [NSURL URLWithString:@"https://api.xing.com"];
             _sharedClient = [[XNGAPIClient alloc] initWithBaseURL:baseURL];
         }
     });

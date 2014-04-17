@@ -38,7 +38,7 @@
      }
                withExpectations:
      ^(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body) {
-         expect(request.URL.host).to.equal(@"www.xing.com");
+         expect(request.URL.host).to.equal(@"api.xing.com");
          expect(request.URL.path).to.equal(@"/v1/xauth");
          expect(request.HTTPMethod).to.equal(@"POST");
 
@@ -68,7 +68,7 @@
      }
                withExpectations:
      ^(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body) {
-         expect(request.URL.host).to.equal(@"www.xing.com");
+         expect(request.URL.host).to.equal(@"api.xing.com");
          expect(request.URL.path).to.equal(@"/v1/request_token");
          expect(request.HTTPMethod).to.equal(@"POST");
          expect([query allKeys]).to.haveCountOf(0);

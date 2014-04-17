@@ -31,7 +31,7 @@
      }
               withExpectations:
      ^(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body) {
-         expect(request.URL.host).to.equal(@"www.xing.com");
+         expect(request.URL.host).to.equal(@"api.xing.com");
          expect(request.URL.path).to.equal(@"/v1/users/me/network_feed");
          expect(request.HTTPMethod).to.equal(@"GET");
 
@@ -53,7 +53,7 @@
      }
               withExpectations:
      ^(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body) {
-         expect(request.URL.host).to.equal(@"www.xing.com");
+         expect(request.URL.host).to.equal(@"api.xing.com");
          expect(request.URL.path).to.equal(@"/v1/users/me/network_feed");
          expect(request.HTTPMethod).to.equal(@"GET");
 
@@ -81,7 +81,7 @@
      }
               withExpectations:
      ^(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body) {
-         expect(request.URL.host).to.equal(@"www.xing.com");
+         expect(request.URL.host).to.equal(@"api.xing.com");
          expect(request.URL.path).to.equal(@"/v1/users/1/feed");
          expect(request.HTTPMethod).to.equal(@"GET");
 
@@ -104,7 +104,7 @@
      }
               withExpectations:
      ^(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body) {
-         expect(request.URL.host).to.equal(@"www.xing.com");
+         expect(request.URL.host).to.equal(@"api.xing.com");
          expect(request.URL.path).to.equal(@"/v1/users/1/feed");
          expect(request.HTTPMethod).to.equal(@"GET");
 
@@ -130,7 +130,7 @@
      }
               withExpectations:
      ^(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body) {
-         expect(request.URL.host).to.equal(@"www.xing.com");
+         expect(request.URL.host).to.equal(@"api.xing.com");
          expect(request.URL.path).to.equal(@"/v1/users/me/status_message");
          expect(request.HTTPMethod).to.equal(@"POST");
 
@@ -154,7 +154,7 @@
      }
               withExpectations:
      ^(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body) {
-         expect(request.URL.host).to.equal(@"www.xing.com");
+         expect(request.URL.host).to.equal(@"api.xing.com");
          expect(request.URL.path).to.equal(@"/v1/users/me/share/link");
          expect(request.HTTPMethod).to.equal(@"POST");
 
@@ -179,7 +179,7 @@
      }
               withExpectations:
      ^(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body) {
-         expect(request.URL.host).to.equal(@"www.xing.com");
+         expect(request.URL.host).to.equal(@"api.xing.com");
          expect(request.URL.path).to.equal(@"/v1/activities/1");
          expect(request.HTTPMethod).to.equal(@"GET");
 
@@ -203,7 +203,7 @@
      }
               withExpectations:
      ^(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body) {
-         expect(request.URL.host).to.equal(@"www.xing.com");
+         expect(request.URL.host).to.equal(@"api.xing.com");
          expect(request.URL.path).to.equal(@"/v1/activities/1/share");
          expect(request.HTTPMethod).to.equal(@"POST");
 
@@ -224,7 +224,7 @@
      }
               withExpectations:
      ^(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body) {
-         expect(request.URL.host).to.equal(@"www.xing.com");
+         expect(request.URL.host).to.equal(@"api.xing.com");
          expect(request.URL.path).to.equal(@"/v1/activities/1");
          expect(request.HTTPMethod).to.equal(@"DELETE");
 
@@ -248,7 +248,7 @@
      }
               withExpectations:
      ^(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body) {
-         expect(request.URL.host).to.equal(@"www.xing.com");
+         expect(request.URL.host).to.equal(@"api.xing.com");
          expect(request.URL.path).to.equal(@"/v1/activities/1/comments");
          expect(request.HTTPMethod).to.equal(@"GET");
 
@@ -272,7 +272,7 @@
      }
               withExpectations:
      ^(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body) {
-         expect(request.URL.host).to.equal(@"www.xing.com");
+         expect(request.URL.host).to.equal(@"api.xing.com");
          expect(request.URL.path).to.equal(@"/v1/activities/1/comments");
          expect(request.HTTPMethod).to.equal(@"GET");
 
@@ -301,7 +301,7 @@
      }
               withExpectations:
      ^(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body) {
-         expect(request.URL.host).to.equal(@"www.xing.com");
+         expect(request.URL.host).to.equal(@"api.xing.com");
          expect(request.URL.path).to.equal(@"/v1/activities/1/comments");
          expect(request.HTTPMethod).to.equal(@"POST");
 
@@ -325,7 +325,7 @@
      }
               withExpectations:
      ^(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body) {
-         expect(request.URL.host).to.equal(@"www.xing.com");
+         expect(request.URL.host).to.equal(@"api.xing.com");
          expect(request.URL.path).to.equal(@"/v1/activities/2/comments/1");
          expect(request.HTTPMethod).to.equal(@"DELETE");
 
@@ -349,7 +349,7 @@
      }
               withExpectations:
      ^(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body) {
-         expect(request.URL.host).to.equal(@"www.xing.com");
+         expect(request.URL.host).to.equal(@"api.xing.com");
          expect(request.URL.path).to.equal(@"/v1/activities/1/likes");
          expect(request.HTTPMethod).to.equal(@"GET");
 
@@ -373,7 +373,7 @@
      }
               withExpectations:
      ^(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body) {
-         expect(request.URL.host).to.equal(@"www.xing.com");
+         expect(request.URL.host).to.equal(@"api.xing.com");
          expect(request.URL.path).to.equal(@"/v1/activities/1/likes");
          expect(request.HTTPMethod).to.equal(@"GET");
 
@@ -401,7 +401,7 @@
      }
               withExpectations:
      ^(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body) {
-         expect(request.URL.host).to.equal(@"www.xing.com");
+         expect(request.URL.host).to.equal(@"api.xing.com");
          expect(request.URL.path).to.equal(@"/v1/activities/1/like");
          expect(request.HTTPMethod).to.equal(@"PUT");
 
@@ -422,7 +422,7 @@
      }
               withExpectations:
      ^(NSURLRequest *request, NSMutableDictionary *query, NSMutableDictionary *body) {
-         expect(request.URL.host).to.equal(@"www.xing.com");
+         expect(request.URL.host).to.equal(@"api.xing.com");
          expect(request.URL.path).to.equal(@"/v1/activities/1/like");
          expect(request.HTTPMethod).to.equal(@"DELETE");
 
