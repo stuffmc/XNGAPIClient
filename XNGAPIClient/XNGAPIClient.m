@@ -37,7 +37,6 @@ static NSDictionary * XNGParametersFromQueryString(NSString *queryString);
 
 @interface XNGAPIClient()
 @property(nonatomic, strong, readwrite) XNGOAuthHandler *oAuthHandler;
-@property(nonatomic, strong, readwrite) NSURL *baseURL;
 @property(nonatomic, strong, readwrite) NSString *callbackScheme;
 @property(nonatomic, copy, readwrite) XNGAPILoginOpenURLBlock loginOpenURLBlock;
 @end
@@ -73,7 +72,6 @@ static XNGAPIClient *_sharedClient = nil;
     self = [super initWithBaseURL:url];
     if (self) {
         _oAuthHandler = [[XNGOAuthHandler alloc] init];
-        self.baseURL = url;
         self.signatureMethod = AFHMACSHA1SignatureMethod;
         [self registerHTTPOperationClass:[XNGJSONRequestOperation class]];
 #ifndef TARGET_OS_MAC
