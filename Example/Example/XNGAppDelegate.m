@@ -21,7 +21,7 @@
 
 #import "XNGAppDelegate.h"
 #import "XNGExampleViewController.h"
-#import "XNGAPI.h"
+#import <XNGAPIClient/XNGAPI.h>
 
 static BOOL RunningTests = NO;
 

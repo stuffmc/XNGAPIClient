@@ -1,11 +1,3 @@
-//
-//  XNGOAuthHandlerTests.m
-//  XINGAPIClient Tests
-//
-//  Created by Piet Brauer on 11.11.13.
-//  Copyright (c) 2013 XING AG. All rights reserved.
-//
-
 #import <XCTest/XCTest.h>
 #import <XNGAPIClient/XNGOAuthHandler.h>
 #import <SSKeychain/SSKeychain.h>

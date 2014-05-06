@@ -1,6 +1,6 @@
 #import <XCTest/XCTest.h>
 #import "XNGTestHelper.h"
-#import "XNGAPI.h"
+#import <XNGAPIClient/XNGAPI.h>
 
 @interface XNGGeoLocationsTests : XCTestCase
 
