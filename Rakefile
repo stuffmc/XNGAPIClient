@@ -5,7 +5,7 @@ end
 
 desc "Runs the specs [EMPTY]"
 task :spec do
-  # Provide your own implementation
+  sh 'xcodebuild -workspace XNGAPIClient.xcworkspace -scheme \'Example\' -destination platform=\'iOS Simulator\',OS=$OS,name=\'iPhone Retina (4-inch)\' clean build test -sdk iphonesimulator | xcpretty -t -c; exit ${PIPESTATUS[0]}'
 end
 
 task :version do
