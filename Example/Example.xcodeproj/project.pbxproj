@@ -33,6 +33,9 @@
 		F057E0C219191BD400C0E1E6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F057E0A719191BD400C0E1E6 /* Foundation.framework */; };
 		F057E0C319191BD400C0E1E6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F057E0AB19191BD400C0E1E6 /* UIKit.framework */; };
 		F057E0CB19191BD400C0E1E6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F057E0C919191BD400C0E1E6 /* InfoPlist.strings */; };
+		F057E0DA191924BC00C0E1E6 /* XNGExampleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F057E0D7191924BC00C0E1E6 /* XNGExampleViewController.m */; };
+		F057E0DB191924BC00C0E1E6 /* XNGLoginWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F057E0D9191924BC00C0E1E6 /* XNGLoginWebViewController.m */; };
+		F057E0DF1919250300C0E1E6 /* XNGTestHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F057E0DE1919250300C0E1E6 /* XNGTestHelper.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +80,13 @@
 		F057E0C019191BD400C0E1E6 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		F057E0C819191BD400C0E1E6 /* ExampleTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ExampleTests-Info.plist"; sourceTree = "<group>"; };
 		F057E0CA19191BD400C0E1E6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		F057E0D6191924BC00C0E1E6 /* XNGExampleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XNGExampleViewController.h; sourceTree = "<group>"; };
+		F057E0D7191924BC00C0E1E6 /* XNGExampleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XNGExampleViewController.m; sourceTree = "<group>"; };
+		F057E0D8191924BC00C0E1E6 /* XNGLoginWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XNGLoginWebViewController.h; sourceTree = "<group>"; };
+		F057E0D9191924BC00C0E1E6 /* XNGLoginWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XNGLoginWebViewController.m; sourceTree = "<group>"; };
+		F057E0DC1919250300C0E1E6 /* XNGTestHelper_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XNGTestHelper_Private.h; sourceTree = "<group>"; };
+		F057E0DD1919250300C0E1E6 /* XNGTestHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XNGTestHelper.h; sourceTree = "<group>"; };
+		F057E0DE1919250300C0E1E6 /* XNGTestHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XNGTestHelper.m; sourceTree = "<group>"; };
 		FFF7241F10694E5E8CA58225 /* libPods-Example.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Example.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -145,6 +155,10 @@
 			children = (
 				F057E0B619191BD400C0E1E6 /* XNGAppDelegate.h */,
 				F057E0B719191BD400C0E1E6 /* XNGAppDelegate.m */,
+				F057E0D6191924BC00C0E1E6 /* XNGExampleViewController.h */,
+				F057E0D7191924BC00C0E1E6 /* XNGExampleViewController.m */,
+				F057E0D8191924BC00C0E1E6 /* XNGLoginWebViewController.h */,
+				F057E0D9191924BC00C0E1E6 /* XNGLoginWebViewController.m */,
 				F057E0B919191BD400C0E1E6 /* Images.xcassets */,
 				F057E0AE19191BD400C0E1E6 /* Supporting Files */,
 			);
@@ -186,6 +200,9 @@
 		F057E0C719191BD400C0E1E6 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				F057E0DC1919250300C0E1E6 /* XNGTestHelper_Private.h */,
+				F057E0DD1919250300C0E1E6 /* XNGTestHelper.h */,
+				F057E0DE1919250300C0E1E6 /* XNGTestHelper.m */,
 				F057E0C819191BD400C0E1E6 /* ExampleTests-Info.plist */,
 				F057E0C919191BD400C0E1E6 /* InfoPlist.strings */,
 			);
@@ -259,8 +276,6 @@
 			mainGroup = F057E09B19191BD400C0E1E6;
 			productRefGroup = F057E0A519191BD400C0E1E6 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-			);
 			projectRoot = "";
 			targets = (
 				F057E0A319191BD400C0E1E6 /* Example */,
@@ -357,6 +372,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F057E0DA191924BC00C0E1E6 /* XNGExampleViewController.m in Sources */,
+				F057E0DB191924BC00C0E1E6 /* XNGLoginWebViewController.m in Sources */,
 				F057E0B819191BD400C0E1E6 /* XNGAppDelegate.m in Sources */,
 				F057E0B419191BD400C0E1E6 /* main.m in Sources */,
 			);
@@ -375,6 +392,7 @@
 				1643A96C03D19E122B690D2D /* XNGJobsTests.m in Sources */,
 				1643A75D126FBFC481C7A27D /* XNGMessagesTests.m in Sources */,
 				1643ADB48536FC743DAE256D /* XNGNetworkFeedTests.m in Sources */,
+				F057E0DF1919250300C0E1E6 /* XNGTestHelper.m in Sources */,
 				1643AA18ECCA325A7994593B /* XNGOAuthHandlerTests.m in Sources */,
 				1643A51ABC9FD1AC2186E944 /* XNGProfileVisitsTests.m in Sources */,
 				1643A10D71B0EC84B0A516AA /* XNGRecommendationsTests.m in Sources */,
@@ -571,6 +589,7 @@
 				F057E0D219191BD400C0E1E6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		F057E0D319191BD400C0E1E6 /* Build configuration list for PBXNativeTarget "ExampleTests" */ = {
 			isa = XCConfigurationList;
@@ -579,6 +598,7 @@
 				F057E0D519191BD400C0E1E6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
