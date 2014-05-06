@@ -1,5 +1,5 @@
 language: objective-c
 env:
-    - OS=7.0
+    - OS=7.1
 before_install: rake bootstrap
 script: rake spec
