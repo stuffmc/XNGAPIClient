@@ -38,7 +38,7 @@ static BOOL RunningTests = NO;
     [self.window makeKeyAndVisible];
 
     // enter your consumerKey and consumerSecret here.
-    // You can optain it at this URL: https://dev.xing.com/applications
+    // You can obtain it at this URL: https://dev.xing.com/applications
     [XNGAPIClient sharedClient].consumerKey = @"";
     [XNGAPIClient sharedClient].consumerSecret = @"";
 
