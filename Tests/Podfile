@@ -1,9 +1,0 @@
-xcodeproj 'XINGAPIClient Tests'
-workspace '../XNGAPIClient'
-inhibit_all_warnings!
-
-platform :ios, '7.0'
-link_with 'iOS Tests'
-
-pod 'XNGAPIClient', :path => '../XNGAPIClient.podspec'
-pod 'XNGAPIClientTester', :git => 'https://github.com/xing/XINGAPIClientTester'
