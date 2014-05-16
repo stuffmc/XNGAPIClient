@@ -478,7 +478,7 @@ static NSString * const XNGAPIClientOAuthAccessTokenPath = @"v1/access_token";
 #pragma mark - Helper methods
 
 - (NSException *)exceptionForUserAlreadyLoggedIn {
-    return [NSException exceptionWithName:@"XNGUserLoginException" reason:@"A User is already loggedIn. Use the isLoggedin method to verfiy that no user is logged in before you use this method." userInfo:@{@"XNGLoggedInUserID":self.currentUserID}];
+    return [NSException exceptionWithName:@"XNGUserLoginException" reason:@"A User is already loggedIn. Use the isLoggedin method to verify that no user is logged in before you use this method." userInfo:@{@"XNGLoggedInUserID":self.currentUserID}];
 }
 
 - (NSException *)exceptionForNoConsumerKey {
