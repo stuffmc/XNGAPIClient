@@ -85,7 +85,7 @@ make a call to load your own profile:
 ``` objective-c
 [client getUserWithID:@"me"
            userFields:nil
-              success:^{
+              success:^(id JSON) {
 			 	// handle success
 			  }
               failure:^(NSError *error) {
